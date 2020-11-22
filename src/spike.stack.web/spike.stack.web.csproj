@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Novicell.App" Version="3.0.6" />
+    <PackageReference Include="Novicell.App.Web" Version="3.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Novicell.App.Web.Extensions\Novicell.App.Web.Extensions.csproj" />
+    <ProjectReference Include="..\spike.stack.module\spike.stack.module.csproj" />
+  </ItemGroup>
+
+</Project>
