@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Extensions.Hosting;
 using SimpleInjector;
-using SimpleInjector.Integration.ServiceCollection;
 
 namespace Novicell.App.Hosted.GenericHost.DependencyInjection
 {

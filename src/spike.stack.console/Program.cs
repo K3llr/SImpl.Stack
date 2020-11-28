@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Novicell.App.Hosted.GenericHost.Extensions;
 
@@ -8,6 +9,8 @@ namespace spike.stack.console
     {
         public static async Task Main(string[] args)
         {
+            Console.WriteLine("Dawn of time");
+            
             var host = Host.CreateDefaultBuilder(args)
                 .ConfigureGenericStackHost(consoleBuilder => // IConsoleHostBuilder
                 {
@@ -16,6 +19,8 @@ namespace spike.stack.console
                 .Build();
                 
             await host.RunAsync();
+            
+            Console.WriteLine("Doomsday");
         }
     }
 }
