@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Novicell.App.Web.Extensions\Novicell.App.Web.Extensions.csproj" />
+    <ProjectReference Include="..\Novicell.App.Hosted.WebHost\Novicell.App.Hosted.WebHost.csproj" />
     <ProjectReference Include="..\spike.stack.module\spike.stack.module.csproj" />
   </ItemGroup>
 

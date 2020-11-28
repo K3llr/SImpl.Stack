@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Novicell.App.Console;
 using Novicell.App.Console.AppBuilders;
 using Novicell.App.Console.Configuration;
 
-namespace Novicell.App.Console.Extensions.Configuration
+namespace Novicell.App.Hosted.GenericHost.Configuration
 {
-    public class CompositeStartupConfiguration : IStartupConfiguration
+    public class CompositeConsoleConfiguration : IConsoleConfiguration
     {
         private readonly IList<IStartup> _startups = new List<IStartup>();
         

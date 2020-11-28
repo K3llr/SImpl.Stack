@@ -1,10 +1,14 @@
 using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Novicell.App;
 using Novicell.App.AppBuilders;
+using Novicell.App.Hosted.Modules;
 
 namespace spike.stack.module
 {
-    public class Test01Module : INovicellModule
+    public class Test01Module : IHostedModule, IHostConfigureModule, IHostObjectConfigureModule, IServicesCollectionConfigureModule
     {
         public void Configure(INovicellAppBuilder appBuilder)
         {
@@ -17,20 +21,33 @@ namespace spike.stack.module
         }
 
         public string Name => "Test 01 module";
-    }
-    
-    public class Test02Module : INovicellModule
-    {
-        public void Configure(INovicellAppBuilder appBuilder)
+        public Task StartAsync()
         {
-            Console.WriteLine($"Configure: {Name}");
+            Console.WriteLine($"Start async: {Name}");
+
+            return Task.CompletedTask;
         }
 
-        public void Init()
+        public Task StopAsync()
         {
-            Console.WriteLine($"Init: {Name}");
+            Console.WriteLine($"Stop async: {Name}");
+            
+            return Task.CompletedTask;
         }
 
-        public string Name => "Test 02 module";
+        public void ConfigureHost(IHost host)
+        {
+            Console.WriteLine($"Configure host object: {host.GetType().Name}");
+        }
+
+        public void ConfigureHost(IHostBuilder hostBuilder)
+        {
+            Console.WriteLine($"Configure host builder: {hostBuilder.GetType().Name}");
+        }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            Console.WriteLine($"Configure services: {services.GetType().Name}");
+        }
     }
 }

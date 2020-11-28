@@ -10,10 +10,15 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     <PackageReference Include="Novicell.App" Version="3.0.6" />
     <PackageReference Include="Novicell.App.Console" Version="3.0.5" />
+    <PackageReference Include="Novicell.App.DependencyInjection" Version="3.0.10" />
+    <PackageReference Include="SimpleInjector" Version="4.7.1" />
+    <PackageReference Include="SimpleInjector.Integration.GenericHost" Version="4.7.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Novicell.App.Console.Extensions\Novicell.App.Console.Extensions.csproj" />
+    <ProjectReference Include="..\Novicell.App.Hosted.GenericHost.DependencyInjection\Novicell.App.Hosted.GenericHost.DependencyInjection.csproj" />
+    <ProjectReference Include="..\Novicell.App.Hosted.GenericHost\Novicell.App.Hosted.GenericHost.csproj" />
+    <ProjectReference Include="..\spike.stack.app\spike.stack.app.csproj" />
     <ProjectReference Include="..\spike.stack.module\spike.stack.module.csproj" />
   </ItemGroup>
 

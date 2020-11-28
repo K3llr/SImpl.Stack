@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Novicell.App.Web.Extensions.Configuration;
+using Novicell.App.Hosted.WebHost.Configuration;
 using spike.stack.module;
 
 namespace spike.stack.web

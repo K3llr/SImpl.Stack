@@ -1,10 +1,11 @@
 using System;
+using Novicell.App.Console;
 using Novicell.App.Console.AppBuilders;
 using Novicell.App.Console.Configuration;
 
-namespace Novicell.App.Console.Extensions.Configuration
+namespace Novicell.App.Hosted.GenericHost.Configuration
 {
-    public class StartupConfiguration : IStartupConfiguration
+    public class ConsoleConfiguration : IConsoleConfiguration
     {
         private IStartup _startups = new ConfigurableStartup(builder => { });
         

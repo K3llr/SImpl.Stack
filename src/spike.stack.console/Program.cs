@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using Novicell.App.Console.Extensions.Configuration;
+using Novicell.App.Hosted.GenericHost.Extensions;
 
 namespace spike.stack.console
 {
@@ -8,17 +8,14 @@ namespace spike.stack.console
     {
         public static async Task Main(string[] args)
         {
-            await Host.CreateDefaultBuilder(args)
-                .ConfigureConsoleStackHost(consoleBuilder => // IConsoleHostBuilder
+            var host = Host.CreateDefaultBuilder(args)
+                .ConfigureGenericStackHost(consoleBuilder => // IConsoleHostBuilder
                 {
                     consoleBuilder.UseStartup<Startup>();
-                    consoleBuilder.ConfigureServices(services =>
-                    {
-                        // Add services to service collection
-                    });
                 })
-                .Build()
-                .RunAsync();
+                .Build();
+                
+            await host.RunAsync();
         }
     }
 }
