@@ -1,7 +1,15 @@
+using System.Collections.Generic;
+
 namespace SImpl.DotNetStack.Diagnostics
 {
-    public interface IDiagnosticsWriter
+    public interface IDiagnosticsCollector
     {
-        void AppendLine(string value);
+        void AddSection(string key, IDiagnosticsSection section);
+        IDiagnosticsSection Get(string key);
+        IReadOnlyList<IDiagnosticsSection> Sections { get; }
+        
+        void RegisterLapTime(string value);
+        IReadOnlyList<LapTime> Timetable { get; }
+        void ClearTimetable();
     }
 }

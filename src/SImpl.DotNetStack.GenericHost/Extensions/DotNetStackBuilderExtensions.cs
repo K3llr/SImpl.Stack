@@ -1,21 +1,16 @@
 using System;
-using Novicell.App.Hosted.GenericHost.Configuration;
-using Novicell.App.Hosted.GenericHost.HostBuilders;
-using Novicell.DotNetStack.HostBuilders;
+using SImpl.DotNetStack.GenericHost.HostBuilders;
+using SImpl.DotNetStack.HostBuilders;
 
-namespace Novicell.App.Hosted.GenericHost.Extensions
+namespace SImpl.DotNetStack.GenericHost.Extensions
 {
     public static class DotNetStackBuilderExtensions
     {
         public static void UseGenericHostStackApp(this IDotNetStackHostBuilder stackHostBuilder, Action<IGenericHostStackAppBuilder> stackAppBuilder)
         {
-            System.Console.WriteLine($"AttachModule: {nameof(GenericHostStackAppModule)}");
-            
             var module = stackHostBuilder.AttachNewOrGetConfiguredModule(() =>
             {
-                var config = new GenericHostStackAppConfiguration();
-                var builder = new GenericHostStackAppBuilder(config);
-                
+                var builder = new GenericHostStackAppBuilder(stackHostBuilder.Runtime);
                 return new GenericHostStackAppModule(builder);
             });
             

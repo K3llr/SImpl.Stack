@@ -2,7 +2,7 @@ using System.Collections.Specialized;
 
 namespace SImpl.DotNetStack.Diagnostics
 {
-    public class PropertyDiagnosticsSection : IDiagnosticsSection
+    public class PropertiesDiagnosticsSection : IDiagnosticsSection
     {
         public string Headline { get; set; }
 

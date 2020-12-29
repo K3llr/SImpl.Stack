@@ -1,17 +1,20 @@
 using System;
-using Novicell.App.Console;
-using Novicell.App.Console.AppBuilders;
+using Microsoft.Extensions.DependencyInjection;
+using SImpl.DotNetStack.ApplicationBuilders;
+using SImpl.DotNetStack.Configurations;
 
-namespace Novicell.App.Hosted.GenericHost.Configuration
+namespace SImpl.DotNetStack.GenericHost.Configuration
 {
     public interface IStartupConfiguration
     {
         void UseStartup<TStartup>()
             where TStartup : IStartup, new(); // TODO: Open startup
 
-        void UseStartup(Action<IAppBuilder> appBuilder);
+        void UseStartup(Action<IDotNetStackApplicationBuilder> appBuilder);
         
         void UseStartup(IStartup startup);
+        
+        void UseServiceConfiguration(Action<IServiceCollection> services);
         
         IStartup GetConfiguredStartup();
     }

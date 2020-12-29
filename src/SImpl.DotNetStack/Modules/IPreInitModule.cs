@@ -1,4 +1,4 @@
-namespace Novicell.DotNetStack.Modules
+namespace SImpl.DotNetStack.Modules
 {
     public interface IPreInitModule : IDotNetStackModule
     {

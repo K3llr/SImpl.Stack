@@ -1,6 +1,6 @@
 namespace SImpl.DotNetStack.Core
 {
-    public class Flags
+    public class RuntimeFlags
     {
         public bool Verbose { get; set; } = false;
 

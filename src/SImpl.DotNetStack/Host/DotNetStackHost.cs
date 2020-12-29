@@ -2,21 +2,21 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using Novicell.DotNetStack.Core;
-using Novicell.DotNetStack.Extensions;
-using Novicell.DotNetStack.Modules;
+using SImpl.DotNetStack.Core;
+using SImpl.DotNetStack.Extensions;
+using SImpl.DotNetStack.Modules;
 
-namespace Novicell.DotNetStack.Host
+namespace SImpl.DotNetStack.Host
 {
     public class DotNetStackHost : IHost
     {
-        private readonly IDotNetStackRuntime _runtime;
         private readonly IHost _host;
+        private readonly IModuleManager _moduleManager;
 
-        public DotNetStackHost(IDotNetStackRuntime runtime, IHost host)
+        public DotNetStackHost(IHost host, IModuleManager moduleManager)
         {
-            _runtime = runtime;
             _host = host;
+            _moduleManager = moduleManager;
         }
         
         public void Dispose()
@@ -26,14 +26,17 @@ namespace Novicell.DotNetStack.Host
 
         public async Task StartAsync(CancellationToken cancellationToken = new CancellationToken())
         {
+            await _moduleManager.EnabledModules.ForEachAsync<IStartableModule>(module => module.StartAsync());
             await _host.StartAsync(cancellationToken);
-            await _runtime.ModuleManager.EnabledModules.ForEachAsync<IStartableModule>(module => module.StartAsync());
+            _moduleManager.SetModuleState(ModuleState.Started);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            await _runtime.ModuleManager.EnabledModules.ForEachAsync<IStartableModule>(module => module.StopAsync());
             await _host.StopAsync(cancellationToken);
+            await _moduleManager.EnabledModules.ForEachAsync<IStartableModule>(module => module.StopAsync());
+            
+            _moduleManager.SetModuleState(ModuleState.Stopped);
         }
 
         public IServiceProvider Services => _host.Services;

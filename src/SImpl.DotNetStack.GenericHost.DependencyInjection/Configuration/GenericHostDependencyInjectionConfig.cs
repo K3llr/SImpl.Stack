@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Novicell.App.DependencyInjection.Configuration;
 using SimpleInjector.Integration.ServiceCollection;
 
-namespace Novicell.App.Hosted.GenericHost.DependencyInjection.Configuration
+namespace SImpl.DotNetStack.GenericHost.DependencyInjection.Configuration
 {
     public class GenericHostDependencyInjectionConfig
     {

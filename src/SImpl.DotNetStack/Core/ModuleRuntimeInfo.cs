@@ -4,11 +4,11 @@ using SImpl.DotNetStack.Modules;
 namespace SImpl.DotNetStack.Core
 {
     /// <summary>
-    /// Responsible for maintaining runtime information aboutn 
+    /// Responsible for maintaining runtime information about attached modules
     /// </summary>
-    public class ModuleContext
+    public class ModuleRuntimeInfo
     {
-        public ModuleContext(IDotNetStackModule module)
+        public ModuleRuntimeInfo(IDotNetStackModule module)
         {
             Module = module;
             State = ModuleState.New;

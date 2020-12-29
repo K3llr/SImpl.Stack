@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Novicell.App.Console;
-using Novicell.App.Console.AppBuilders;
-using Novicell.App.Console.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using SImpl.DotNetStack.ApplicationBuilders;
+using SImpl.DotNetStack.Configurations;
 
-namespace Novicell.App.Hosted.GenericHost.Configuration
+namespace SImpl.DotNetStack.GenericHost.Configuration
 {
     public class CompositeStartupConfiguration : IStartupConfiguration
     {
@@ -13,29 +13,37 @@ namespace Novicell.App.Hosted.GenericHost.Configuration
         public void UseStartup<TStartup>()
             where TStartup : IStartup, new()
         {
-            _startups.Add(new ConfigurableStartup(appBuilder =>
-            {
-                new TStartup().Configuration(appBuilder);
-            }));
+            UseStartup(new TStartup());
         }
         
-        public void UseStartup(Action<IAppBuilder> appBuilder)
+        public void UseStartup(Action<IDotNetStackApplicationBuilder> appBuilder)
         {
-            _startups.Add(new ConfigurableStartup(appBuilder));
+            UseStartup(new ConfigurableStartup(appBuilder));
         }
         
         public void UseStartup(IStartup startup)
         {
             _startups.Add(startup);
         }
-        
+
+        public void UseServiceConfiguration(Action<IServiceCollection> services)
+        {
+            UseStartup(new ConfigurableStartup().WithServiceConfiguration(services));
+        }
+
         public IStartup GetConfiguredStartup()
         {
             return new ConfigurableStartup(appBuilder =>
             {
                 foreach (var startup in _startups)
                 {
-                    startup.Configuration(appBuilder);
+                    startup.Configure(appBuilder);
+                }
+            }).WithServiceConfiguration(services =>
+            {
+                foreach (var startup in _startups)
+                {
+                    startup.ConfigureServices(services);
                 }
             });
         }

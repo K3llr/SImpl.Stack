@@ -1,14 +1,15 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Novicell.App;
 using Novicell.App.AppBuilders;
 using Novicell.App.DependencyInjection.Configuration;
-using Novicell.App.Hosted.GenericHost.DependencyInjection.Configuration;
-using Novicell.DotNetStack.Modules;
+using SImpl.DotNetStack.GenericHost.DependencyInjection.Configuration;
+using SImpl.DotNetStack.Modules;
 using SimpleInjector;
 
-namespace Novicell.App.Hosted.GenericHost.DependencyInjection
+namespace SImpl.DotNetStack.GenericHost.DependencyInjection
 {
-    public class GenericHostDependencyInjectionModule : INovicellModule, IHostObjectConfigureModule, IServicesCollectionConfigureModule
+    public class GenericHostDependencyInjectionModule : INovicellModule, IHostConfigureModule, IServicesCollectionConfigureModule
     {
         public static GenericHostDependencyInjectionConfig Config { get; private set;  }
     

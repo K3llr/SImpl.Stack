@@ -1,4 +1,4 @@
-namespace Novicell.App.Hosted.GenericHost.DependencyInjection
+namespace SImpl.DotNetStack.GenericHost.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {

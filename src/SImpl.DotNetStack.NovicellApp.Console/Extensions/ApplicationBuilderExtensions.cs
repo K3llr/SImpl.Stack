@@ -9,8 +9,11 @@ namespace SImpl.DotNetStack.App.Extensions
     {
         public static void UseNovicellConsoleApp(this IDotNetStackApplicationBuilder stackBuilder, Action<IConsoleAppBuilder> configure)
         {
+            // TODO: Need to be application modules only
+            stackBuilder.AttachNewOrGetConfiguredModule(() => new NovicellAppConsoleRuntimeModule(configure));
+            
             // Execute Startup configuration (custom configuration)
-            configure(ConsoleBootManager.CurrentConsoleBuilder);
+            configure?.Invoke(ConsoleBootManager.CurrentConsoleBuilder);
         }
     }
 }

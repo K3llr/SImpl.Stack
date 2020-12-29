@@ -4,7 +4,7 @@ using Novicell.App.AppBuilders;
 using Novicell.App.Web;
 using Novicell.App.Web.Configuration;
 
-namespace Novicell.App.Hosted.WebHost.Configuration
+namespace SImpl.DotNetStack.WebHost.Configuration
 {
     public static class ApplicationBuilderExtension
     {

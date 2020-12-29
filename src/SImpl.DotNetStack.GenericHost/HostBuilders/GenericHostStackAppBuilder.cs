@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Configurations;
+using SImpl.DotNetStack.Core;
 using SImpl.DotNetStack.GenericHost.Application;
 using SImpl.DotNetStack.GenericHost.Configuration;
 
@@ -10,32 +11,34 @@ namespace SImpl.DotNetStack.GenericHost.HostBuilders
 {
     public class GenericHostStackAppBuilder : IGenericHostStackAppBuilder
     {
-        private readonly GenericHostStackAppConfiguration _genericHostStackAppConfiguration;
+        private readonly IDotNetStackRuntime _runtime;
+        private readonly IStartupConfiguration _config;
 
-        public GenericHostStackAppBuilder(GenericHostStackAppConfiguration genericHostStackAppConfiguration)
+        public GenericHostStackAppBuilder(IDotNetStackRuntime runtime)
         {
-            _genericHostStackAppConfiguration = genericHostStackAppConfiguration;
+            _runtime = runtime;
+            _config = new StartupConfiguration();
         }
 
         public void UseStartup<TStartup>()
             where TStartup : IStartup, new()
         {
-            _genericHostStackAppConfiguration.StartupConfiguration.UseStartup<TStartup>();
+            _config.UseStartup<TStartup>();
         }
         
         public void Configure(Action<IDotNetStackApplicationBuilder> appBuilder)
         {
-            _genericHostStackAppConfiguration.StartupConfiguration.UseStartup(appBuilder);
+            _config.UseStartup(appBuilder);
         }
         
         public void ConfigureServices(Action<IServiceCollection> services)
         {
-            _genericHostStackAppConfiguration.ServicesCollectionConfiguration.Configure(services);
+            _config.UseServiceConfiguration(services);
         }
 
         public IDotNetStackApplication Build()
         {
-            return new GenericHostStackApplication(_genericHostStackAppConfiguration);
+            return new GenericHostStackApplication(_runtime, _config.GetConfiguredStartup());
         }
     }
 }

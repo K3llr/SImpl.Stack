@@ -1,13 +1,14 @@
 using Microsoft.Extensions.Hosting;
+using SImpl.DotNetStack.Diagnostics;
 
-namespace Novicell.DotNetStack.Core
+namespace SImpl.DotNetStack.Core
 {
     public class DotNetStackRuntime : IDotNetStackRuntime
     {
         private static readonly object Lock = new object();
-        public static DotNetStackRuntime Current { get; internal set; }
+        public static DotNetStackRuntime Current { get; private set; }
         
-        public static DotNetStackRuntime Init(DotNetStackRuntime runtime)
+        private static DotNetStackRuntime Init(DotNetStackRuntime runtime)
         {
             if (Current != null) return Current;
             
@@ -16,25 +17,23 @@ namespace Novicell.DotNetStack.Core
                 return Current ??= runtime;
             }
         }
-        
-        public static DotNetStackRuntime Init(IHostBuilder hostBuilder)
+
+        public DotNetStackRuntime(IHostBuilder hostBuilder, IModuleManager moduleManager, IDiagnosticsCollector diagnostics, RuntimeFlags runtimeFlags)
         {
-            if (Current != null) return Current;
+            HostBuilder = hostBuilder;
+            ModuleManager = moduleManager;
+            Diagnostics = diagnostics;
+            Flags = runtimeFlags;
             
-            lock (Lock)
-            {
-                return Current ??= new DotNetStackRuntime
-                {
-                    ModuleManager = new ModuleManager(),
-                    HostBuilder = hostBuilder
-                };
-            }
+            Init(this);
         }
+
+        public IModuleManager ModuleManager { get; }
+
+        public IHostBuilder HostBuilder { get; }
         
-        private DotNetStackRuntime() { }
-
-        public IModuleManager ModuleManager { get; private set; }
-
-        public IHostBuilder HostBuilder { get; private set; }
+        public IDiagnosticsCollector Diagnostics { get; }
+        
+        public RuntimeFlags Flags { get; }
     }
 }

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Novicell.DotNetStack.Modules
+namespace SImpl.DotNetStack.Modules
 {
     public interface IStartableModule : IDotNetStackModule
     {

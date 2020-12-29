@@ -1,6 +1,6 @@
-using Novicell.DotNetStack.HostBuilders;
+using SImpl.DotNetStack.HostBuilders;
 
-namespace Novicell.App.Hosted.GenericHost.DependencyInjection.Configuration
+namespace SImpl.DotNetStack.GenericHost.DependencyInjection.Configuration
 {
     public static class DotNetStackAppBuilderExtensions
     {

@@ -1,4 +1,4 @@
-namespace Novicell.App.Hosted.WebHost.AppBuilders
+namespace SImpl.DotNetStack.WebHost.AppBuilders
 {
     public interface IDotNetStackAppBuilder
     {

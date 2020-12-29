@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Novicell.DotNetStack.Core;
-using Novicell.DotNetStack.Exceptions;
-using Novicell.DotNetStack.Extensions;
-using Novicell.DotNetStack.Host;
-using Novicell.DotNetStack.Modules;
+using SImpl.DotNetStack.Core;
+using SImpl.DotNetStack.Exceptions;
+using SImpl.DotNetStack.Host;
+using SImpl.DotNetStack.Modules;
 
-namespace Novicell.DotNetStack.HostBuilders
+namespace SImpl.DotNetStack.HostBuilders
 {
-    public class DotNetStackHostBuilder : IDotNetStackHostBuilder, IHostBuilder
+    public class DotNetStackHostBuilder : IDotNetStackHostBuilder
     {
-        private readonly Action<IDotNetStackHostBuilder> _configureDelegate;
+        private readonly IModuleManager _moduleManager;
+        private readonly IHostBootManager _bootManager;
 
-        public DotNetStackHostBuilder(IDotNetStackRuntime runtime, Action<IDotNetStackHostBuilder> configureDelegate)
+        public DotNetStackHostBuilder(IDotNetStackRuntime runtime, IModuleManager moduleManager, IHostBootManager bootManager)
         {
             Runtime = runtime;
-            _configureDelegate = configureDelegate;
+            _moduleManager = moduleManager;
+            _bootManager = bootManager;
         }
 
         public IDotNetStackRuntime Runtime { get; }
@@ -26,10 +27,10 @@ namespace Novicell.DotNetStack.HostBuilders
         public void Use<TModule>(Func<TModule> factory)
             where TModule : IDotNetStackModule
         {
-            var module = Runtime.ModuleManager.GetConfiguredModule<TModule>();
+            var module = _moduleManager.GetConfiguredModule<TModule>();
             if (module is null)
             {
-                Runtime.ModuleManager.AttachModule(factory.Invoke());
+                _moduleManager.AttachModule(factory.Invoke());
             }
             else
             {
@@ -40,11 +41,11 @@ namespace Novicell.DotNetStack.HostBuilders
         public TModule AttachNewOrGetConfiguredModule<TModule>(Func<TModule> factory)
             where TModule : IDotNetStackModule
         {
-            var module = Runtime.ModuleManager.GetConfiguredModule<TModule>();
+            var module = _moduleManager.GetConfiguredModule<TModule>();
             if (module is null)
             {
                 module = factory.Invoke();
-                Runtime.ModuleManager.AttachModule(module);
+                _moduleManager.AttachModule(module);
             }
 
             return module;
@@ -52,38 +53,20 @@ namespace Novicell.DotNetStack.HostBuilders
 
         public IHost Build()
         {
-            // Start configuration of the host builder
-            _configureDelegate?.Invoke(this);
+            _bootManager.PreInit();
+            
+            _bootManager.ConfigureServices(this);
+            
+            _bootManager.ConfigureHostBuilder(this);
 
-            var modules = Runtime.ModuleManager.EnabledModules;
-            
-            modules.ForEach<IPreInitModule>(module =>
-            {
-                module.PreInit();
-            });
-            
-            // Run all host builder configuring modules
-            modules.ForEach<IServicesCollectionConfigureModule>(module =>
-            {
-                ConfigureServices((hostBuilderContext, services) => module.ConfigureServices(services));
-            });
-
-            // Run all host builder configuring modules
-            modules.ForEach<IHostConfigureModule>(module =>
-            {
-                module.ConfigureHost(Runtime.HostBuilder);
-            });
-            
             // Build the inner host
             var innerHost = Runtime.HostBuilder.Build();
             
-            // Run all host object configuring modules
-            modules.ForEach<IHostObjectConfigureModule>(module =>
-            {
-                module.ConfigureHost(innerHost);
-            });
+            _bootManager.ConfigureHost(innerHost);
             
-            return new DotNetStackHost(Runtime, innerHost);
+            _moduleManager.SetModuleState(ModuleState.Configured);
+            
+            return new DotNetStackHost(innerHost, _moduleManager);
         }
         
         public IHostBuilder ConfigureHostConfiguration(Action<IConfigurationBuilder> configureDelegate)

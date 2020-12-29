@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Novicell.DotNetStack.Modules
+namespace SImpl.DotNetStack.Modules
 {
     public interface IServicesCollectionConfigureModule : IDotNetStackModule
     {

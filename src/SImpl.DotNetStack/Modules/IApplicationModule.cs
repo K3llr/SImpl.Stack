@@ -1,14 +1,19 @@
+using System.Threading.Tasks;
 using SImpl.DotNetStack.ApplicationBuilders;
 
 namespace SImpl.DotNetStack.Modules
 {
-    public interface IApplicationConfigureModule : IApplicationConfigureModule<IDotNetStackApplicationBuilder>
+    public interface IApplicationModule : IApplicationModule<IDotNetStackApplicationBuilder>
     {
     }
     
-    public interface IApplicationConfigureModule<in TApplicationBuilder> : IStartableModule
+    public interface IApplicationModule<in TApplicationBuilder> : IDotNetStackModule
         where TApplicationBuilder : IDotNetStackApplicationBuilder
     {
         void ConfigureApplication(TApplicationBuilder builder);
+
+        Task StartAsync();
+        
+        Task StopAsync();
     }
 }

@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using SImpl.DotNetStack.HostBuilders;
+using spike.stack.module;
 
 namespace spike.stack.web
 {
@@ -14,6 +16,10 @@ namespace spike.stack.web
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .AddDotNetStack(args, stack =>
+                {
+                    stack.UseDotNetStackTestModule();
                 })
                 .Build()
                 .RunAsync();

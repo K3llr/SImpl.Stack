@@ -2,19 +2,19 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using SImpl.DotNetStack.Core;
+using Microsoft.Extensions.Logging;
 
-namespace SImpl.DotNetStack.Diagnostics
+namespace SImpl.DotNetStack.Verbosity
 {
-    public class DiagnosticsHost : IHost
+    public class VerboseHost : IHost
     {
         private readonly IHost _host;
-        private readonly IDotNetStackRuntime _runtime;
+        private readonly ILogger<VerboseHost> _logger;
 
-        public DiagnosticsHost(IHost host, IDotNetStackRuntime runtime)
+        public VerboseHost(IHost host, ILogger<VerboseHost> logger)
         {
             _host = host;
-            _runtime = runtime;
+            _logger = logger;
         }
         
         public void Dispose()
@@ -24,32 +24,16 @@ namespace SImpl.DotNetStack.Diagnostics
 
         public async Task StartAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            
-            Console.WriteLine("");
-            Console.WriteLine("Diagnostics:");
-            Console.WriteLine("> Flags");
-            Console.WriteLine($"    --diagnostics: {_runtime.Flags.Diagnostics }");
-            Console.WriteLine($"    --verbose: {_runtime.Flags.Verbose }");
-            Console.WriteLine("");
-            
-            Console.ResetColor();
-            
+            _logger.LogDebug("Host starting");
             await _host.StartAsync(cancellationToken);
+            _logger.LogDebug("Host started");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken = new CancellationToken())
         {
+            _logger.LogDebug("Host stopping");
             await _host.StopAsync(cancellationToken);
-            
-            Console.ForegroundColor = ConsoleColor.White;
-            
-            Console.WriteLine("");
-            Console.WriteLine("Post diagnostics:");
-            // TODO: ?
-            Console.WriteLine("");
-            
-            Console.ResetColor();
+            _logger.LogDebug("Host stopped");
         }
 
         public IServiceProvider Services => _host.Services;

@@ -1,6 +1,6 @@
-using Novicell.DotNetStack.Modules;
+using SImpl.DotNetStack.Modules;
 
-namespace Novicell.DotNetStack.HostBuilders
+namespace SImpl.DotNetStack.HostBuilders
 {
     public static class DotNetStackHostBuilderExtensions
     {

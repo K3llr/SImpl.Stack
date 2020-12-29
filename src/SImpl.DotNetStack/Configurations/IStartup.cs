@@ -1,12 +1,17 @@
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.ApplicationBuilders;
 
-namespace SImpl.DotNetStack.Application
+namespace SImpl.DotNetStack.Configurations
 {
-    public interface IStartup
+    public interface IStartup : IStartup<IDotNetStackApplicationBuilder>
+    {
+    }
+    
+    public interface IStartup<in TApplicationBuilder>
+        where TApplicationBuilder : IDotNetStackApplicationBuilder
     {
         void ConfigureServices(IServiceCollection services);
 
-        void Configure(IDotNetStackApplicationBuilder stackBuilder);
+        void Configure(TApplicationBuilder stackBuilder);
     }
 }

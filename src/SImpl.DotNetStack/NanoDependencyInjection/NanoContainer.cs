@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SImpl.DotNetStack.DI
+namespace SImpl.DotNetStack.NanoDependencyInjection
 {
     public class NanoContainer : INanoContainer
     {

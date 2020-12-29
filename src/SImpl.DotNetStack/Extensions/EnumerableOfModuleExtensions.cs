@@ -5,7 +5,7 @@ using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.Extensions
 {
-    public static class EnumerableExtensions
+    public static class EnumerableOfModuleExtensions
     {
         public static IEnumerable<TModule> FilterBy<TModule>(this IEnumerable<IDotNetStackModule> modules)
             where TModule : IDotNetStackModule

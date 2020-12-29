@@ -1,4 +1,11 @@
-$HEADER$namespace $NAMESPACE$
+namespace SImpl.DotNetStack.Core
 {
-  public enum $ENUM$ {$END$}
+    public enum ModuleState
+    {
+        New,
+        Attached,
+        Configured,
+        Started,
+        Stopped
+    }
 }

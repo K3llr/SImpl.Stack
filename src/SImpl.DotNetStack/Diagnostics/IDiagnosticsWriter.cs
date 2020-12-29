@@ -1,4 +1,7 @@
-$HEADER$namespace $NAMESPACE$
+namespace SImpl.DotNetStack.Diagnostics
 {
-  public interface $INTERFACE$ {$END$}
+    public interface IDiagnosticsWriter
+    {
+        void AppendLine(string value);
+    }
 }

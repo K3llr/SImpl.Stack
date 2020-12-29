@@ -1,17 +1,50 @@
+using System;
+using System.Threading.Tasks;
+using Novicell.App.AppBuilders;
 using Novicell.App.Console;
 using Novicell.App.Console.Configuration;
 using SImpl.DotNetStack.ApplicationBuilders;
+using SImpl.DotNetStack.Dependencies;
+using SImpl.DotNetStack.GenericHost;
 using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.App
 {
-    public class NovicellAppModule : IApplicationConfigureModule
+    [DependsOn(typeof(GenericHostStackAppModule))]
+    public class NovicellAppConsoleRuntimeModule : IApplicationModule
     {
-        public string Name => "Novicell App Stack Module";
+        private readonly Action<IConsoleAppBuilder> _configure;
+
+        public NovicellAppConsoleRuntimeModule(Action<IConsoleAppBuilder> configure)
+        {
+            _configure = configure;
+        }
 
         public void ConfigureApplication(IDotNetStackApplicationBuilder builder)
         {
-            ConsoleBootManager.Boot(new ConfigurableStartup())
+            
+        }
+
+        public string Name => "Novicell App Console Runtime Module";
+
+        public Task StartAsync()
+        {
+            ConsoleBootManager.Boot(new ConfigurableStartup(appBuilder =>
+            {
+                appBuilder.UseNovicellConsoleApp(consoleApp =>
+                {
+                    _configure?.Invoke(consoleApp);
+                });
+            }));
+
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync()
+        {
+            ConsoleBootManager.UnloadApp();
+            
+            return Task.CompletedTask;
         }
     }
 }

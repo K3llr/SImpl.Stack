@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Novicell.App.Hosted.WebHost.Configuration;
+using SImpl.DotNetStack.WebHost.Configuration;
 using spike.stack.module;
 
 namespace spike.stack.web
@@ -36,7 +36,7 @@ namespace spike.stack.web
 
             app.UseWebStackApp(webApp =>
             {
-                webApp.UseTest01Module();
+                webApp.UseHybridTestModule();
             });
         }
     }

@@ -1,7 +1,7 @@
 using Novicell.App.DependencyInjection.Configuration;
-using Novicell.DotNetStack.App.Extensions;
+using SImpl.DotNetStack.App.Extensions;
 
-namespace Novicell.App.Hosted.GenericHost.DependencyInjection.Configuration
+namespace SImpl.DotNetStack.GenericHost.DependencyInjection.Configuration
 {
     public static class DependencyInjectionConfigExtensions
     {

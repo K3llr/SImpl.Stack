@@ -1,6 +1,6 @@
 using System;
 
-namespace Novicell.DotNetStack.Exceptions
+namespace SImpl.DotNetStack.Exceptions
 {
     public class InvalidConfigurationException : Exception
     {

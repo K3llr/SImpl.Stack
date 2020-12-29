@@ -1,36 +1,41 @@
 using System;
-using Novicell.App.Console;
-using Novicell.App.Console.AppBuilders;
-using Novicell.App.Console.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using SImpl.DotNetStack.ApplicationBuilders;
+using SImpl.DotNetStack.Configurations;
 
-namespace Novicell.App.Hosted.GenericHost.Configuration
+namespace SImpl.DotNetStack.GenericHost.Configuration
 {
     public class StartupConfiguration : IStartupConfiguration
     {
-        private IStartup _startups = new ConfigurableStartup(builder => { });
-        
+        private IStartup _startups;
+        private Action<IServiceCollection> _serviceDelegate;
+
         public void UseStartup<TStartup>()
             where TStartup : IStartup, new()
         {
-            _startups = new ConfigurableStartup(appBuilder =>
-            {
-                new TStartup().Configuration(appBuilder);
-            });
+            UseStartup(new TStartup());
         }
         
-        public void UseStartup(Action<IAppBuilder> appBuilder)
+        public void UseStartup(Action<IDotNetStackApplicationBuilder> appBuilder)
         {
-            _startups = new ConfigurableStartup(appBuilder);
+            UseStartup(new ConfigurableStartup(appBuilder));
         }
         
         public void UseStartup(IStartup startup)
         {
             _startups = startup;
         }
-        
+
+        public void UseServiceConfiguration(Action<IServiceCollection> services)
+        {
+            _serviceDelegate = services;
+        }
+
         public IStartup GetConfiguredStartup()
         {
-            return _startups;
+            return new ConfigurableStartup()
+                .WithConfiguration(configureDelegate => _startups.Configure(configureDelegate))
+                .WithServiceConfiguration(_serviceDelegate);
         }
     }
 }

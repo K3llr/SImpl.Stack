@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Novicell.DotNetStack.Modules;
+using SImpl.DotNetStack.Modules;
 
-namespace Novicell.DotNetStack.Core
+namespace SImpl.DotNetStack.Core
 {
     public interface IModuleManager
     {
@@ -18,12 +18,14 @@ namespace Novicell.DotNetStack.Core
         TModule GetConfiguredModule<TModule>(Type t)
             where TModule : IDotNetStackModule;
         
+        void SetModuleState(ModuleState state);
+
         IReadOnlyList<IDotNetStackModule> Modules { get; }
         
         IReadOnlyList<IDotNetStackModule> EnabledModules { get; }
         
-        IReadOnlyList<IDotNetStackModule> DisabledModules { get; } 
+        IReadOnlyList<IDotNetStackModule> DisabledModules { get; }
         
-        
+        IReadOnlyCollection<ModuleRuntimeInfo> ModuleContexts { get; }
     }
 }

@@ -1,10 +1,11 @@
 using System;
-using Novicell.DotNetStack.Core;
-using Novicell.DotNetStack.Modules;
+using Microsoft.Extensions.Hosting;
+using SImpl.DotNetStack.Core;
+using SImpl.DotNetStack.Modules;
 
-namespace Novicell.DotNetStack.HostBuilders
+namespace SImpl.DotNetStack.HostBuilders
 {
-    public interface IDotNetStackHostBuilder
+    public interface IDotNetStackHostBuilder : IHostBuilder
     {
         IDotNetStackRuntime Runtime { get; }
 

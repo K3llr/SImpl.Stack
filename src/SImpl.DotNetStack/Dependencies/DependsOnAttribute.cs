@@ -1,4 +1,16 @@
-$HEADER$namespace $NAMESPACE$
+using System;
+
+namespace SImpl.DotNetStack.Dependencies
 {
-  public class $CLASS$ {$END$}
+    
+    [AttributeUsage(AttributeTargets.Class)]
+    public class DependsOnAttribute : Attribute
+    {
+        public DependsOnAttribute(params Type[] dependencies)
+        {
+            Dependencies = dependencies;
+        }
+        
+        public Type[] Dependencies { get; }
+    }
 }

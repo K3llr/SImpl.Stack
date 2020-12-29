@@ -4,18 +4,18 @@ using Novicell.App.AppBuilders;
 
 namespace spike.stack.module
 {
-    public class Test03Module : INovicellModule
+    public class LegacyStackModule : INovicellModule
     {
         public void Configure(INovicellAppBuilder appBuilder)
         {
-            Console.WriteLine($"Configure: {Name}");
+            // Console.WriteLine($"Configure: {Name}");
         }
 
         public void Init()
         {
-            Console.WriteLine($"Init: {Name}");
+            // Console.WriteLine($"Init: {Name}");
         }
 
-        public string Name => "Test 03 module";
+        public string Name => nameof(LegacyStackModule);
     }
 }

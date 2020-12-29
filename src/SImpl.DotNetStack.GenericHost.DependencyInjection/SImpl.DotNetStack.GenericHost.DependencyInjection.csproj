@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Novicell.App.Hosted.GenericHost.DependencyInjection</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SImpl.DotNetStack.App\SImpl.DotNetStack.App.csproj" />
+    <ProjectReference Include="..\SImpl.DotNetStack.NovicellApp.Console\SImpl.DotNetStack.NovicellApp.Console.csproj" />
     <ProjectReference Include="..\SImpl.DotNetStack\SImpl.DotNetStack.csproj" />
   </ItemGroup>
 

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Novicell.DotNetStack.Application
+namespace SImpl.DotNetStack.Application
 {
     public interface IDotNetStackApplication
     {

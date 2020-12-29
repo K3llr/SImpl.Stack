@@ -1,4 +1,4 @@
-namespace Novicell.App.Hosted.WebHost
+namespace SImpl.DotNetStack.WebHost
 {
     public class Program
     {
