@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using Novicell.App.Hosted.GenericHost.Extensions;
+using Microsoft.Extensions.Logging;
+using SImpl.DotNetStack.GenericHost.Extensions;
+using SImpl.DotNetStack.HostBuilders;
+using spike.stack.module;
 
 namespace spike.stack.console
 {
@@ -9,18 +12,35 @@ namespace spike.stack.console
     {
         public static async Task Main(string[] args)
         {
-            Console.WriteLine("Dawn of time");
-            
-            var host = Host.CreateDefaultBuilder(args)
-                .ConfigureGenericStackHost(consoleBuilder => // IConsoleHostBuilder
+            await Host.CreateDefaultBuilder(args)
+                .AddDotNetStack(args, stackHostBuilder =>
                 {
-                    consoleBuilder.UseStartup<Startup>();
+                    stackHostBuilder.Use<Level2aModule>();
+                    stackHostBuilder.Use<Level2bModule>();
+                    stackHostBuilder.Use<Level1Module>();
+                    stackHostBuilder.Use<RootModule>();
+                    
+                    stackHostBuilder.UseDotNetStackTestModule();
+                    
+                    //stackHostBuilder.UseDependencyInjection();
+                    
+                    stackHostBuilder.UseGenericHostStackApp(genericStackHostBuilder => 
+                    {
+                        genericStackHostBuilder.UseStartup<Startup>();
+                    });
                 })
-                .Build();
-                
-            await host.RunAsync();
-            
-            Console.WriteLine("Doomsday");
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddSimpleConsole(options =>
+                    {
+                        options.IncludeScopes = true;
+                        options.SingleLine = true;
+                        options.TimestampFormat = "hh:mm:ss.fff ";
+                    });
+                })
+                .Build()
+                .RunAsync();
         }
     }
 }
