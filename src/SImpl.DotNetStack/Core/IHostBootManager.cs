@@ -7,8 +7,6 @@ namespace SImpl.DotNetStack.Core
 {
     public interface IHostBootManager
     {
-        IEnumerable<IDotNetStackModule> BootSequence { get; }
-        
         void PreInit();
 
         void ConfigureServices(IHostBuilder hostBuilder);

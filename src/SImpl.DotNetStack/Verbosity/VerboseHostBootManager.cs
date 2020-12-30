@@ -10,20 +10,20 @@ namespace SImpl.DotNetStack.Verbosity
     public class VerboseHostBootManager : IHostBootManager
     {
         private readonly IHostBootManager _bootManager;
+        private readonly IModuleManager _moduleManager;
         private readonly ILogger<VerboseHost> _logger;
 
-        public VerboseHostBootManager(IHostBootManager bootManager, ILogger<VerboseHost> logger)
+        public VerboseHostBootManager(IHostBootManager bootManager, IModuleManager moduleManager, ILogger<VerboseHost> logger)
         {
             _bootManager = bootManager;
+            _moduleManager = moduleManager;
             _logger = logger;
         }
-
-        public IEnumerable<IDotNetStackModule> BootSequence => _bootManager.BootSequence;
 
         public void PreInit()
         {
             _logger.LogDebug("> Module boot order");
-            foreach (var module in BootSequence)
+            foreach (var module in _moduleManager.BootSequence)
             {
                 _logger.LogDebug($"   - {module.Name}");
             }

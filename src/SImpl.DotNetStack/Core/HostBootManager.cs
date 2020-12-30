@@ -16,7 +16,7 @@ namespace SImpl.DotNetStack.Core
         }
 
         private IEnumerable<IDotNetStackModule> _bootSequence;
-        public IEnumerable<IDotNetStackModule> BootSequence => _bootSequence ??= _moduleManager.BootSequence;
+        private IEnumerable<IDotNetStackModule> BootSequence => _bootSequence ??= _moduleManager.BootSequence;
 
         public void PreInit()
         {
