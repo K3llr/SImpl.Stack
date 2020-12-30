@@ -107,13 +107,13 @@ namespace SImpl.DotNetStack.Diagnostics
             section.Value.AppendLine("- Enabled modules");
             foreach (var module in _runtime.ModuleManager.EnabledModules)
             {
-                section.Value.AppendLine($"-- {module.Name}");
+                section.Value.AppendLine($"   - {module.Name}");
             }
             
             section.Value.AppendLine("- Disabled modules");
             foreach (var module in _runtime.ModuleManager.DisabledModules)
             {
-                section.Value.AppendLine($"-- {module.Name}");
+                section.Value.AppendLine($"   - {module.Name}");
             }
             
             section.Value.AppendLine("- Autorun modules");

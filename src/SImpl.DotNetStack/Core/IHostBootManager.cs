@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.Modules;
 
@@ -6,7 +7,7 @@ namespace SImpl.DotNetStack.Core
 {
     public interface IHostBootManager
     {
-        IEnumerable<IDotNetStackModule> Modules { get; }
+        IEnumerable<IDotNetStackModule> BootSequence { get; }
         
         void PreInit();
 
@@ -16,6 +17,8 @@ namespace SImpl.DotNetStack.Core
 
         void ConfigureHost(IHost host);
 
-        // TODO: Start + stop
+        Task StartAsync();
+        
+        Task StopAsync();
     }
 }

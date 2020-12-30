@@ -34,7 +34,7 @@ namespace SImpl.DotNetStack.GenericHost.Application
                 
             // TODO configure and start applications modules
             
-            foreach (var moduleContext in _runtime.ModuleManager.ModuleContexts)
+            foreach (var moduleContext in _runtime.ModuleManager.ModuleInfos)
             {
                 if (ModuleState.Attached.Equals(moduleContext.State))
                 {

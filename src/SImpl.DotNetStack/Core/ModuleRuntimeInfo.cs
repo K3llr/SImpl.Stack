@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using SImpl.DotNetStack.Dependencies;
 using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.Core
@@ -12,13 +16,23 @@ namespace SImpl.DotNetStack.Core
         {
             Module = module;
             State = ModuleState.New;
+            
+            var dependsOn = module.GetType().GetCustomAttribute<DependsOnAttribute>();
+            Dependencies = dependsOn?.Dependencies ?? Array.Empty<Type>();
         }
         
         public IDotNetStackModule Module { get; }
 
-        public Type Type => Module.GetType();
+        public Type[] Dependencies { get; }
+        
+        public Type ModuleType => Module.GetType();
 
-        public bool Disabled { get; set; } // TODO: Figure out whether this is relevant
+        public bool IsEnabled { get; private set; } = true;
+        
+        public void Disable()
+        {
+            IsEnabled = false;
+        }
         
         public ModuleState State { get; private set; }
 
@@ -26,8 +40,5 @@ namespace SImpl.DotNetStack.Core
         {
             State = state;
         }
-        
-        // State
-        // TODO: Implement verbose diagnostics instead 
     }
 }

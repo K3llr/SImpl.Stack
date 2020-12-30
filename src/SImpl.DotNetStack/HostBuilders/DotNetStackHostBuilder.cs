@@ -54,19 +54,14 @@ namespace SImpl.DotNetStack.HostBuilders
         public IHost Build()
         {
             _bootManager.PreInit();
-            
             _bootManager.ConfigureServices(this);
-            
             _bootManager.ConfigureHostBuilder(this);
 
-            // Build the inner host
             var innerHost = Runtime.HostBuilder.Build();
             
             _bootManager.ConfigureHost(innerHost);
             
-            _moduleManager.SetModuleState(ModuleState.Configured);
-            
-            return new DotNetStackHost(innerHost, _moduleManager);
+            return new DotNetStackHost(innerHost, _bootManager);
         }
         
         public IHostBuilder ConfigureHostConfiguration(Action<IConfigurationBuilder> configureDelegate)

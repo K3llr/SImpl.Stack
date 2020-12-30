@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Extensions.Logging;
 using SImpl.DotNetStack.Core;
+using SImpl.DotNetStack.Dependencies;
 using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.Verbosity
@@ -21,10 +23,11 @@ namespace SImpl.DotNetStack.Verbosity
         public void AttachModule<TModule>(TModule module) 
             where TModule : IDotNetStackModule
         {
-            _logger.LogDebug($"AttachModule ".PadRight(40, '-'));
-            _logger.LogDebug($"{typeof(TModule).Name}");
+            _logger.LogDebug($"> AttachModule ");
+            _logger.LogDebug($"   - Type: {typeof(TModule).Name}");
+            _logger.LogDebug($"   - Name: {module.Name}");
 
-            _logger.LogDebug($"Implements:");
+            _logger.LogDebug($"   - Implements:");
             
             var modules = typeof(TModule)
                 .GetInterfaces()
@@ -33,13 +36,18 @@ namespace SImpl.DotNetStack.Verbosity
             
             foreach (var type in modules)
             {
-                _logger.LogDebug($"- {type.Name}");
+                _logger.LogDebug($"      - {type.Name}");
             }
             
-            _logger.LogDebug($"Dependent on:");
-            _logger.LogDebug($"- TODO");
+            _logger.LogDebug($"   - Dependent on:");
             
-            _logger.LogDebug($"".PadRight(40, '-'));
+            var dependsOn = module.GetType().GetCustomAttribute<DependsOnAttribute>();
+            var dependencies = dependsOn?.Dependencies ?? Array.Empty<Type>();
+            
+            foreach (var type in dependencies)
+            {
+                _logger.LogDebug($"      - {type.Name}");
+            }
             
             _moduleManager.AttachModule(module);
         }
@@ -47,7 +55,7 @@ namespace SImpl.DotNetStack.Verbosity
         public void DisableModule<TModule>() 
             where TModule : IDotNetStackModule
         {
-            _logger.LogDebug($"DisableModule: {typeof(TModule).Name}");
+            _logger.LogDebug($"> DisableModule: {typeof(TModule).Name}");
             _moduleManager.DisableModule<TModule>();
         }
 
@@ -65,13 +73,15 @@ namespace SImpl.DotNetStack.Verbosity
 
         public void SetModuleState(ModuleState state)
         {
-            _logger.LogDebug($"Set module state: {state:G}");
+            _logger.LogDebug($"> Set module state: {state:G}");
             _moduleManager.SetModuleState(state);
         }
 
-        public IReadOnlyList<IDotNetStackModule> Modules => _moduleManager.Modules.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
+        public IReadOnlyList<IDotNetStackModule> AllModules => _moduleManager.AllModules.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
         public IReadOnlyList<IDotNetStackModule> EnabledModules => _moduleManager.EnabledModules.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
         public IReadOnlyList<IDotNetStackModule> DisabledModules => _moduleManager.DisabledModules.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
-        public IReadOnlyCollection<ModuleRuntimeInfo> ModuleContexts => _moduleManager.ModuleContexts;
+        public IReadOnlyList<IDotNetStackModule> BootSequence => _moduleManager.BootSequence.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
+        
+        public IReadOnlyList<ModuleRuntimeInfo> ModuleInfos => _moduleManager.ModuleInfos;
     }
 }

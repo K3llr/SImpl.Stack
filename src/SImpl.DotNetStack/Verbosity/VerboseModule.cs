@@ -24,7 +24,7 @@ namespace SImpl.DotNetStack.Verbosity
         {
             if (_module is IHostConfigureModule module)
             {
-                _logger.LogDebug($"- {_module.GetType().Name}.ConfigureHost");
+                _logger.LogDebug($"   - {_module.GetType().Name}.ConfigureHost");
                 module.ConfigureHost(host);
             }
         }
@@ -33,7 +33,7 @@ namespace SImpl.DotNetStack.Verbosity
         {
             if (_module is IHostBuilderConfigureModule module)
             {
-                _logger.LogDebug($"- {_module.GetType().Name}.ConfigureHostBuilder");
+                _logger.LogDebug($"   - {_module.GetType().Name}.ConfigureHostBuilder");
                 module.ConfigureHostBuilder(hostBuilder);
             }
         }
@@ -42,7 +42,7 @@ namespace SImpl.DotNetStack.Verbosity
         {
             if (_module is IServicesCollectionConfigureModule module)
             {
-                _logger.LogDebug($"- {_module.GetType().Name}.ConfigureServices");
+                _logger.LogDebug($"   - {_module.GetType().Name}.ConfigureServices");
                 module.ConfigureServices(services);
             }
         }
@@ -51,7 +51,7 @@ namespace SImpl.DotNetStack.Verbosity
         {
             if (_module is IPreInitModule module)
             {
-                _logger.LogDebug($"- {_module.GetType().Name}.PreInit");
+                _logger.LogDebug($"   - {_module.GetType().Name}.PreInit");
                 module.PreInit();
             }
         }
@@ -60,7 +60,7 @@ namespace SImpl.DotNetStack.Verbosity
         {
             if (_module is IApplicationModule module)
             {
-                _logger.LogDebug($"- {_module.GetType().Name}.ConfigureApplication");
+                _logger.LogDebug($"   - {_module.GetType().Name}.ConfigureApplication");
                 module.ConfigureApplication(builder);
             }
         }
@@ -69,7 +69,7 @@ namespace SImpl.DotNetStack.Verbosity
         {
             if (_module is IApplicationModule module)
             {
-                _logger.LogDebug($"- {_module.GetType().Name}.StartAsync");
+                _logger.LogDebug($"   - {_module.GetType().Name}.StartAsync");
                 await module.StartAsync();
             }
         }
@@ -78,7 +78,7 @@ namespace SImpl.DotNetStack.Verbosity
         {
             if (_module is IApplicationModule module)
             {
-                _logger.LogDebug($"- {_module.GetType().Name}.StopAsync");
+                _logger.LogDebug($"   - {_module.GetType().Name}.StopAsync");
                 await module.StopAsync();
             }
         }
@@ -87,7 +87,7 @@ namespace SImpl.DotNetStack.Verbosity
         {
             if (_module is IStartableModule module)
             {
-                _logger.LogDebug($"- {_module.GetType().Name}.StartAsync");
+                _logger.LogDebug($"   - {_module.GetType().Name}.StartAsync");
                 await module.StartAsync();
             }
         }
@@ -96,7 +96,7 @@ namespace SImpl.DotNetStack.Verbosity
         {
             if (_module is IStartableModule module)
             {
-                _logger.LogDebug($"- {_module.GetType().Name}.StopAsync");
+                _logger.LogDebug($"   - {_module.GetType().Name}.StopAsync");
                 await module.StopAsync();
             }
         }

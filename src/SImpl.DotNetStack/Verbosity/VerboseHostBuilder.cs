@@ -25,9 +25,9 @@ namespace SImpl.DotNetStack.Verbosity
 
         public IHost Build()
         {
-            _logger.LogDebug("Host building");
+            _logger.LogDebug("> Host building");
             var host = new VerboseHost(_hostBuilder.Build(), _logger);
-            _logger.LogDebug("Host built");
+            _logger.LogDebug("> Host built");
             
             return host;
         }

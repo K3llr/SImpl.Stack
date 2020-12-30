@@ -15,19 +15,19 @@ namespace spike.stack.console
             await Host.CreateDefaultBuilder(args)
                 .AddDotNetStack(args, stackHostBuilder =>
                 {
-                    stackHostBuilder.Use<Level2aModule>();
-                    stackHostBuilder.Use<Level2bModule>();
-                    stackHostBuilder.Use<Level1Module>();
-                    stackHostBuilder.Use<RootModule>();
-                    
-                    stackHostBuilder.UseDotNetStackTestModule();
-                    
-                    //stackHostBuilder.UseDependencyInjection();
-                    
                     stackHostBuilder.UseGenericHostStackApp(genericStackHostBuilder => 
                     {
                         genericStackHostBuilder.UseStartup<Startup>();
                     });
+                    
+                    //stackHostBuilder.UseDependencyInjection();
+                    
+                    stackHostBuilder.UseDotNetStackTestModule();
+                    
+                    stackHostBuilder.Use<Level2aModule>();
+                    stackHostBuilder.Use<Level2bModule>();
+                    stackHostBuilder.Use<Level1Module>();
+                    stackHostBuilder.Use<RootModule>();
                 })
                 .ConfigureLogging(logging =>
                 {

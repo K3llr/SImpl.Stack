@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.Extensions;
 using SImpl.DotNetStack.Modules;
@@ -14,11 +15,12 @@ namespace SImpl.DotNetStack.Core
             _moduleManager = moduleManager;
         }
 
-        public IEnumerable<IDotNetStackModule> Modules => _moduleManager.EnabledModules; // TODO: Sort by dependencies
+        private IEnumerable<IDotNetStackModule> _bootSequence;
+        public IEnumerable<IDotNetStackModule> BootSequence => _bootSequence ??= _moduleManager.BootSequence;
 
         public void PreInit()
         {
-            Modules.ForEach<IPreInitModule>(module =>
+            BootSequence.ForEach<IPreInitModule>(module =>
             {
                 module.PreInit();
             });
@@ -26,7 +28,7 @@ namespace SImpl.DotNetStack.Core
 
         public void ConfigureServices(IHostBuilder hostBuilder)
         {
-            Modules.ForEach<IServicesCollectionConfigureModule>(module =>
+            BootSequence.ForEach<IServicesCollectionConfigureModule>(module =>
             {
                 hostBuilder.ConfigureServices((hostBuilderContext, services) => module.ConfigureServices(services));
             });
@@ -34,7 +36,7 @@ namespace SImpl.DotNetStack.Core
 
         public void ConfigureHostBuilder(IHostBuilder hostBuilder)
         {
-            Modules.ForEach<IHostBuilderConfigureModule>(module =>
+            BootSequence.ForEach<IHostBuilderConfigureModule>(module =>
             {
                 module.ConfigureHostBuilder(hostBuilder);
             });
@@ -42,10 +44,26 @@ namespace SImpl.DotNetStack.Core
 
         public void ConfigureHost(IHost host)
         {
-            Modules.ForEach<IHostConfigureModule>(module =>
+            BootSequence.ForEach<IHostConfigureModule>(module =>
             {
                 module.ConfigureHost(host);
             });
+            
+            _moduleManager.SetModuleState(ModuleState.Configured);
+        }
+
+        public async Task StartAsync()
+        {
+            await BootSequence.ForEachAsync<IStartableModule>(module => module.StartAsync());
+            
+            _moduleManager.SetModuleState(ModuleState.Started);
+        }
+
+        public async Task StopAsync()
+        {
+            await BootSequence.ForEachAsync<IStartableModule>(module => module.StopAsync());
+            
+            _moduleManager.SetModuleState(ModuleState.Stopped);
         }
     }
 }

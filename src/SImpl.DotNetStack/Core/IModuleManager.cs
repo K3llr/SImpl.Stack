@@ -20,12 +20,14 @@ namespace SImpl.DotNetStack.Core
         
         void SetModuleState(ModuleState state);
 
-        IReadOnlyList<IDotNetStackModule> Modules { get; }
+        IReadOnlyList<IDotNetStackModule> AllModules { get; }
         
         IReadOnlyList<IDotNetStackModule> EnabledModules { get; }
         
         IReadOnlyList<IDotNetStackModule> DisabledModules { get; }
         
-        IReadOnlyCollection<ModuleRuntimeInfo> ModuleContexts { get; }
+        IReadOnlyList<ModuleRuntimeInfo> ModuleInfos { get; }
+        
+        IReadOnlyList<IDotNetStackModule> BootSequence { get; }
     }
 }
