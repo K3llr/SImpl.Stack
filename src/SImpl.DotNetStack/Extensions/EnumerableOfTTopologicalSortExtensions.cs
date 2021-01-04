@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SImpl.DotNetStack.Extensions
 {
-    public static class TopologicalSortEnumerableOfTExtension
+    public static class EnumerableOfTTopologicalSortExtensions
     {
         public static IEnumerable<T> TopologicalSort<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> dependencyDelegate)
         {

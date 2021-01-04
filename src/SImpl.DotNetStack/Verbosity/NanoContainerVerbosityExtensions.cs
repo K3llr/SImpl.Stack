@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using SImpl.DotNetStack.Core;
+using SImpl.DotNetStack.Host;
 using SImpl.DotNetStack.HostBuilders;
 using SImpl.DotNetStack.NanoDependencyInjection;
 

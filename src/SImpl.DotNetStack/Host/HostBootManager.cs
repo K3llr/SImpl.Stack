@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using SImpl.DotNetStack.Core;
 using SImpl.DotNetStack.Extensions;
 using SImpl.DotNetStack.Modules;
 
-namespace SImpl.DotNetStack.Core
+namespace SImpl.DotNetStack.Host
 {
     public class HostBootManager : IHostBootManager
     {

@@ -4,6 +4,7 @@ using System.CommandLine.Invocation;
 using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.Core;
 using SImpl.DotNetStack.Diagnostics;
+using SImpl.DotNetStack.Host;
 using SImpl.DotNetStack.HostBuilders;
 using SImpl.DotNetStack.NanoDependencyInjection;
 using SImpl.DotNetStack.Verbosity;

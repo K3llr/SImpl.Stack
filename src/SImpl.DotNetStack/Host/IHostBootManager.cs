@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using SImpl.DotNetStack.Modules;
 
-namespace SImpl.DotNetStack.Core
+namespace SImpl.DotNetStack.Host
 {
     public interface IHostBootManager
     {

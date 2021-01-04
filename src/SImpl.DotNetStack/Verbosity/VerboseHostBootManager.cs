@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SImpl.DotNetStack.Core;
-using SImpl.DotNetStack.Modules;
+using SImpl.DotNetStack.Host;
 
 namespace SImpl.DotNetStack.Verbosity
 {

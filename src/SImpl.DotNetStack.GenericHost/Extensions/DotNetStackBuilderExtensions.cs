@@ -6,7 +6,7 @@ namespace SImpl.DotNetStack.GenericHost.Extensions
 {
     public static class DotNetStackBuilderExtensions
     {
-        public static void UseGenericHostStackApp(this IDotNetStackHostBuilder stackHostBuilder, Action<IGenericHostStackAppBuilder> stackAppBuilder)
+        public static void UseGenericHostStackApp(this IDotNetStackHostBuilder stackHostBuilder, Action<IGenericHostStackAppBuilder> configureDelegate)
         {
             var module = stackHostBuilder.AttachNewOrGetConfiguredModule(() =>
             {
@@ -14,7 +14,7 @@ namespace SImpl.DotNetStack.GenericHost.Extensions
                 return new GenericHostStackAppModule(builder);
             });
             
-            stackAppBuilder?.Invoke(module.ApplicationBuilder);
+            configureDelegate?.Invoke(module.ApplicationBuilder);
         }
     }
 }
