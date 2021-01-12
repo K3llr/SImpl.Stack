@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.Diagnostics;
+using SImpl.DotNetStack.NanoDependencyInjection;
 
 namespace SImpl.DotNetStack.Core
 {
@@ -18,9 +19,10 @@ namespace SImpl.DotNetStack.Core
             }
         }
 
-        public DotNetStackRuntime(IHostBuilder hostBuilder, IModuleManager moduleManager, IDiagnosticsCollector diagnostics, RuntimeFlags runtimeFlags)
+        public DotNetStackRuntime(IHostBuilder hostBuilder, INanoContainer container, IModuleManager moduleManager, IDiagnosticsCollector diagnostics, RuntimeFlags runtimeFlags)
         {
             HostBuilder = hostBuilder;
+            Container = container;
             ModuleManager = moduleManager;
             Diagnostics = diagnostics;
             Flags = runtimeFlags;
@@ -28,6 +30,8 @@ namespace SImpl.DotNetStack.Core
             Init(this);
         }
 
+        public INanoContainer Container { get; }
+        
         public IModuleManager ModuleManager { get; }
 
         public IHostBuilder HostBuilder { get; }

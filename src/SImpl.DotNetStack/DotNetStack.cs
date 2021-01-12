@@ -2,6 +2,8 @@ using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using Microsoft.Extensions.Hosting;
+using SImpl.DotNetStack.Application;
+using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Core;
 using SImpl.DotNetStack.Diagnostics;
 using SImpl.DotNetStack.Host;
@@ -27,7 +29,7 @@ namespace SImpl.DotNetStack
             var dotNetStackHostBuilder = CreateDotNetStackHostBuilder(hostBuilder, flags, diagnostics);
             
             // Start configuration of the host builder
-            configureDelegate?.Invoke(dotNetStackHostBuilder);
+            dotNetStackHostBuilder.Configure(configureDelegate);
             
             return dotNetStackHostBuilder;
         }
@@ -36,13 +38,25 @@ namespace SImpl.DotNetStack
         {
             var container = new NanoContainer();
             
+            // Register container
+            container.Register<INanoContainer>(container);
+            
+            // Register parameters
             container.Register<IHostBuilder>(hostBuilder);
             container.Register<IDiagnosticsCollector>(diagnostics);
             container.Register<RuntimeFlags>(flags);
+            
+            // Register core services
             container.Register<IModuleManager, ModuleManager>();
             container.Register<IDotNetStackRuntime, DotNetStackRuntime>();
+            
+            // Register host builder and boot manager
             container.Register<IHostBootManager, HostBootManager>();
             container.Register<IDotNetStackHostBuilder, DotNetStackHostBuilder>();
+            
+            // register application builder and boot manager
+            container.Register<IApplicationBootManager, ApplicationBootManager>();
+            container.Register<IDotNetStackApplicationBuilder, DotNetStackApplicationBuilder>();
             
             if (flags.Diagnostics)
             {

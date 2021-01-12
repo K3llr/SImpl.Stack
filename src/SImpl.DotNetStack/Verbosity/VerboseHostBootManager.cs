@@ -21,50 +21,62 @@ namespace SImpl.DotNetStack.Verbosity
 
         public void PreInit()
         {
-            _logger.LogDebug("> Module boot order");
+            _logger.LogDebug(" HostBootManager > Module boot order");
             foreach (var module in _moduleManager.BootSequence)
             {
-                _logger.LogDebug($"   - {module.Name}");
+                _logger.LogDebug($"  - {module.Name}");
             }
             
-            _logger.LogDebug("> PreInit started");
+            _logger.LogDebug(" HostBootManager > PreInit started");
             _bootManager.PreInit();
-            _logger.LogDebug("> PreInit ended");
+            _logger.LogDebug(" HostBootManager > PreInit ended");
         }
 
         public void ConfigureServices(IHostBuilder hostBuilder)
         {
-            _logger.LogDebug("> ConfigureServices started");
+            _logger.LogDebug(" HostBootManager > ConfigureServices started");
             _bootManager.ConfigureServices(hostBuilder);
-            _logger.LogDebug("> ConfigureServices ended");
+            _logger.LogDebug(" HostBootManager > ConfigureServices ended");
         }
 
         public void ConfigureHostBuilder(IHostBuilder hostBuilder)
         {
-            _logger.LogDebug("> ConfigureHostBuilder started");
+            _logger.LogDebug(" HostBootManager > ConfigureHostBuilder started");
             _bootManager.ConfigureHostBuilder(hostBuilder);
-            _logger.LogDebug("> ConfigureHostBuilder ended");
+            _logger.LogDebug(" HostBootManager > ConfigureHostBuilder ended");
         }
 
         public void ConfigureHost(IHost host)
         {
-            _logger.LogDebug("> ConfigureHost started");
+            _logger.LogDebug(" HostBootManager > ConfigureHost started");
             _bootManager.ConfigureHost(host);
-            _logger.LogDebug("> ConfigureHost ended");
+            _logger.LogDebug(" HostBootManager > ConfigureHost ended");
         }
 
         public async Task StartAsync()
         {
-            _logger.LogDebug("> StartAsync started"); 
+            _logger.LogDebug(" HostBootManager > Module boot order");
+            foreach (var module in _moduleManager.BootSequence)
+            {
+                _logger.LogDebug($"  - {module.Name}");
+            }
+            
+            _logger.LogDebug(" HostBootManager > StartAsync started"); 
             await _bootManager.StartAsync();
-            _logger.LogDebug("> StartAsync ended");
+            _logger.LogDebug(" HostBootManager > StartAsync ended");
         }
 
         public async Task StopAsync()
         {
-            _logger.LogDebug("> StopAsync started"); 
+            _logger.LogDebug(" HostBootManager > Module boot order");
+            foreach (var module in _moduleManager.BootSequence)
+            {
+                _logger.LogDebug($"  - {module.Name}");
+            }
+            
+            _logger.LogDebug(" HostBootManager > StopAsync started"); 
             await _bootManager.StopAsync();
-            _logger.LogDebug("> StopAsync ended");
+            _logger.LogDebug(" HostBootManager > StopAsync ended");
         }
     }
 }

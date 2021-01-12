@@ -10,7 +10,6 @@ namespace SImpl.DotNetStack.Core
     public class ModuleManager : IModuleManager
     {
         private readonly List<ModuleRuntimeInfo> _modulesInfos = new List<ModuleRuntimeInfo>();
-        private readonly List<Type> _disabledModules = new List<Type>();
         
         public void AttachModule<TModule>(TModule module)
             where TModule : IDotNetStackModule
@@ -32,8 +31,6 @@ namespace SImpl.DotNetStack.Core
         {
             var moduleRuntimeInfo = _modulesInfos.SingleOrDefault(ctx => ctx.Module is TModule);
             moduleRuntimeInfo?.Disable();
-            
-            _disabledModules.Add(typeof(TModule));
         }
 
         public TModule GetConfiguredModule<TModule>()

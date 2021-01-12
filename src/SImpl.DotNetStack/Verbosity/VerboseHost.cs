@@ -24,16 +24,16 @@ namespace SImpl.DotNetStack.Verbosity
 
         public async Task StartAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            _logger.LogDebug("> Host starting");
+            _logger.LogDebug("Host > Host starting");
             await _host.StartAsync(cancellationToken);
-            _logger.LogDebug("> Host started");
+            _logger.LogDebug("Host > Host started");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            _logger.LogDebug("> Host stopping");
+            _logger.LogDebug("Host > Host stopping");
             await _host.StopAsync(cancellationToken);
-            _logger.LogDebug("> Host stopped");
+            _logger.LogDebug("Host > Host stopped");
         }
 
         public IServiceProvider Services => _host.Services;

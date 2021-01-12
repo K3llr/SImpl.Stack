@@ -12,6 +12,6 @@ namespace SImpl.DotNetStack.Configurations
     {
         void ConfigureServices(IServiceCollection services);
 
-        void Configure(TApplicationBuilder stackBuilder);
+        void Configure(TApplicationBuilder applicationBuilder);
     }
 }

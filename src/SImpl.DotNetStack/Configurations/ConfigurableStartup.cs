@@ -38,9 +38,9 @@ namespace SImpl.DotNetStack.Configurations
             _serviceDelegate?.Invoke(services);
         }
 
-        public void Configure(IDotNetStackApplicationBuilder stackBuilder)
+        public void Configure(IDotNetStackApplicationBuilder applicationBuilder)
         {
-            _configureDelegate?.Invoke(stackBuilder);
+            _configureDelegate?.Invoke(applicationBuilder);
         }
     }
 }

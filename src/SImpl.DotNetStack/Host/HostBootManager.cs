@@ -21,10 +21,13 @@ namespace SImpl.DotNetStack.Host
 
         public void PreInit()
         {
-            BootSequence.ForEach<IPreInitModule>(module =>
+            // NOTE: Please do no try and optimize. Especially not to put Config.EnabledModules into a variable before the loop or to use an foreach loop
+            // because the collection is expanded inside the loop due to recursive nature of the stack.
+            for (var i = 0; i < _moduleManager.EnabledModules.Count; i++)
             {
-                module.PreInit();
-            });
+                var module = _moduleManager.EnabledModules[i] as IPreInitModule;
+                module?.PreInit();
+            }
         }
 
         public void ConfigureServices(IHostBuilder hostBuilder)

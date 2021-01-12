@@ -10,7 +10,7 @@ namespace SImpl.DotNetStack.Modules
     public interface IApplicationModule<in TApplicationBuilder> : IDotNetStackModule
         where TApplicationBuilder : IDotNetStackApplicationBuilder
     {
-        void ConfigureApplication(TApplicationBuilder builder);
+        void Configure(TApplicationBuilder builder);
 
         Task StartAsync();
         

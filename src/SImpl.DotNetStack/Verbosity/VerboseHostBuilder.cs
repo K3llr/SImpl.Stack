@@ -25,9 +25,9 @@ namespace SImpl.DotNetStack.Verbosity
 
         public IHost Build()
         {
-            _logger.LogDebug("> Host building");
+            _logger.LogDebug("HostBuilder > Building host started");
             var host = new VerboseHost(_hostBuilder.Build(), _logger);
-            _logger.LogDebug("> Host built");
+            _logger.LogDebug("HostBuilder > Building host ended");
             
             return host;
         }
@@ -54,7 +54,10 @@ namespace SImpl.DotNetStack.Verbosity
 
         public IHostBuilder ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
+            _logger.LogDebug("HostBuilder > ConfigureServices started");
             _hostBuilder.ConfigureServices(configureDelegate);
+            _logger.LogDebug("HostBuilder > ConfigureServices ended");
+            
             return this;
         }
 
@@ -84,6 +87,13 @@ namespace SImpl.DotNetStack.Verbosity
             where TModule : IDotNetStackModule
         {
             return _hostBuilder.AttachNewOrGetConfiguredModule(factory);
+        }
+
+        public void Configure(Action<IDotNetStackHostBuilder> configureDelegate)
+        {
+            _logger.LogDebug("HostBuilder > Module configuration started");
+            _hostBuilder.Configure(configureDelegate);
+            _logger.LogDebug("HostBuilder > Module configuration ended");
         }
     }
 }

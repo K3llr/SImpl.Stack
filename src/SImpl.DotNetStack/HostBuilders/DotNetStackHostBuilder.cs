@@ -51,6 +51,11 @@ namespace SImpl.DotNetStack.HostBuilders
             return module;
         }
 
+        public void Configure(Action<IDotNetStackHostBuilder> configureDelegate)
+        {
+            configureDelegate?.Invoke(this);
+        }
+
         public IHost Build()
         {
             _bootManager.PreInit();

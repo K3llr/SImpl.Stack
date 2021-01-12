@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Logging;
+using SImpl.DotNetStack.Application;
+using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Core;
 using SImpl.DotNetStack.Host;
 using SImpl.DotNetStack.HostBuilders;
@@ -30,6 +32,8 @@ namespace SImpl.DotNetStack.Verbosity
             container.RegisterDecorator<IModuleManager, VerboseModuleManager>();
             container.RegisterDecorator<IHostBootManager, VerboseHostBootManager>();
             container.RegisterDecorator<IDotNetStackHostBuilder, VerboseHostBuilder>();
+            container.RegisterDecorator<IApplicationBootManager, VerboseApplicationBootManager>();
+            container.RegisterDecorator<IDotNetStackApplicationBuilder, VerboseApplicationBuilder>();
             
             return container;
         }

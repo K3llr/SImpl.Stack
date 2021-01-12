@@ -1,17 +1,26 @@
 using System;
-using SImpl.DotNetStack.Core;
+using Microsoft.Extensions.DependencyInjection;
+using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.ApplicationBuilders
 {
     public interface IDotNetStackApplicationBuilder
     {
-        IDotNetStackRuntime Runtime { get; }
-
         void Use<TModule>(Func<TModule> factory)
-            where TModule : IDotNetStackModule;
+            where TModule : IApplicationModule;
         
         TModule AttachNewOrGetConfiguredModule<TModule>(Func<TModule> factory)
-            where TModule : IDotNetStackModule;
+            where TModule : IApplicationModule;
+        
+        IDotNetStackApplicationBuilder ConfigureServices(Action<IServiceCollection> configureDelegate);
+        
+        IDotNetStackApplicationBuilder ConfigureServices(IServiceCollection serviceCollection);
+        
+        IDotNetStackApplicationBuilder ConfigureApplication();
+        
+        IDotNetStackApplication Build();
+        
+        void Configure(Action<IDotNetStackApplicationBuilder> configureDelegate);
     }
 }

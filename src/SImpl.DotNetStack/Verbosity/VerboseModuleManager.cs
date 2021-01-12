@@ -23,12 +23,14 @@ namespace SImpl.DotNetStack.Verbosity
         public void AttachModule<TModule>(TModule module) 
             where TModule : IDotNetStackModule
         {
-            _logger.LogDebug($"> AttachModule ");
-            _logger.LogDebug($"   - Type: {typeof(TModule).Name}");
-            _logger.LogDebug($"   - Name: {module.Name}");
+            _logger.LogDebug($"      ModuleManager > AttachModule started");
+            _logger.LogDebug("      {");
+            _logger.LogDebug($"        \"Type\": \"{typeof(TModule).Name}\",");
+            _logger.LogDebug($"        \"Name\": \"{module.Name}\",");
 
-            _logger.LogDebug($"   - Implements:");
-            
+            _logger.LogDebug($"        \"Implements\":");
+            _logger.LogDebug("          [");
+
             var modules = typeof(TModule)
                 .GetInterfaces()
                 .Where(t => typeof(IDotNetStackModule).IsAssignableFrom(t)) // Only IDotNetStack interfaces
@@ -36,26 +38,44 @@ namespace SImpl.DotNetStack.Verbosity
             
             foreach (var type in modules)
             {
-                _logger.LogDebug($"      - {type.Name}");
+                _logger.LogDebug($"            \"{type.Name}\",");
             }
             
-            _logger.LogDebug($"   - Dependent on:");
+            _logger.LogDebug("          ],");
+
             
             var dependsOn = module.GetType().GetCustomAttribute<DependsOnAttribute>();
             var dependencies = dependsOn?.Dependencies ?? Array.Empty<Type>();
-            
-            foreach (var type in dependencies)
+
+            if (dependencies.Any())
             {
-                _logger.LogDebug($"      - {type.Name}");
+                _logger.LogDebug($"        \"DependentOn\":");
+                _logger.LogDebug("          [");
+
+                foreach (var type in dependencies)
+                {
+                    _logger.LogDebug($"            \"{type.Name}\",");
+                }
+                _logger.LogDebug("          ]");
+
+            }
+            else
+            {
+                _logger.LogDebug("        \"DependentOn\": []");
+ 
             }
             
+            _logger.LogDebug("      }");
+            
             _moduleManager.AttachModule(module);
+            
+            _logger.LogDebug($"      ModuleManager > AttachModule ended");
         }
 
         public void DisableModule<TModule>() 
             where TModule : IDotNetStackModule
         {
-            _logger.LogDebug($"> DisableModule: {typeof(TModule).Name}");
+            _logger.LogDebug($"      ModuleManager > DisableModule: {typeof(TModule).Name}");
             _moduleManager.DisableModule<TModule>();
         }
 
@@ -73,7 +93,7 @@ namespace SImpl.DotNetStack.Verbosity
 
         public void SetModuleState(ModuleState state)
         {
-            _logger.LogDebug($"> Set module state: {state:G}");
+            _logger.LogDebug($"  ModuleManager > Set module state: {state:G}");
             _moduleManager.SetModuleState(state);
         }
 

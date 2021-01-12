@@ -119,6 +119,12 @@ namespace SImpl.DotNetStack.Diagnostics
             section.Value.AppendLine("- Autorun modules");
             // TODO:
 
+            section.Value.AppendLine("- Boot sequence");
+            foreach (var module in _runtime.ModuleManager.BootSequence)
+            {
+                section.Value.AppendLine($"   - {module.Name}");
+            }
+            
             _diagnostics.AddSection("Modules", section);
         }
 

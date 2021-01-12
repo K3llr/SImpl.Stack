@@ -10,7 +10,7 @@ using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.App
 {
-    [DependsOn(typeof(GenericHostStackAppModule))]
+    [DependsOn(typeof(GenericHostStackApplicationModule))]
     public class NovicellAppConsoleRuntimeModule : IApplicationModule
     {
         private readonly Action<IConsoleAppBuilder> _configure;
@@ -20,7 +20,7 @@ namespace SImpl.DotNetStack.App
             _configure = configure;
         }
 
-        public void ConfigureApplication(IDotNetStackApplicationBuilder builder)
+        public void Configure(IDotNetStackApplicationBuilder builder)
         {
             
         }
