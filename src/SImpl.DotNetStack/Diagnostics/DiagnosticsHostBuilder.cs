@@ -76,12 +76,14 @@ namespace SImpl.DotNetStack.Diagnostics
         
         public IDotNetStackRuntime Runtime => _hostBuilder.Runtime;
         
-        public void Use<TModule>(Func<TModule> factory) where TModule : IDotNetStackModule
+        public void Use<TModule>(Func<TModule> factory) 
+            where TModule : IDotNetStackModule
         {
             _hostBuilder.Use(factory);
         }
 
-        public TModule AttachNewOrGetConfiguredModule<TModule>(Func<TModule> factory) where TModule : IDotNetStackModule
+        public TModule AttachNewOrGetConfiguredModule<TModule>(Func<TModule> factory) 
+            where TModule : IDotNetStackModule
         {
             return _hostBuilder.AttachNewOrGetConfiguredModule(factory);
         }

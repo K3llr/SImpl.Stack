@@ -16,8 +16,6 @@ namespace spike.stack.console
         {
             applicationBuilder.Use<TestStackedApplicationModule>();
             
-            
-            
             /*stackBuilder.UseNovicellConsoleApp(consoleApp =>
             {
                

@@ -19,7 +19,7 @@ namespace SImpl.DotNetStack.Application
         }
 
         private IEnumerable<IApplicationModule> _bootSequence;
-        private IEnumerable<IApplicationModule> BootSequence => _bootSequence ??= _moduleManager.BootSequence.Cast<IApplicationModule>();
+        private IEnumerable<IApplicationModule> BootSequence => _bootSequence ??= _moduleManager.BootSequence.FilterBy<IApplicationModule>();
 
         public void Configure(IDotNetStackApplicationBuilder appBuilder)
         {
