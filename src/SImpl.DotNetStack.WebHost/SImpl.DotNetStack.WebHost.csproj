@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Novicell.App.Web" Version="3.0.5" />
+    <Folder Include="Configuration" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions" />
-    <Folder Include="HostBuilders" />
+    <ProjectReference Include="..\SImpl.DotNetStack\SImpl.DotNetStack.csproj" />
   </ItemGroup>
 
 </Project>

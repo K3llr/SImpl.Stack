@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using SImpl.DotNetStack.Dependencies;
 using SImpl.DotNetStack.Modules;
+using SImpl.DotNetStack.Modules.Dependencies;
 
 namespace SImpl.DotNetStack.Core
 {

@@ -1,28 +1,29 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.Application;
-using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.Configurations;
 using SImpl.DotNetStack.Diagnostics;
+using SImpl.DotNetStack.GenericHost.ApplicationBuilders;
+using SImpl.DotNetStack.GenericHost.Configuration;
 using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.GenericHost
 {
-    public class GenericHostStackApplicationModule : IPreInitModule, IServicesCollectionConfigureModule, IStartableModule, IDiagnosticsModule
+    public class GenericHostStackApplicationModule : IPreInitModule, IServicesCollectionConfigureModule,
+        IStartableModule, IDiagnosticsModule
     {
         private readonly IStartup _startup;
-        private readonly IDotNetStackApplicationBuilder _applicationBuilder;
+        private readonly IApplicationBuilder _applicationBuilder;
 
         private IDotNetStackApplication _application;
 
-        public GenericHostStackApplicationModule(IStartup startup, IDotNetStackApplicationBuilder applicationBuilder)
+        public GenericHostStackApplicationModule(IStartup startup, IApplicationBuilder applicationBuilder)
         {
             _startup = startup;
             _applicationBuilder = applicationBuilder;
         }
-        
+
         public string Name { get; } = "Generic Host Stack Application Module";
-        
+
         public void Diagnose(IDiagnosticsCollector collector)
         {
             // TODO: Add diagnostics
@@ -31,15 +32,14 @@ namespace SImpl.DotNetStack.GenericHost
                 Headline = Name,
                 Properties =
                 {
-                    { "Application Modules", "TODO"}
+                    {"Application Modules", "TODO"}
                 }
             });
         }
 
         public void PreInit()
         {
-            _applicationBuilder.Configure(_startup.Configure);
-            _applicationBuilder.ConfigureApplication();
+            _startup.Configure(_applicationBuilder);
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -50,7 +50,7 @@ namespace SImpl.DotNetStack.GenericHost
         public async Task StartAsync()
         {
             _application = _applicationBuilder.Build();
-            
+
             await _application.StartAsync();
         }
 

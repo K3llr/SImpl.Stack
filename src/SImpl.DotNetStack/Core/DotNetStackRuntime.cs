@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Hosting;
+using SImpl.DotNetStack.DependencyInjection;
 using SImpl.DotNetStack.Diagnostics;
-using SImpl.DotNetStack.NanoDependencyInjection;
 
 namespace SImpl.DotNetStack.Core
 {

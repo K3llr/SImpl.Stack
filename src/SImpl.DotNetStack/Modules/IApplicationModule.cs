@@ -3,14 +3,9 @@ using SImpl.DotNetStack.ApplicationBuilders;
 
 namespace SImpl.DotNetStack.Modules
 {
-    public interface IApplicationModule : IApplicationModule<IDotNetStackApplicationBuilder>
+    public interface IApplicationModule : IDotNetStackModule
     {
-    }
-    
-    public interface IApplicationModule<in TApplicationBuilder> : IDotNetStackModule
-        where TApplicationBuilder : IDotNetStackApplicationBuilder
-    {
-        void Configure(TApplicationBuilder builder);
+        void Configure(IDotNetStackApplicationBuilder builder);
 
         Task StartAsync();
         

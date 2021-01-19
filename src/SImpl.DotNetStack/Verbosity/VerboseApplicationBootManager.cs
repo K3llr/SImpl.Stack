@@ -1,8 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.ApplicationBuilders;
+using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.Verbosity
 {
@@ -17,32 +19,27 @@ namespace SImpl.DotNetStack.Verbosity
             _logger = logger;
         }
         
-        public void Configure(IDotNetStackApplicationBuilder appBuilder)
+        public IEnumerable<IApplicationModule> Configure(IDotNetStackApplicationBuilder appBuilder)
         {
-            _logger.LogDebug("    ApplicationBootManager > Configure started");
-            _bootManager.Configure(appBuilder);
-            _logger.LogDebug("    ApplicationBootManager > Configure ended");
-        }
+            _logger.LogDebug("    ApplicationBootManager > Configure > started");
+            var processed = _bootManager.Configure(appBuilder).ToArray();
+            _logger.LogDebug("    ApplicationBootManager > Configure > ended");
 
-        public void ConfigureServices(IServiceCollection serviceCollection)
-        {
-            _logger.LogDebug("    ApplicationBootManager > ConfigureServices started");
-            _bootManager.ConfigureServices(serviceCollection);
-            _logger.LogDebug("    ApplicationBootManager> ConfigureServices ended");
+            return processed;
         }
 
         public async Task StartAsync()
         {
-            _logger.LogDebug("    ApplicationBootManager > StartAsync started");
+            _logger.LogDebug("    ApplicationBootManager > StartAsync > started");
             await _bootManager.StartAsync();
-            _logger.LogDebug("    ApplicationBootManager > StartAsync ended");
+            _logger.LogDebug("    ApplicationBootManager > StartAsync > ended");
         }
 
         public async Task StopAsync()
         {
-            _logger.LogDebug("    ApplicationBootManager > StopAsync started");
+            _logger.LogDebug("    ApplicationBootManager > StopAsync > started");
             await _bootManager.StopAsync();
-            _logger.LogDebug("    ApplicationBootManager > StopAsync ended");
+            _logger.LogDebug("    ApplicationBootManager > StopAsync > ended");
         }
     }
 }

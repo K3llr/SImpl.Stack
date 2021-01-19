@@ -1,14 +1,13 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.ApplicationBuilders;
+using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.Application
 {
     public interface IApplicationBootManager
     {
-        void Configure(IDotNetStackApplicationBuilder appBuilder);
-        
-        void ConfigureServices(IServiceCollection serviceCollection);
+        IEnumerable<IApplicationModule> Configure(IDotNetStackApplicationBuilder appBuilder);
 
         Task StartAsync();
 

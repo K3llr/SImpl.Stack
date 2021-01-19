@@ -75,7 +75,7 @@ namespace SImpl.DotNetStack.Verbosity
             }
         }
 
-        async Task IApplicationModule<IDotNetStackApplicationBuilder>.StartAsync()
+        async Task IApplicationModule.StartAsync()
         {
             if (_module is IApplicationModule module)
             {
@@ -84,7 +84,7 @@ namespace SImpl.DotNetStack.Verbosity
             }
         }
 
-        async Task IApplicationModule<IDotNetStackApplicationBuilder>.StopAsync()
+        async Task IApplicationModule.StopAsync()
         {
             if (_module is IApplicationModule module)
             {

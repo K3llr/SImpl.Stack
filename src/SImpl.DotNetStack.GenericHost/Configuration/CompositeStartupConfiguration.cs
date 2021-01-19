@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.Configurations;
+using SImpl.DotNetStack.GenericHost.ApplicationBuilders;
 
 namespace SImpl.DotNetStack.GenericHost.Configuration
 {
@@ -16,7 +16,7 @@ namespace SImpl.DotNetStack.GenericHost.Configuration
             UseStartup(new TStartup());
         }
         
-        public void UseStartup(Action<IDotNetStackApplicationBuilder> appBuilder)
+        public void UseStartup(Action<IApplicationBuilder> appBuilder)
         {
             UseStartup(new ConfigurableStartup(appBuilder));
         }

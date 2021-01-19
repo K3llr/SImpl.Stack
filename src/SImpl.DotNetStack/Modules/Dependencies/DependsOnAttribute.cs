@@ -1,6 +1,6 @@
 using System;
 
-namespace SImpl.DotNetStack.Dependencies
+namespace SImpl.DotNetStack.Modules.Dependencies
 {
     
     [AttributeUsage(AttributeTargets.Class)]

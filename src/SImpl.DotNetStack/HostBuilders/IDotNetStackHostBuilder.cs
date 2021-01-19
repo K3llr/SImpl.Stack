@@ -1,5 +1,4 @@
 using System;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.Core;
 using SImpl.DotNetStack.Modules;
@@ -16,6 +15,6 @@ namespace SImpl.DotNetStack.HostBuilders
         TModule AttachNewOrGetConfiguredModule<TModule>(Func<TModule> factory)
             where TModule : IDotNetStackModule;
 
-        void Configure(Action<IDotNetStackHostBuilder> configureDelegate);
+        void Configure(IDotNetStackHostBuilder hostBuilder, Action<IDotNetStackHostBuilder> configureDelegate);
     }
 }

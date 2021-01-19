@@ -1,4 +1,4 @@
-namespace SImpl.DotNetStack.NanoDependencyInjection
+namespace SImpl.DotNetStack.DependencyInjection
 {
     public interface INanoServiceRegistration
     {

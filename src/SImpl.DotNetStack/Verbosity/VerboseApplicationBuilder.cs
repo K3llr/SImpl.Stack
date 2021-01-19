@@ -1,5 +1,4 @@
 using System;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.ApplicationBuilders;
@@ -30,36 +29,20 @@ namespace SImpl.DotNetStack.Verbosity
             return _applicationBuilder.AttachNewOrGetConfiguredModule(factory);
         }
 
-        public IDotNetStackApplicationBuilder ConfigureServices(Action<IServiceCollection> configureDelegate)
+        public void Configure(Action<IDotNetStackApplicationBuilder> configureDelegate)
         {
-            return _applicationBuilder.ConfigureServices(configureDelegate);
-        }
-
-        public IDotNetStackApplicationBuilder ConfigureServices(IServiceCollection serviceCollection)
-        {
-            return _applicationBuilder.ConfigureServices(serviceCollection);
-        }
-
-        public IDotNetStackApplicationBuilder ConfigureApplication()
-        {
-            return _applicationBuilder.ConfigureApplication();
+            _logger.LogDebug("   ApplicationBuilder > Configure > started");
+            _applicationBuilder.Configure(configureDelegate);
+            _logger.LogDebug("   ApplicationBuilder > Configure > ended");
         }
 
         public IDotNetStackApplication Build()
         {
-            _logger.LogDebug("   ApplicationBuilder > Application building");
+            _logger.LogDebug("   ApplicationBuilder > Building application > building");
             var application = new VerboseApplication(_applicationBuilder.Build(), _logger);
-            _logger.LogDebug("   ApplicationBuilder > Application built");
+            _logger.LogDebug("   ApplicationBuilder > Building application > built");
 
             return application;
-        }
-
-        public void Configure(Action<IDotNetStackApplicationBuilder> configureDelegate)
-        {
-            _logger.LogDebug("   ApplicationBuilder > Module configuration started");
-            _applicationBuilder.Configure(configureDelegate);
-            _logger.LogDebug("   ApplicationBuilder > Module configuration ended");
-
         }
     }
 }

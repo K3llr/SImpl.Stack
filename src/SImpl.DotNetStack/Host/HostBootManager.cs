@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.Core;
@@ -19,22 +21,28 @@ namespace SImpl.DotNetStack.Host
         private IEnumerable<IDotNetStackModule> _bootSequence;
         private IEnumerable<IDotNetStackModule> BootSequence => _bootSequence ??= _moduleManager.BootSequence;
 
-        public void PreInit()
+        public  IEnumerable<IPreInitModule> PreInit()
         {
-            // NOTE: Please do no try and optimize. Especially not to put Config.EnabledModules into a variable before the loop or to use an foreach loop
+            var preInitModules = new List<IPreInitModule>();
+            
+            // NOTE: Please do no try and optimize the following loop. Especially not to put Config.EnabledModules into a variable before the loop or to use an foreach loop
             // because the collection is expanded inside the loop due to recursive nature of the stack.
             for (var i = 0; i < _moduleManager.EnabledModules.Count; i++)
             {
                 var module = _moduleManager.EnabledModules[i] as IPreInitModule;
                 module?.PreInit();
+                
+                preInitModules.Add(module);
             }
+
+            return preInitModules;
         }
 
         public void ConfigureServices(IHostBuilder hostBuilder)
         {
-            BootSequence.ForEach<IServicesCollectionConfigureModule>(module =>
+            hostBuilder.ConfigureServices((hostBuilderContext, services) =>
             {
-                hostBuilder.ConfigureServices((hostBuilderContext, services) => module.ConfigureServices(services));
+                BootSequence.ForEach<IServicesCollectionConfigureModule>(module => module.ConfigureServices(services));
             });
         }
 
@@ -59,13 +67,13 @@ namespace SImpl.DotNetStack.Host
         public async Task StartAsync()
         {
             await BootSequence.ForEachAsync<IStartableModule>(module => module.StartAsync());
-            
+
             _moduleManager.SetModuleState(ModuleState.Started);
         }
 
         public async Task StopAsync()
         {
-            await BootSequence.ForEachAsync<IStartableModule>(module => module.StopAsync());
+            await BootSequence.Reverse().ForEachAsync<IStartableModule>(module => module.StopAsync());
             
             _moduleManager.SetModuleState(ModuleState.Stopped);
         }

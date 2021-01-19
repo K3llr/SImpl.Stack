@@ -51,17 +51,17 @@ namespace SImpl.DotNetStack.HostBuilders
             return module;
         }
 
-        public void Configure(Action<IDotNetStackHostBuilder> configureDelegate)
+        public void Configure(IDotNetStackHostBuilder hostBuilder, Action<IDotNetStackHostBuilder> configureDelegate)
         {
-            configureDelegate?.Invoke(this);
+            configureDelegate?.Invoke(hostBuilder);
+            
+            _bootManager.PreInit();
+            _bootManager.ConfigureServices(hostBuilder);
+            _bootManager.ConfigureHostBuilder(hostBuilder);
         }
 
         public IHost Build()
         {
-            _bootManager.PreInit();
-            _bootManager.ConfigureServices(this);
-            _bootManager.ConfigureHostBuilder(this);
-
             var innerHost = Runtime.HostBuilder.Build();
             
             _bootManager.ConfigureHost(innerHost);
@@ -71,32 +71,38 @@ namespace SImpl.DotNetStack.HostBuilders
         
         public IHostBuilder ConfigureHostConfiguration(Action<IConfigurationBuilder> configureDelegate)
         {
-            return Runtime.HostBuilder.ConfigureHostConfiguration(configureDelegate);
+            Runtime.HostBuilder.ConfigureHostConfiguration(configureDelegate);
+            return this;
         }
 
         public IHostBuilder ConfigureAppConfiguration(Action<HostBuilderContext, IConfigurationBuilder> configureDelegate)
         {
-            return Runtime.HostBuilder.ConfigureAppConfiguration(configureDelegate);
+            Runtime.HostBuilder.ConfigureAppConfiguration(configureDelegate);
+            return this;
         }
 
         public IHostBuilder ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
-            return Runtime.HostBuilder.ConfigureServices(configureDelegate);
+            Runtime.HostBuilder.ConfigureServices(configureDelegate);
+            return this;
         }
 
         public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(IServiceProviderFactory<TContainerBuilder> factory)
         {
-            return Runtime.HostBuilder.UseServiceProviderFactory(factory);
+            Runtime.HostBuilder.UseServiceProviderFactory(factory);
+            return this;
         }
 
         public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(Func<HostBuilderContext, IServiceProviderFactory<TContainerBuilder>> factory)
         {
-            return Runtime.HostBuilder.UseServiceProviderFactory(factory);
+            Runtime.HostBuilder.UseServiceProviderFactory(factory);
+            return this;
         }
 
         public IHostBuilder ConfigureContainer<TContainerBuilder>(Action<HostBuilderContext, TContainerBuilder> configureDelegate)
         {
-            return Runtime.HostBuilder.ConfigureContainer(configureDelegate);
+            Runtime.HostBuilder.ConfigureContainer(configureDelegate);
+            return this;
         }
 
         public IDictionary<object, object> Properties => Runtime.HostBuilder.Properties;

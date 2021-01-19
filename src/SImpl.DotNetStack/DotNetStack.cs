@@ -5,10 +5,10 @@ using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Core;
+using SImpl.DotNetStack.DependencyInjection;
 using SImpl.DotNetStack.Diagnostics;
 using SImpl.DotNetStack.Host;
 using SImpl.DotNetStack.HostBuilders;
-using SImpl.DotNetStack.NanoDependencyInjection;
 using SImpl.DotNetStack.Verbosity;
 
 namespace SImpl.DotNetStack
@@ -29,7 +29,7 @@ namespace SImpl.DotNetStack
             var dotNetStackHostBuilder = CreateDotNetStackHostBuilder(hostBuilder, flags, diagnostics);
             
             // Start configuration of the host builder
-            dotNetStackHostBuilder.Configure(configureDelegate);
+            dotNetStackHostBuilder.Configure(dotNetStackHostBuilder, configureDelegate);
             
             return dotNetStackHostBuilder;
         }

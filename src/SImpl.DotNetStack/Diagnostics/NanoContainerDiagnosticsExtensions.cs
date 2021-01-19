@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
+using SImpl.DotNetStack.DependencyInjection;
 using SImpl.DotNetStack.HostBuilders;
-using SImpl.DotNetStack.NanoDependencyInjection;
 
 namespace SImpl.DotNetStack.Diagnostics
 {

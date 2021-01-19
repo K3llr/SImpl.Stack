@@ -1,12 +1,12 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using SImpl.DotNetStack.ApplicationBuilders;
+using SImpl.DotNetStack.GenericHost.ApplicationBuilders;
 
-namespace SImpl.DotNetStack.Configurations
+namespace SImpl.DotNetStack.GenericHost.Configuration
 {
     public class ConfigurableStartup : IStartup
     {
-        private Action<IDotNetStackApplicationBuilder> _configureDelegate;
+        private Action<IApplicationBuilder> _configureDelegate;
         private Action<IServiceCollection> _serviceDelegate;
 
         public ConfigurableStartup()
@@ -14,7 +14,7 @@ namespace SImpl.DotNetStack.Configurations
             _configureDelegate = builder => { };
         }
         
-        public ConfigurableStartup(Action<IDotNetStackApplicationBuilder> configureDelegate)
+        public ConfigurableStartup(Action<IApplicationBuilder> configureDelegate)
         {
             _configureDelegate = configureDelegate;
         }
@@ -26,7 +26,7 @@ namespace SImpl.DotNetStack.Configurations
             return this;
         }
         
-        public ConfigurableStartup WithConfiguration(Action<IDotNetStackApplicationBuilder> configureDelegate)
+        public ConfigurableStartup WithConfiguration(Action<IApplicationBuilder> configureDelegate)
         {
             _configureDelegate = configureDelegate;
 
@@ -38,9 +38,9 @@ namespace SImpl.DotNetStack.Configurations
             _serviceDelegate?.Invoke(services);
         }
 
-        public void Configure(IDotNetStackApplicationBuilder applicationBuilder)
+        public void Configure(IApplicationBuilder app)
         {
-            _configureDelegate?.Invoke(applicationBuilder);
+            _configureDelegate?.Invoke(app);
         }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.Configurations;
+using SImpl.DotNetStack.GenericHost.ApplicationBuilders;
 using SImpl.DotNetStack.GenericHost.Configuration;
 
 namespace SImpl.DotNetStack.GenericHost.HostBuilders
@@ -21,7 +20,7 @@ namespace SImpl.DotNetStack.GenericHost.HostBuilders
             _config.UseStartup<TStartup>();
         }
         
-        public void Configure(Action<IDotNetStackApplicationBuilder> appBuilder)
+        public void Configure(Action<IApplicationBuilder> appBuilder)
         {
             _config.UseStartup(appBuilder);
         }
@@ -30,7 +29,5 @@ namespace SImpl.DotNetStack.GenericHost.HostBuilders
         {
             _config.UseServiceConfiguration(services);
         }
-        
-        
     }
 }

@@ -88,9 +88,9 @@ namespace SImpl.DotNetStack.Diagnostics
             return _hostBuilder.AttachNewOrGetConfiguredModule(factory);
         }
 
-        public void Configure(Action<IDotNetStackHostBuilder> configureDelegate)
+        public void Configure(IDotNetStackHostBuilder hostBuilder, Action<IDotNetStackHostBuilder> configureDelegate)
         {
-            _hostBuilder.Configure(configureDelegate);
+            _hostBuilder.Configure(hostBuilder, configureDelegate);
         }
     }
 }

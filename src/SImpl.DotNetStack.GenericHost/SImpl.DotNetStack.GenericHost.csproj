@@ -17,11 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Novicell.App" Version="3.0.6" />
-    <PackageReference Include="Novicell.App.Console" Version="3.0.5" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SImpl.DotNetStack\SImpl.DotNetStack.csproj" />
   </ItemGroup>
 

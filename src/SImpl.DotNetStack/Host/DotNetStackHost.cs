@@ -22,7 +22,7 @@ namespace SImpl.DotNetStack.Host
         }
 
         public async Task StartAsync(CancellationToken cancellationToken = new CancellationToken())
-        {
+        {  
             await _bootManager.StartAsync();
             await _host.StartAsync(cancellationToken);
         }

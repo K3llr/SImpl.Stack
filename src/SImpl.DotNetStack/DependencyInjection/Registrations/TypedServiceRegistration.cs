@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace SImpl.DotNetStack.NanoDependencyInjection
+namespace SImpl.DotNetStack.DependencyInjection.Registrations
 {
     public class TypedServiceRegistration<TImplementation> : INanoServiceRegistration
     {

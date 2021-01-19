@@ -25,22 +25,20 @@ namespace SImpl.DotNetStack.Verbosity
 
         public IHost Build()
         {
-            _logger.LogDebug("HostBuilder > Building host started");
+            _logger.LogDebug("HostBuilder > Building host > started");
             var host = new VerboseHost(_hostBuilder.Build(), _logger);
-            _logger.LogDebug("HostBuilder > Building host ended");
+            _logger.LogDebug("HostBuilder > Building host > ended");
             
             return host;
         }
 
-        public IHostBuilder ConfigureAppConfiguration(
-            Action<HostBuilderContext, IConfigurationBuilder> configureDelegate)
+        public IHostBuilder ConfigureAppConfiguration(Action<HostBuilderContext, IConfigurationBuilder> configureDelegate)
         {
             _hostBuilder.ConfigureAppConfiguration(configureDelegate);
             return this;
         }
 
-        public IHostBuilder ConfigureContainer<TContainerBuilder>(
-            Action<HostBuilderContext, TContainerBuilder> configureDelegate)
+        public IHostBuilder ConfigureContainer<TContainerBuilder>(Action<HostBuilderContext, TContainerBuilder> configureDelegate)
         {
             _hostBuilder.ConfigureContainer(configureDelegate);
             return this;
@@ -50,26 +48,25 @@ namespace SImpl.DotNetStack.Verbosity
         {
             _hostBuilder.ConfigureHostConfiguration(configureDelegate);
             return this;
+            
         }
 
         public IHostBuilder ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
-            _logger.LogDebug("HostBuilder > ConfigureServices started");
+            _logger.LogDebug("HostBuilder > ConfigureServices > started");
             _hostBuilder.ConfigureServices(configureDelegate);
-            _logger.LogDebug("HostBuilder > ConfigureServices ended");
+            _logger.LogDebug("HostBuilder > ConfigureServices > ended");
             
             return this;
         }
 
-        public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(
-            IServiceProviderFactory<TContainerBuilder> factory)
+        public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(IServiceProviderFactory<TContainerBuilder> factory)
         {
             _hostBuilder.UseServiceProviderFactory(factory);
             return this;
         }
 
-        public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(
-            Func<HostBuilderContext, IServiceProviderFactory<TContainerBuilder>> factory)
+        public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(Func<HostBuilderContext, IServiceProviderFactory<TContainerBuilder>> factory)
         {
             _hostBuilder.UseServiceProviderFactory(factory);
             return this;
@@ -89,11 +86,11 @@ namespace SImpl.DotNetStack.Verbosity
             return _hostBuilder.AttachNewOrGetConfiguredModule(factory);
         }
 
-        public void Configure(Action<IDotNetStackHostBuilder> configureDelegate)
+        public void Configure(IDotNetStackHostBuilder hostBuilder, Action<IDotNetStackHostBuilder> configureDelegate)
         {
-            _logger.LogDebug("HostBuilder > Module configuration started");
-            _hostBuilder.Configure(configureDelegate);
-            _logger.LogDebug("HostBuilder > Module configuration ended");
+            _logger.LogDebug("HostBuilder > Configure > started");
+            _hostBuilder.Configure(hostBuilder, configureDelegate);
+            _logger.LogDebug("HostBuilder > Configure > ended");
         }
     }
 }

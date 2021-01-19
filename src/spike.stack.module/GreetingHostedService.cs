@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using spike.stack.app.Application;
 
-namespace spike.stack.console
+namespace spike.stack.module
 {
     public class GreetingHostedService : IHostedService
     {

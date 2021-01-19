@@ -2,9 +2,9 @@ using Microsoft.Extensions.Logging;
 using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Core;
+using SImpl.DotNetStack.DependencyInjection;
 using SImpl.DotNetStack.Host;
 using SImpl.DotNetStack.HostBuilders;
-using SImpl.DotNetStack.NanoDependencyInjection;
 
 namespace SImpl.DotNetStack.Verbosity
 {

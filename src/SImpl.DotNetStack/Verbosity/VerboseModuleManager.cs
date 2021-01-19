@@ -4,8 +4,8 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Logging;
 using SImpl.DotNetStack.Core;
-using SImpl.DotNetStack.Dependencies;
 using SImpl.DotNetStack.Modules;
+using SImpl.DotNetStack.Modules.Dependencies;
 
 namespace SImpl.DotNetStack.Verbosity
 {

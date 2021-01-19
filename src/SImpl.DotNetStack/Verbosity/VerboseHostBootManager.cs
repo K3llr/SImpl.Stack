@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SImpl.DotNetStack.Core;
 using SImpl.DotNetStack.Host;
+using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.Verbosity
 {
@@ -19,64 +22,58 @@ namespace SImpl.DotNetStack.Verbosity
             _logger = logger;
         }
 
-        public void PreInit()
+        public IEnumerable<IPreInitModule> PreInit()
         {
-            _logger.LogDebug(" HostBootManager > Module boot order");
+            _logger.LogDebug(" HostBootManager > PreInit > started");
+            var processed = _bootManager.PreInit().ToArray();
+            _logger.LogDebug(" HostBootManager > PreInit > Module PreInit sequence");
+            foreach (var module in processed)
+            {
+                _logger.LogDebug($"  - {module.Name}");
+            }
+            _logger.LogDebug(" HostBootManager > PreInit > Module boot sequence");
             foreach (var module in _moduleManager.BootSequence)
             {
                 _logger.LogDebug($"  - {module.Name}");
             }
-            
-            _logger.LogDebug(" HostBootManager > PreInit started");
-            _bootManager.PreInit();
-            _logger.LogDebug(" HostBootManager > PreInit ended");
+            _logger.LogDebug(" HostBootManager > PreInit > ended");
+
+            return processed;
         }
 
         public void ConfigureServices(IHostBuilder hostBuilder)
         {
-            _logger.LogDebug(" HostBootManager > ConfigureServices started");
+            _logger.LogDebug(" HostBootManager > ConfigureServices > started");
             _bootManager.ConfigureServices(hostBuilder);
-            _logger.LogDebug(" HostBootManager > ConfigureServices ended");
+            _logger.LogDebug(" HostBootManager > ConfigureServices > ended");
         }
 
         public void ConfigureHostBuilder(IHostBuilder hostBuilder)
         {
-            _logger.LogDebug(" HostBootManager > ConfigureHostBuilder started");
+            _logger.LogDebug(" HostBootManager > ConfigureHostBuilder > started");
             _bootManager.ConfigureHostBuilder(hostBuilder);
-            _logger.LogDebug(" HostBootManager > ConfigureHostBuilder ended");
+            _logger.LogDebug(" HostBootManager > ConfigureHostBuilder > ended");
         }
 
         public void ConfigureHost(IHost host)
         {
-            _logger.LogDebug(" HostBootManager > ConfigureHost started");
+            _logger.LogDebug(" HostBootManager > ConfigureHost > started");
             _bootManager.ConfigureHost(host);
-            _logger.LogDebug(" HostBootManager > ConfigureHost ended");
+            _logger.LogDebug(" HostBootManager > ConfigureHost > ended");
         }
 
         public async Task StartAsync()
         {
-            _logger.LogDebug(" HostBootManager > Module boot order");
-            foreach (var module in _moduleManager.BootSequence)
-            {
-                _logger.LogDebug($"  - {module.Name}");
-            }
-            
-            _logger.LogDebug(" HostBootManager > StartAsync started"); 
+            _logger.LogDebug(" HostBootManager > StartAsync > started"); 
             await _bootManager.StartAsync();
-            _logger.LogDebug(" HostBootManager > StartAsync ended");
+            _logger.LogDebug(" HostBootManager > StartAsync > ended");
         }
 
         public async Task StopAsync()
         {
-            _logger.LogDebug(" HostBootManager > Module boot order");
-            foreach (var module in _moduleManager.BootSequence)
-            {
-                _logger.LogDebug($"  - {module.Name}");
-            }
-            
-            _logger.LogDebug(" HostBootManager > StopAsync started"); 
+            _logger.LogDebug(" HostBootManager > StopAsync > started"); 
             await _bootManager.StopAsync();
-            _logger.LogDebug(" HostBootManager > StopAsync ended");
+            _logger.LogDebug(" HostBootManager > StopAsync > ended");
         }
     }
 }

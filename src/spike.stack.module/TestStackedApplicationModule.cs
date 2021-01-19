@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.Dependencies;
 using SImpl.DotNetStack.Modules;
+using SImpl.DotNetStack.Modules.Dependencies;
 
 namespace spike.stack.module
 {

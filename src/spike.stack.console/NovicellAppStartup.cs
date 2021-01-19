@@ -18,9 +18,6 @@ namespace spike.stack.console
         {
             app.UseNovicellConsoleApp(consoleApp =>
             {                
-                consoleApp.UseHybridTestModule();
-                consoleApp.Use<LegacyStackModule>();
-                
                 consoleApp.UseDependencyInjection(di =>
                 {
                     di.UseGenericHost();

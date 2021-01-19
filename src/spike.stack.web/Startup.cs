@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SImpl.DotNetStack.WebHost.Configuration;
+using SImpl.DotNetStack.WebHost.Extensions;
+using SImpl.DotNetStack.ApplicationBuilders;
+using spike.stack.app.Application;
+using spike.stack.app.Domain;
 using spike.stack.module;
 
 namespace spike.stack.web
@@ -14,6 +17,10 @@ namespace spike.stack.web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Works
+            /*services.AddSingleton<IGreetingAppService, GreetingAppService>();
+            services.AddSingleton<IGreetingService, SpanishGreetingService>();
+            services.AddHostedService<GreetingHostedService>();*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,9 +41,9 @@ namespace spike.stack.web
                 });
             });
 
-            app.UseWebStackApp(webApp =>
+            app.UseDotNetStackWebApp(builder =>
             {
-                webApp.UseHybridTestModule();
+                builder.Use<TestStackedApplicationModule>();
             });
         }
     }

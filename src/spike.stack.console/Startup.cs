@@ -1,6 +1,11 @@
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.Configurations;
+using SImpl.DotNetStack.GenericHost.ApplicationBuilders;
+using SImpl.DotNetStack.GenericHost.Configuration;
+using SImpl.DotNetStack.GenericHost.Extensions;
+using spike.stack.app.Application;
+using spike.stack.app.Domain;
 using spike.stack.module;
 
 namespace spike.stack.console
@@ -9,13 +14,19 @@ namespace spike.stack.console
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            // Works
+            //services.AddScoped<IGreetingAppService, GreetingAppService>();
+            //services.AddScoped<IGreetingService, SpanishGreetingService>();
+            //services.AddHostedService<GreetingHostedService>();
         }
 
-        public void Configure(IDotNetStackApplicationBuilder applicationBuilder)
+        public void Configure(IApplicationBuilder app)
         {
-            applicationBuilder.Use<TestStackedApplicationModule>();
-            
+            app.UseDotNetStackGenericApp(stack =>
+            {
+                stack.Use<TestStackedApplicationModule>();
+            });
+
             /*stackBuilder.UseNovicellConsoleApp(consoleApp =>
             {
                

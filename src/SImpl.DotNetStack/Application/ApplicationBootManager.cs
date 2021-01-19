@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Core;
 using SImpl.DotNetStack.Extensions;
@@ -21,20 +20,21 @@ namespace SImpl.DotNetStack.Application
         private IEnumerable<IApplicationModule> _bootSequence;
         private IEnumerable<IApplicationModule> BootSequence => _bootSequence ??= _moduleManager.BootSequence.FilterBy<IApplicationModule>();
 
-        public void Configure(IDotNetStackApplicationBuilder appBuilder)
+        public IEnumerable<IApplicationModule> Configure(IDotNetStackApplicationBuilder appBuilder)
         {
+            var configuredModules = new List<IApplicationModule>();
+            
             // NOTE: Please do no try and optimize. Especially not to put Config.EnabledModules into a variable before the loop or to use an foreach loop
             // because the collection is expanded inside the loop due to recursive nature of the stack.
             for (var i = 0; i < _moduleManager.EnabledModules.Count; i++)
             {
                 var module = _moduleManager.EnabledModules[i] as IApplicationModule;
                 module?.Configure(appBuilder);
+                
+                configuredModules.Add(module);
             }
-        }
 
-        public void ConfigureServices(IServiceCollection serviceCollection)
-        {
-            BootSequence.ForEach<IServicesCollectionConfigureModule>(module => module.ConfigureServices(serviceCollection));
+            return configuredModules;
         }
 
         public async Task StartAsync()
@@ -46,7 +46,7 @@ namespace SImpl.DotNetStack.Application
 
         public async Task StopAsync()
         {
-            await BootSequence.ForEachAsync<IApplicationModule>(module => module.StopAsync());
+            await BootSequence.Reverse().ForEachAsync<IApplicationModule>(module => module.StopAsync());
             
             _moduleManager.SetModuleState(ModuleState.Stopped);
         }

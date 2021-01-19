@@ -1,6 +1,6 @@
 using System;
 
-namespace SImpl.DotNetStack.NanoDependencyInjection
+namespace SImpl.DotNetStack.DependencyInjection.Registrations
 {
     public class FactoryServiceRegistration<TService> : INanoServiceRegistration
     {

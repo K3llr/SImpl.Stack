@@ -1,13 +1,13 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.Configurations;
+using SImpl.DotNetStack.GenericHost.ApplicationBuilders;
 
 namespace SImpl.DotNetStack.GenericHost.Configuration
 {
     public class StartupConfiguration : IStartupConfiguration
     {
-        private IStartup _startups;
+        private IStartup _startup;
         private Action<IServiceCollection> _serviceDelegate;
 
         public void UseStartup<TStartup>()
@@ -16,14 +16,14 @@ namespace SImpl.DotNetStack.GenericHost.Configuration
             UseStartup(new TStartup());
         }
         
-        public void UseStartup(Action<IDotNetStackApplicationBuilder> appBuilder)
+        public void UseStartup(Action<IApplicationBuilder> appBuilder)
         {
             UseStartup(new ConfigurableStartup(appBuilder));
         }
         
         public void UseStartup(IStartup startup)
         {
-            _startups = startup;
+            _startup = startup;
         }
 
         public void UseServiceConfiguration(Action<IServiceCollection> services)
@@ -34,8 +34,12 @@ namespace SImpl.DotNetStack.GenericHost.Configuration
         public IStartup GetConfiguredStartup()
         {
             return new ConfigurableStartup()
-                .WithConfiguration(configureDelegate => _startups.Configure(configureDelegate))
-                .WithServiceConfiguration(_serviceDelegate);
+                .WithConfiguration(configureDelegate => _startup?.Configure(configureDelegate))
+                .WithServiceConfiguration(services =>
+                {
+                    _serviceDelegate?.Invoke(services);
+                    _startup?.ConfigureServices(services);
+                });
         }
     }
 }

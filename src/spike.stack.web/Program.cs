@@ -1,7 +1,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.HostBuilders;
+using spike.stack.app.Application;
+using spike.stack.app.Domain;
 using spike.stack.module;
 
 namespace spike.stack.web
@@ -15,12 +18,24 @@ namespace spike.stack.web
             await Host.CreateDefaultBuilder(args)
                 .AddDotNetStack(args, stack =>
                 {
-                    stack.ConfigureWebHostDefaults(webBuilder =>
+                    stack.ConfigureServices(services =>
                     {
-                        webBuilder.UseStartup<Startup>();
+                        // Works
+                        /*services.AddSingleton<IGreetingAppService, GreetingAppService>();
+                        services.AddSingleton<IGreetingService, SpanishGreetingService>();
+                        services.AddHostedService<GreetingHostedService>();*/
                     });
-                        
-                    stack.UseDotNetStackTestModule();
+                    
+                    stack.ConfigureWebHostDefaults(webHostBuilder =>
+                    {
+                        webHostBuilder.UseStartup<Startup>();
+                    });
+                }).ConfigureServices(services =>
+                {
+                    // Works
+                    /*services.AddSingleton<IGreetingAppService, GreetingAppService>();
+                    services.AddSingleton<IGreetingService, SpanishGreetingService>();
+                    services.AddHostedService<GreetingHostedService>();*/
                 })
                 .Build()
                 .RunAsync();

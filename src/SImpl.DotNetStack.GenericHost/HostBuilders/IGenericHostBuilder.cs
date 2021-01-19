@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.Configurations;
+using SImpl.DotNetStack.GenericHost.ApplicationBuilders;
+using SImpl.DotNetStack.GenericHost.Configuration;
 
 namespace SImpl.DotNetStack.GenericHost.HostBuilders
 {
@@ -10,7 +10,7 @@ namespace SImpl.DotNetStack.GenericHost.HostBuilders
         void UseStartup<TStartup>()
             where TStartup : IStartup, new();
 
-        void Configure(Action<IDotNetStackApplicationBuilder> appBuilder);
+        void Configure(Action<IApplicationBuilder> appBuilder);
         
         void ConfigureServices(Action<IServiceCollection> services);
     }

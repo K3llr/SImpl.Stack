@@ -1,8 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SImpl.DotNetStack.GenericHost.Extensions;
 using SImpl.DotNetStack.HostBuilders;
+using spike.stack.app.Application;
+using spike.stack.app.Domain;
 
 namespace spike.stack.console
 {
@@ -11,14 +15,36 @@ namespace spike.stack.console
         public static async Task Main(string[] args)
         {
             await Host.CreateDefaultBuilder(args)
-                .AddDotNetStack(args, stackHostBuilder =>
+                .AddDotNetStack(args, stack =>
                 {
-                    stackHostBuilder.ConfigureGenericHost(genericHostBuilder => 
+                   /* stack.ConfigureServices(services =>
+                    {
+                        // Works
+                        services.AddScoped<IGreetingAppService, GreetingAppService>();
+                        services.AddScoped<IGreetingService, SpanishGreetingService>();
+                        services.AddHostedService<GreetingHostedService>();
+                    });*/
+                    
+                    stack.ConfigureGenericHost(genericHostBuilder => 
                     {
                         genericHostBuilder.UseStartup<Startup>();
+                        /*genericHostBuilder.ConfigureServices(services =>
+                        {
+                            // Works
+                            services.AddScoped<IGreetingAppService, GreetingAppService>();
+                            services.AddScoped<IGreetingService, SpanishGreetingService>();
+                            services.AddHostedService<GreetingHostedService>();
+                        });*/
                     });
                 })
-                .ConfigureLogging(logging =>
+                /*.ConfigureServices(services =>
+                {
+                    // Works
+                    services.AddScoped<IGreetingAppService, GreetingAppService>();
+                    services.AddScoped<IGreetingService, SpanishGreetingService>();
+                    services.AddHostedService<GreetingHostedService>();
+                })*/
+                /*.ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
                     logging.AddSimpleConsole(options =>
@@ -27,7 +53,7 @@ namespace spike.stack.console
                         options.SingleLine = true;
                         options.TimestampFormat = "hh:mm:ss.fff ";
                     });
-                })
+                })*/
                 .Build()
                 .RunAsync();
         }

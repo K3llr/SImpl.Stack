@@ -1,11 +1,13 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.Host
 {
     public interface IHostBootManager
     {
-        void PreInit();
+        IEnumerable<IPreInitModule> PreInit();
 
         void ConfigureServices(IHostBuilder hostBuilder);
 
