@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Modules;
 using SImpl.DotNetStack.Modules.Dependencies;
+using SImpl.DotNetStack.Runtime.ApplicationBuilders;
 
 namespace spike.stack.module
 {

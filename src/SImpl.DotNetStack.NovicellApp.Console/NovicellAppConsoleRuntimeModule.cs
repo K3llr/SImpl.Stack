@@ -4,7 +4,7 @@ using Novicell.App.AppBuilders;
 using Novicell.App.Console;
 using Novicell.App.Console.Configuration;
 using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.GenericHost;
+using SImpl.DotNetStack.Hosts.GenericHost;
 using SImpl.DotNetStack.Modules;
 using SImpl.DotNetStack.Modules.Dependencies;
 

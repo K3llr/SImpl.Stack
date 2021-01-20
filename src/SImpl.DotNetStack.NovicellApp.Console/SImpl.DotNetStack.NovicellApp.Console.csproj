@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SImpl.DotNetStack.GenericHost\SImpl.DotNetStack.GenericHost.csproj" />
-    <ProjectReference Include="..\SImpl.DotNetStack\SImpl.DotNetStack.csproj" />
+    <ProjectReference Include="..\SImpl.DotNetStack.Hosts.GenericHost\SImpl.DotNetStack.Hosts.GenericHost.csproj" />
+    <ProjectReference Include="..\SImpl.DotNetStack.Runtime\SImpl.DotNetStack.Runtime.csproj" />
   </ItemGroup>
 
 </Project>

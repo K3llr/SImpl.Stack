@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SImpl.DotNetStack.NovicellApp.Console\SImpl.DotNetStack.NovicellApp.Console.csproj" />
-    <ProjectReference Include="..\SImpl.DotNetStack\SImpl.DotNetStack.csproj" />
+    <ProjectReference Include="..\SImpl.DotNetStack.Runtime\SImpl.DotNetStack.Runtime.csproj" />
   </ItemGroup>
 
 </Project>

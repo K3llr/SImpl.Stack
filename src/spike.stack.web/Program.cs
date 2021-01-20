@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.HostBuilders;
+using SImpl.DotNetStack.Runtime.HostBuilders;
 using spike.stack.app.Application;
 using spike.stack.app.Domain;
 using spike.stack.module;

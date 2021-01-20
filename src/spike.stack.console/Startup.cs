@@ -1,9 +1,9 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.GenericHost.ApplicationBuilders;
-using SImpl.DotNetStack.GenericHost.Configuration;
-using SImpl.DotNetStack.GenericHost.Extensions;
+using SImpl.DotNetStack.Runtime.ApplicationBuilders;
+using SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders;
+using SImpl.DotNetStack.Hosts.GenericHost.Configuration;
+using SImpl.DotNetStack.Hosts.GenericHost.Extensions;
 using spike.stack.app.Application;
 using spike.stack.app.Domain;
 using spike.stack.module;

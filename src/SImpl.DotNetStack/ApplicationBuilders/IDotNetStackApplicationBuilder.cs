@@ -1,5 +1,4 @@
 using System;
-using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.ApplicationBuilders
@@ -11,7 +10,7 @@ namespace SImpl.DotNetStack.ApplicationBuilders
         
         TModule AttachNewOrGetConfiguredModule<TModule>(Func<TModule> factory)
             where TModule : IApplicationModule;
-
+        
         void Configure(Action<IDotNetStackApplicationBuilder> configureDelegate);
         
         IDotNetStackApplication Build();
