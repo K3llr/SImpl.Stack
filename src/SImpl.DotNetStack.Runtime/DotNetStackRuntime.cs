@@ -50,6 +50,7 @@ namespace SImpl.DotNetStack.Runtime
             
             // Register core services
             container.Register<IModuleManager, ModuleManager>();
+            container.Register<IBootSequenceFactory, BootSequenceFactory>();
             container.Register<IDotNetStackRuntimeServices, DotNetStackRuntimeServices>();
             
             // Register host builder and boot manager

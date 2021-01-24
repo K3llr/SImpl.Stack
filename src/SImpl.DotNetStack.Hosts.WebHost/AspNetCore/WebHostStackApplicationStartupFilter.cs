@@ -14,8 +14,8 @@ namespace SImpl.DotNetStack.Hosts.WebHost.AspNetCore
         {
             return builder =>
             {
-                var moduleManager = DotNetStackRuntimeServices.Current.BootContainer.Resolve<IModuleManager>();
-                moduleManager.BootSequence.ForEach<IWebHostApplicationModule>(module => module.Configure(builder, builder.ApplicationServices.GetService<IWebHostEnvironment>()));
+                var moduleManager = DotNetStackRuntimeServices.Current.BootContainer.Resolve<IBootSequenceFactory>();
+                moduleManager.New().ForEach<IAspNetApplicationModule>(module => module.Configure(builder, builder.ApplicationServices.GetService<IWebHostEnvironment>()));
                 
                 next(builder);
             };

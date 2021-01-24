@@ -18,14 +18,16 @@ namespace SImpl.DotNetStack.Runtime.Diagnostics
         
         private readonly IHost _host;
         private readonly IModuleManager _moduleManager;
+        private readonly IBootSequenceFactory _bootSequenceFactory;
         private readonly IDiagnosticsCollector _diagnostics;
         private readonly RuntimeFlags _runtimeFlags;
         private readonly ILogger<DiagnosticsHost> _logger;
 
-        public DiagnosticsHost(IHost host, IModuleManager moduleManager, IDiagnosticsCollector diagnostics, RuntimeFlags runtimeFlags, ILogger<DiagnosticsHost> logger)
+        public DiagnosticsHost(IHost host, IModuleManager moduleManager, IBootSequenceFactory bootSequenceFactory, IDiagnosticsCollector diagnostics, RuntimeFlags runtimeFlags, ILogger<DiagnosticsHost> logger)
         {
             _host = host;
             _moduleManager = moduleManager;
+            _bootSequenceFactory = bootSequenceFactory;
             _diagnostics = diagnostics;
             _runtimeFlags = runtimeFlags;
             _logger = logger;
@@ -124,7 +126,7 @@ namespace SImpl.DotNetStack.Runtime.Diagnostics
             // TODO:
 
             section.Value.AppendLine("- Boot sequence");
-            foreach (var module in _moduleManager.BootSequence)
+            foreach (var module in _bootSequenceFactory.New())
             {
                 section.Value.AppendLine($"   - {module.Name}");
             }
@@ -151,7 +153,7 @@ namespace SImpl.DotNetStack.Runtime.Diagnostics
         
         private void AddModuleDiagnostics()
         {
-            _moduleManager.EnabledModules.ForEach<IDiagnosticsModule>(module =>
+            _bootSequenceFactory.New().ForEach<IDiagnosticsModule>(module =>
             {
                 module.Diagnose(_diagnostics);
             });

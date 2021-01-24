@@ -91,43 +91,5 @@ namespace SImpl.DotNetStack.Runtime.Core
                 .Select(ctx => ctx.Module)
                 .ToList()
                 .AsReadOnly();
-
-        public IReadOnlyList<IDotNetStackModule> BootSequence
-        {
-            get
-            {
-                var enabledModuleContexts =
-                    _modulesInfos
-                        .Where(info => info.IsEnabled)
-                        .Select(info => new ModuleContext
-                        {
-                            Info = info
-                        }).ToList();
-
-                var moduleContextLookup =
-                    enabledModuleContexts
-                        .ToDictionary(ctx => ctx.Info.ModuleType);
-
-                foreach (var ctx in enabledModuleContexts)
-                {
-                    ctx.Dependencies = ctx.Info.Dependencies
-                        .Select(t => moduleContextLookup.ContainsKey(t) ? moduleContextLookup[t] : null)
-                        .Where(d => d is not null)
-                        .ToArray();
-                }
-
-                return enabledModuleContexts
-                    .TopologicalSort(ctx => ctx.Dependencies)
-                    .Select(ctx => ctx.Info.Module)
-                    .ToList()
-                    .AsReadOnly();
-            }
-        }
-        
-        private class ModuleContext
-        {
-            public ModuleRuntimeInfo Info { get; set; }
-            public ModuleContext[] Dependencies { get; set; }
-        }
     }
 }

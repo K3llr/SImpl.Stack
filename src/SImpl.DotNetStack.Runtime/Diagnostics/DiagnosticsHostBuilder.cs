@@ -15,14 +15,16 @@ namespace SImpl.DotNetStack.Runtime.Diagnostics
     {
         private readonly IDotNetStackHostBuilder _hostBuilder;
         private readonly IModuleManager _moduleManager;
+        private readonly IBootSequenceFactory _bootSequenceFactory;
         private readonly IDiagnosticsCollector _diagnostics;
         private readonly RuntimeFlags _runtimeFlags;
         private readonly ILogger<DiagnosticsHost> _logger;
 
-        public DiagnosticsHostBuilder(IDotNetStackHostBuilder hostBuilder, IModuleManager moduleManager, IDiagnosticsCollector diagnostics, RuntimeFlags runtimeFlags, ILogger<DiagnosticsHost> logger)
+        public DiagnosticsHostBuilder(IDotNetStackHostBuilder hostBuilder, IModuleManager moduleManager, IBootSequenceFactory bootSequenceFactory, IDiagnosticsCollector diagnostics, RuntimeFlags runtimeFlags, ILogger<DiagnosticsHost> logger)
         {
             _hostBuilder = hostBuilder;
             _moduleManager = moduleManager;
+            _bootSequenceFactory = bootSequenceFactory;
             _diagnostics = diagnostics;
             _runtimeFlags = runtimeFlags;
             _logger = logger;
@@ -33,7 +35,7 @@ namespace SImpl.DotNetStack.Runtime.Diagnostics
         public IHost Build()
         {
             _diagnostics.RegisterLapTime("Host building");
-            var host = new DiagnosticsHost(_hostBuilder.Build(), _moduleManager, _diagnostics, _runtimeFlags, _logger);
+            var host = new DiagnosticsHost(_hostBuilder.Build(), _moduleManager, _bootSequenceFactory, _diagnostics, _runtimeFlags, _logger);
             _diagnostics.RegisterLapTime("Host built");
             
             return host;

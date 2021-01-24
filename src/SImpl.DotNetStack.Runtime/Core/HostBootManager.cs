@@ -10,14 +10,16 @@ namespace SImpl.DotNetStack.Runtime.Core
     public class HostBootManager : IHostBootManager
     {
         private readonly IModuleManager _moduleManager;
+        private readonly IBootSequenceFactory _bootSequenceFactory;
 
-        public HostBootManager(IModuleManager moduleManager)
+        public HostBootManager(IModuleManager moduleManager, IBootSequenceFactory bootSequenceFactory)
         {
             _moduleManager = moduleManager;
+            _bootSequenceFactory = bootSequenceFactory;
         }
 
-        private IEnumerable<IDotNetStackModule> _bootSequence;
-        private IEnumerable<IDotNetStackModule> BootSequence => _bootSequence ??= _moduleManager.BootSequence;
+        private IBootSequence _bootSequence1;
+        private IBootSequence BootSequence => _bootSequence1 ??= _bootSequenceFactory.New();
 
         public  IEnumerable<IPreInitModule> PreInit()
         {

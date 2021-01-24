@@ -13,12 +13,14 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
     {
         private readonly IHostBootManager _bootManager;
         private readonly IModuleManager _moduleManager;
+        private readonly IBootSequenceFactory _bootSequenceFactory;
         private readonly ILogger<VerboseHost> _logger;
 
-        public VerboseHostBootManager(IHostBootManager bootManager, IModuleManager moduleManager, ILogger<VerboseHost> logger)
+        public VerboseHostBootManager(IHostBootManager bootManager, IModuleManager moduleManager, IBootSequenceFactory bootSequenceFactory, ILogger<VerboseHost> logger)
         {
             _bootManager = bootManager;
             _moduleManager = moduleManager;
+            _bootSequenceFactory = bootSequenceFactory;
             _logger = logger;
         }
 
@@ -32,7 +34,7 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
                 _logger.LogDebug($"  - {module.Name}");
             }
             _logger.LogDebug(" HostBootManager > PreInit > Module boot sequence");
-            foreach (var module in _moduleManager.BootSequence)
+            foreach (var module in _bootSequenceFactory.New())
             {
                 _logger.LogDebug($"  - {module.Name}");
             }

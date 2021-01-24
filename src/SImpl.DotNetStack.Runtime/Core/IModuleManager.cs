@@ -30,7 +30,5 @@ namespace SImpl.DotNetStack.Runtime.Core
         IReadOnlyList<IDotNetStackModule> EnabledModules { get; }
         
         IReadOnlyList<IDotNetStackModule> DisabledModules { get; }
-        
-        IReadOnlyList<IDotNetStackModule> BootSequence { get; }
     }
 }

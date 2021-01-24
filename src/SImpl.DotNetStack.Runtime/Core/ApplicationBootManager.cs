@@ -10,14 +10,16 @@ namespace SImpl.DotNetStack.Runtime.Core
     public class ApplicationBootManager : IApplicationBootManager
     {
         private readonly IModuleManager _moduleManager;
+        private readonly IBootSequenceFactory _bootSequenceFactory;
 
-        public ApplicationBootManager(IModuleManager moduleManager)
+        public ApplicationBootManager(IModuleManager moduleManager, IBootSequenceFactory bootSequenceFactory)
         {
             _moduleManager = moduleManager;
+            _bootSequenceFactory = bootSequenceFactory;
         }
 
-        private IEnumerable<IDotNetStackModule> _bootSequence;
-        private IEnumerable<IDotNetStackModule> BootSequence => _bootSequence ??= _moduleManager.BootSequence;
+        private IBootSequence _bootSequence;
+        private IBootSequence BootSequence => _bootSequence ??= _bootSequenceFactory.New();
 
         public IEnumerable<TApplicationModule> Configure<TApplicationModule, TApplicationBuilder>(TApplicationBuilder appBuilder)
             where TApplicationModule : class, IApplicationModule<TApplicationBuilder>

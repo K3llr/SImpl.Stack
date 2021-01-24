@@ -29,6 +29,7 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
             });
                 
             container.RegisterDecorator<IModuleManager, VerboseModuleManager>();
+            container.RegisterDecorator<IBootSequenceFactory, VerboseBootSequenceFactory>();
             container.RegisterDecorator<IHostBootManager, VerboseHostBootManager>();
             container.RegisterDecorator<IDotNetStackHostBuilder, VerboseHostBuilder>();
             container.RegisterDecorator<IApplicationBootManager, VerboseApplicationBootManager>();

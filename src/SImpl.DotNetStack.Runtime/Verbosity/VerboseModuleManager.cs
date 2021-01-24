@@ -84,7 +84,7 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
             var module = _moduleManager.AttachNewOrGetConfigured(factory);
             LogModule(module);
                 
-            _logger.LogDebug($"      ModuleManager > AttachNewOrGetConfigured ended");
+            _logger.LogDebug($"      ModuleManager > AttachModule ended");
             
             return module;
         }
@@ -113,12 +113,10 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
             _logger.LogDebug($"  ModuleManager > Set module state: {state:G}");
             _moduleManager.SetModuleState(state);
         }
-
-        public IReadOnlyList<IDotNetStackModule> AllModules => _moduleManager.AllModules.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
-        public IReadOnlyList<IDotNetStackModule> EnabledModules => _moduleManager.EnabledModules.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
-        public IReadOnlyList<IDotNetStackModule> DisabledModules => _moduleManager.DisabledModules.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
-        public IReadOnlyList<IDotNetStackModule> BootSequence => _moduleManager.BootSequence.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
-
         public IReadOnlyList<ModuleRuntimeInfo> ModuleInfos => _moduleManager.ModuleInfos;
+
+        public IReadOnlyList<IDotNetStackModule> AllModules => _moduleManager.AllModules;
+        public IReadOnlyList<IDotNetStackModule> EnabledModules => _moduleManager.EnabledModules;
+        public IReadOnlyList<IDotNetStackModule> DisabledModules => _moduleManager.DisabledModules;
     }
 }
