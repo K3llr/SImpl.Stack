@@ -5,13 +5,13 @@ namespace SImpl.DotNetStack.Runtime.HostBuilders
 {
     public static class DotNetStackHostBuilderExtensions
     {
-        public static void Use<TModule>(this IDotNetStackHostBuilder stackHostBuilder)
+        public static void UseStackAppModule<TModule>(this IDotNetStackHostBuilder stackHostBuilder)
             where TModule : IDotNetStackModule, new()
         {
             stackHostBuilder.Use(() => new TModule());
         }
         
-        public static void Use<TModule>(this IDotNetStackHostBuilder stackHostBuilder, TModule module)
+        public static void UseStackAppModule<TModule>(this IDotNetStackHostBuilder stackHostBuilder, TModule module)
             where TModule : IDotNetStackModule
         {
             stackHostBuilder.Use(() => module);

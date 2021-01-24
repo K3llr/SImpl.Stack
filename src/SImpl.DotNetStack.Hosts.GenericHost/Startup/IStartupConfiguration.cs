@@ -2,7 +2,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders;
 
-namespace SImpl.DotNetStack.Hosts.GenericHost.Configuration
+namespace SImpl.DotNetStack.Hosts.GenericHost.Startup
 {
     public interface IStartupConfiguration
     {

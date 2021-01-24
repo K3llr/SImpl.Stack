@@ -24,6 +24,15 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
             where TModule : IDotNetStackModule
         {
             _logger.LogDebug($"      ModuleManager > AttachModule started");
+            
+            _moduleManager.AttachModule(module);
+            LogModule(module);
+                
+            _logger.LogDebug($"      ModuleManager > AttachModule ended");
+        }
+
+        private void LogModule<TModule>(TModule module) where TModule : IDotNetStackModule
+        {
             _logger.LogDebug("      {");
             _logger.LogDebug($"        \"Type\": \"{typeof(TModule).Name}\",");
             _logger.LogDebug($"        \"Name\": \"{module.Name}\",");
@@ -35,15 +44,15 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
                 .GetInterfaces()
                 .Where(t => typeof(IDotNetStackModule).IsAssignableFrom(t)) // Only IDotNetStack interfaces
                 .OrderBy(t => t.Name);
-            
+
             foreach (var type in modules)
             {
                 _logger.LogDebug($"            \"{type.Name}\",");
             }
-            
+
             _logger.LogDebug("          ],");
 
-            
+
             var dependsOn = module.GetType().GetCustomAttribute<DependsOnAttribute>();
             var dependencies = dependsOn?.Dependencies ?? Array.Empty<Type>();
 
@@ -56,22 +65,30 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
                 {
                     _logger.LogDebug($"            \"{type.Name}\",");
                 }
-                _logger.LogDebug("          ]");
 
+                _logger.LogDebug("          ]");
             }
             else
             {
                 _logger.LogDebug("        \"DependentOn\": []");
- 
             }
-            
+
             _logger.LogDebug("      }");
-            
-            _moduleManager.AttachModule(module);
-            
-            _logger.LogDebug($"      ModuleManager > AttachModule ended");
         }
 
+        public TModule AttachNewOrGetConfigured<TModule>(Func<TModule> factory) 
+            where TModule : IDotNetStackModule
+        {
+            _logger.LogDebug($"      ModuleManager > AttachNewOrGetConfigured started");
+
+            var module = _moduleManager.AttachNewOrGetConfigured(factory);
+            LogModule(module);
+                
+            _logger.LogDebug($"      ModuleManager > AttachNewOrGetConfigured ended");
+            
+            return module;
+        }
+        
         public void DisableModule<TModule>() 
             where TModule : IDotNetStackModule
         {
@@ -101,7 +118,7 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
         public IReadOnlyList<IDotNetStackModule> EnabledModules => _moduleManager.EnabledModules.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
         public IReadOnlyList<IDotNetStackModule> DisabledModules => _moduleManager.DisabledModules.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
         public IReadOnlyList<IDotNetStackModule> BootSequence => _moduleManager.BootSequence.Select(m => new VerboseModule(m, _logger)).ToList().AsReadOnly();
-        
+
         public IReadOnlyList<ModuleRuntimeInfo> ModuleInfos => _moduleManager.ModuleInfos;
     }
 }

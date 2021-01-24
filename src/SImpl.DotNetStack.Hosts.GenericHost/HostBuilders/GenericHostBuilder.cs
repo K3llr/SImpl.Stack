@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders;
-using SImpl.DotNetStack.Hosts.GenericHost.Configuration;
+using SImpl.DotNetStack.Hosts.GenericHost.Startup;
 
 namespace SImpl.DotNetStack.Hosts.GenericHost.HostBuilders
 {

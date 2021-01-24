@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SImpl.DotNetStack.Hosts.GenericHost\SImpl.DotNetStack.Hosts.GenericHost.csproj" />
     <ProjectReference Include="..\SImpl.DotNetStack.Hosts.WebHost\SImpl.DotNetStack.Hosts.WebHost.csproj" />
     <ProjectReference Include="..\SImpl.DotNetStack.Runtime\SImpl.DotNetStack.Runtime.csproj" />
     <ProjectReference Include="..\spike.stack.app\spike.stack.app.csproj" />

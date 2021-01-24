@@ -5,13 +5,18 @@ namespace SImpl.DotNetStack.Modules
 {
     public interface IApplicationModule : IApplicationModule<IDotNetStackApplicationBuilder>
     {
-        Task StartAsync();
-        Task StopAsync();
     }
 
-    public interface IApplicationModule<in TApplicationBuilder> : IDotNetStackModule
+    public interface IApplicationModule<in TApplicationBuilder> : IDotNetStackApplicationModule
         where TApplicationBuilder : IDotNetStackApplicationBuilder
     {
         void Configure(TApplicationBuilder builder);
+    }
+
+    public interface IDotNetStackApplicationModule : IDotNetStackModule
+    {
+        Task StartAsync();
+        
+        Task StopAsync();
     }
 }

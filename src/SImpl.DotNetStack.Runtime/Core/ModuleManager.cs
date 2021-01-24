@@ -15,15 +15,33 @@ namespace SImpl.DotNetStack.Runtime.Core
             where TModule : IDotNetStackModule
         {
             var configuredModule = GetConfiguredModule<TModule>();
-            if (configuredModule is not null)
+            if (configuredModule is null)
+            {
+                var moduleContext = new ModuleRuntimeInfo(module);
+                moduleContext.SetState(ModuleState.Attached);
+
+                _modulesInfos.Add(moduleContext);
+            }
+            else
             {
                 throw new InvalidConfigurationException($"A module with the type {nameof(TModule)} has already been attached to the stack.");
             }
-
-            var moduleContext = new ModuleRuntimeInfo(module);
-            moduleContext.SetState(ModuleState.Attached);
-            
-            _modulesInfos.Add(moduleContext);
+        }
+        
+        public TModule AttachNewOrGetConfigured<TModule>(Func<TModule> factory)
+            where TModule : IDotNetStackModule
+        {
+            var configuredModule = GetConfiguredModule<TModule>();
+            if (configuredModule is not null)
+            {
+                return configuredModule;
+            }
+            else
+            {
+                configuredModule = factory.Invoke();
+                AttachModule(configuredModule);
+                return configuredModule;
+            }
         }
 
         public void DisableModule<TModule>()

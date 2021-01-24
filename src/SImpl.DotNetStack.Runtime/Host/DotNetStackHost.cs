@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using SImpl.DotNetStack.Runtime.Core;
 
 namespace SImpl.DotNetStack.Runtime.Host
 {
@@ -23,14 +24,14 @@ namespace SImpl.DotNetStack.Runtime.Host
 
         public async Task StartAsync(CancellationToken cancellationToken = new CancellationToken())
         {  
-            await _bootManager.StartAsync();
             await _host.StartAsync(cancellationToken);
+            await _bootManager.StartAsync();
         }
 
         public async Task StopAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            await _host.StopAsync(cancellationToken);
             await _bootManager.StopAsync();
+            await _host.StopAsync(cancellationToken);
         }
 
         public IServiceProvider Services => _host.Services;

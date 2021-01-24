@@ -1,41 +1,50 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Hosts.WebHost.ApplicationBuilder;
+using SImpl.DotNetStack.Hosts.WebHost.Modules;
 using SImpl.DotNetStack.Modules;
 using spike.stack.app.Application;
 using spike.stack.app.Domain;
 
 namespace spike.stack.module
 {
-    public class TestApplicationModule : IApplicationModule, IServicesCollectionConfigureModule, IPreInitModule
+    public class GreetingsWebModule : IWebHostApplicationModule, IServicesCollectionConfigureModule
     {
-        public void Configure(IDotNetStackApplicationBuilder builder)
+        private IGreetingAppService _greetingAppService;
+
+        public void Configure(IWebHostApplicationBuilder builder)
         {
             
         }
 
-        public string Name => nameof(TestApplicationModule);
-        
-        public void PreInit()
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            _greetingAppService = app.ApplicationServices.GetService<IGreetingAppService>();
         }
+
+        public string Name => nameof(GreetingsWebModule);
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // not called before configure
             services.AddTransient<IGreetingAppService, GreetingAppService>();
             services.AddTransient<IGreetingService, SpanishGreetingService>();
-            services.AddHostedService<GreetingHostedService>();
         }
 
         public Task StartAsync()
         {
+            Console.WriteLine(_greetingAppService.SayHi("Keller"));
             return Task.CompletedTask;
         }
 
         public Task StopAsync()
         {
+            Console.WriteLine(_greetingAppService.SayBye("Keller"));
             return Task.CompletedTask;
         }
     }

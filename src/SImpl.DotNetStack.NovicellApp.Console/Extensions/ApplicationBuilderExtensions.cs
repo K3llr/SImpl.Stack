@@ -10,7 +10,7 @@ namespace SImpl.DotNetStack.App.Extensions
         public static void UseNovicellConsoleApp(this IDotNetStackApplicationBuilder stackBuilder, Action<IConsoleAppBuilder> configure)
         {
             // TODO: Need to be application modules only
-            stackBuilder.AttachNewOrGetConfiguredModule(() => new NovicellAppConsoleRuntimeModule(configure));
+            stackBuilder.AttachNewStackAppModuleOrGetConfigured(() => new NovicellAppConsoleRuntimeModule(configure));
             
             // Execute Startup configuration (custom configuration)
             configure?.Invoke(ConsoleBootManager.CurrentConsoleBuilder);

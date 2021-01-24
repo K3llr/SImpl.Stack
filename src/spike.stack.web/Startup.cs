@@ -3,12 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SImpl.DotNetStack.ApplicationBuilders;
+using SImpl.DotNetStack.Hosts.WebHost;
 using SImpl.DotNetStack.Hosts.WebHost.Extensions;
-using SImpl.DotNetStack.Runtime.ApplicationBuilders;
-using spike.stack.app.Application;
-using spike.stack.app.Domain;
 using spike.stack.module;
+using SImpl.DotNetStack.Runtime.Core;
 
 namespace spike.stack.web
 {
@@ -40,11 +38,6 @@ namespace spike.stack.web
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
-            });
-
-            app.UseDotNetStackWebApp(builder =>
-            {
-                builder.Use<TestStackedApplicationModule>();
             });
         }
     }

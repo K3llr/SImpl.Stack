@@ -5,28 +5,28 @@ namespace SImpl.DotNetStack.Runtime.ApplicationBuilders
 {
     public static class DotNetStackApplicationBuilderExtensions
     {
-        public static void Use<TModule>(this IDotNetStackApplicationBuilder stackHostBuilder)
+        public static void UseStackAppModule<TModule>(this IDotNetStackApplicationBuilder stackAppBuilder)
             where TModule : IApplicationModule, new()
         {
-            stackHostBuilder.Use(() => new TModule());
+            stackAppBuilder.UseStackAppModule(() => new TModule());
         }
         
-        public static void Use<TModule>(this IDotNetStackApplicationBuilder stackHostBuilder, TModule module)
+        public static void UseStackAppModule<TModule>(this IDotNetStackApplicationBuilder stackAppBuilder, TModule module)
             where TModule : IApplicationModule
         {
-            stackHostBuilder.Use(() => module);
+            stackAppBuilder.UseStackAppModule(() => module);
         }
         
-        public static TModule AttachNewOrGetConfiguredModule<TModule>(this IDotNetStackApplicationBuilder stackHostBuilder)
+        public static TModule AttachNewOrGetConfiguredModule<TModule>(this IDotNetStackApplicationBuilder stackAppBuilder)
             where TModule : IApplicationModule, new()
         {
-            return stackHostBuilder.AttachNewOrGetConfiguredModule(() => new TModule());
+            return stackAppBuilder.AttachNewStackAppModuleOrGetConfigured(() => new TModule());
         }
         
-        public static TModule AttachNewOrGetConfiguredModule<TModule>(this IDotNetStackApplicationBuilder stackHostBuilder, TModule module)
+        public static TModule AttachNewOrGetConfiguredModule<TModule>(this IDotNetStackApplicationBuilder stackAppBuilder, TModule module)
             where TModule : IApplicationModule
         {
-            return stackHostBuilder.AttachNewOrGetConfiguredModule(() => module);
+            return stackAppBuilder.AttachNewStackAppModuleOrGetConfigured(() => module);
         }
     }
 }

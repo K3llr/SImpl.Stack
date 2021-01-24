@@ -78,6 +78,12 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
             _hostBuilder.Use(factory);
         }
 
+        public TModule GetConfiguredModule<TModule>()
+            where TModule : IDotNetStackModule
+        {
+            return _hostBuilder.GetConfiguredModule<TModule>();
+        }
+
         public TModule AttachNewOrGetConfiguredModule<TModule>(Func<TModule> factory) 
             where TModule : IDotNetStackModule
         {

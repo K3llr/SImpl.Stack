@@ -66,11 +66,18 @@ namespace SImpl.NanoContainer
 
         public TService New<TService>()
         {
-            return (TService)new TypedServiceRegistration<TService>(Resolve).Resolve();
+            return New<TService>(new Dictionary<Type, object>());
+        }
+        
+        public TService New<TService>(IDictionary<Type, object> overrideScope)
+        {
+            return (TService)new TypedServiceRegistration<TService>(key => overrideScope.ContainsKey(key) ? overrideScope[key] : Resolve(key)).Resolve();
         }
 
         private INanoContainer AddServiceRegistration(Type key, INanoServiceRegistration registration, bool overwrite = false)
         {
+            // TODO: Detect recursive dependency
+            
             if (_hasResolved)
             {
                 throw new Exception($"Cannot add new registrations after first Resolve()");

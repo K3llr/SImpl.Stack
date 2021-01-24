@@ -1,8 +1,8 @@
 using System;
 using SImpl.DotNetStack.HostBuilders;
 using SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders;
-using SImpl.DotNetStack.Hosts.GenericHost.Configuration;
 using SImpl.DotNetStack.Hosts.GenericHost.HostBuilders;
+using SImpl.DotNetStack.Hosts.GenericHost.Startup;
 
 namespace SImpl.DotNetStack.Hosts.GenericHost.Extensions
 {
@@ -17,7 +17,7 @@ namespace SImpl.DotNetStack.Hosts.GenericHost.Extensions
             
             // Get startup and configure application builder 
             var startup = genericHostConfig.GetConfiguredStartup();
-            var applicationBuilder = new ApplicationBuilder(stackHostBuilder, startup.Configure, startup.ConfigureServices); 
+            var applicationBuilder = new ApplicationBuilder(startup.Configure, startup.ConfigureServices); 
             applicationBuilder.Configure();
         }
     }

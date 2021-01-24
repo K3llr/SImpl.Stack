@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.HostBuilders;
 using SImpl.DotNetStack.Modules;
 using SImpl.DotNetStack.Runtime.Core;
-using SImpl.DotNetStack.Runtime.Exceptions;
 using SImpl.DotNetStack.Runtime.Host;
 
 namespace SImpl.DotNetStack.Runtime.HostBuilders
@@ -27,36 +26,34 @@ namespace SImpl.DotNetStack.Runtime.HostBuilders
         public void Use<TModule>(Func<TModule> factory)
             where TModule : IDotNetStackModule
         {
-            var module = _moduleManager.GetConfiguredModule<TModule>();
-            if (module is null)
-            {
-                _moduleManager.AttachModule(factory.Invoke());
-            }
-            else
-            {
-                throw new InvalidConfigurationException($"A module with the type {nameof(TModule)} has already been attached to the stack.");
-            }
+            _moduleManager.AttachModule(factory.Invoke());
+        }
+
+        public TModule GetConfiguredModule<TModule>() where TModule : IDotNetStackModule
+        {
+            return _moduleManager.GetConfiguredModule<TModule>();
         }
 
         public TModule AttachNewOrGetConfiguredModule<TModule>(Func<TModule> factory)
             where TModule : IDotNetStackModule
         {
-            var module = _moduleManager.GetConfiguredModule<TModule>();
-            if (module is null)
-            {
-                module = factory.Invoke();
-                _moduleManager.AttachModule(module);
-            }
-
-            return module;
+            return _moduleManager.AttachNewOrGetConfigured(factory);
         }
 
         public void Configure(IDotNetStackHostBuilder hostBuilder, Action<IDotNetStackHostBuilder> configureDelegate)
         {
+            // Configure the stack host (aka attach all stack host modules) 
             configureDelegate?.Invoke(hostBuilder);
             
+            // Initialize all stack host modules
+            // If host app is configures, PreInit will attach application modules
             _bootManager.PreInit();
+            
+            // All modules (host and application) has been attached
+            // Modules register services
             _bootManager.ConfigureServices(hostBuilder);
+            
+            // Modules configure the host builder
             _bootManager.ConfigureHostBuilder(hostBuilder);
         }
 

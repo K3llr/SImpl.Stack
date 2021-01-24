@@ -6,12 +6,18 @@ namespace SImpl.DotNetStack.Hosts.GenericHost.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
-        public static void UseDotNetStackGenericApp(this IApplicationBuilder applicationBuilder, Action<IGenericStackApplicationBuilder> configureDelegate)
+        public static void UseDotNetStackGenericApp(this IApplicationBuilder applicationBuilder, Action<IGenericHostApplicationBuilder> configureDelegate)
         {
-            var stackApplicationBuilder = new GenericStackApplicationBuilder(DotNetStackRuntimeServices.Current.ApplicationBuilder, configureDelegate, applicationBuilder.ConfigureServices);
+            if (DotNetStackRuntimeServices.Current.Flags.Verbose)
+            {
+                // TODO: attach verbose decorators
+            }
+            
+            var stackApplicationBuilder = DotNetStackRuntimeServices.Current.BootContainer.New<GenericHostApplicationBuilder>();
             
             // attach application
-            applicationBuilder.HostBuilder.AttachNewOrGetConfiguredModule(() => new GenericHostStackApplicationModule(stackApplicationBuilder));
+            DotNetStackRuntimeServices.Current.HostBuilder.AttachNewOrGetConfiguredModule(
+                () => new GenericHostStackApplicationModule(stackApplicationBuilder, configureDelegate, applicationBuilder.ConfigureServices));
         }
     }
 }

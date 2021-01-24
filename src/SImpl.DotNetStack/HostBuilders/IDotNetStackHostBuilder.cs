@@ -9,6 +9,9 @@ namespace SImpl.DotNetStack.HostBuilders
         void Use<TModule>(Func<TModule> factory)
             where TModule : IDotNetStackModule;
         
+        TModule GetConfiguredModule<TModule>()
+            where TModule : IDotNetStackModule;
+
         TModule AttachNewOrGetConfiguredModule<TModule>(Func<TModule> factory)
             where TModule : IDotNetStackModule;
 

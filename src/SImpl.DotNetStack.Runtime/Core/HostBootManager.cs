@@ -3,10 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.Modules;
-using SImpl.DotNetStack.Runtime.Core;
 using SImpl.DotNetStack.Runtime.Extensions;
 
-namespace SImpl.DotNetStack.Runtime.Host
+namespace SImpl.DotNetStack.Runtime.Core
 {
     public class HostBootManager : IHostBootManager
     {
@@ -28,10 +27,11 @@ namespace SImpl.DotNetStack.Runtime.Host
             // because the collection is expanded inside the loop due to recursive nature of the stack.
             for (var i = 0; i < _moduleManager.EnabledModules.Count; i++)
             {
-                var module = _moduleManager.EnabledModules[i] as IPreInitModule;
-                module?.PreInit();
-                
-                preInitModules.Add(module);
+                if (_moduleManager.EnabledModules[i] is IPreInitModule module)
+                {
+                    module.PreInit();
+                    preInitModules.Add(module);
+                }
             }
 
             return preInitModules;

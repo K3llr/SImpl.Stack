@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders;
 
-namespace SImpl.DotNetStack.Hosts.GenericHost.Configuration
+namespace SImpl.DotNetStack.Hosts.GenericHost.Startup
 {
     public class CompositeStartupConfiguration : IStartupConfiguration
     {

@@ -2,19 +2,20 @@ using System;
 using Novicell.App.AppBuilders;
 using SImpl.DotNetStack.HostBuilders;
 using SImpl.DotNetStack.Runtime.HostBuilders;
+using SImpl.DotNetStack.Runtime.ApplicationBuilders;
 
 namespace spike.stack.module
 {
-    public static class AppBuilderExtension
+    public static partial class AppBuilderExtension
     {
         public static void UseDotNetStackTestModule(this IDotNetStackHostBuilder stackHostBuilders)
         {
-            stackHostBuilders.Use<DotNetStackTestModule>();
+            stackHostBuilders.UseStackAppModule<DotNetStackTestModule>();
         }
         
         public static void UseHybridTestModule(this IDotNetStackHostBuilder stackHostBuilder)
         {
-            stackHostBuilder.Use<HybridTestModule>();
+            stackHostBuilder.UseStackAppModule<HybridTestModule>();
         }
         
         public static void UseHybridTestModule(this INovicellAppBuilder novicellAppBuilder)

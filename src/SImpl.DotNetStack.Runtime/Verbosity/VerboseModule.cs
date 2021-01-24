@@ -8,7 +8,14 @@ using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.Runtime.Verbosity
 {
-    public class VerboseModule : IPreInitModule, IServicesCollectionConfigureModule, IHostBuilderConfigureModule, IHostConfigureModule, IStartableModule, IApplicationModule, IDiagnosticsModule
+    public class VerboseModule : 
+        IPreInitModule, 
+        IServicesCollectionConfigureModule, 
+        IHostBuilderConfigureModule, 
+        IHostConfigureModule, 
+        IStartableModule, 
+        IApplicationModule, 
+        IDiagnosticsModule
     {
         private readonly IDotNetStackModule _module;
         private readonly ILogger<VerboseHost> _logger;
@@ -75,7 +82,7 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
             }
         }
 
-        async Task IApplicationModule.StartAsync()
+        async Task IDotNetStackApplicationModule.StartAsync()
         {
             if (_module is IApplicationModule module)
             {
@@ -84,7 +91,7 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
             }
         }
 
-        async Task IApplicationModule.StopAsync()
+        async Task IDotNetStackApplicationModule.StopAsync()
         {
             if (_module is IApplicationModule module)
             {

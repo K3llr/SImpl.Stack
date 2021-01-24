@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SImpl.DotNetStack.Runtime\SImpl.DotNetStack.Runtime.csproj" />
     <ProjectReference Include="..\SImpl.DotNetStack\SImpl.DotNetStack.csproj" />
   </ItemGroup>

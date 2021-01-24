@@ -1,6 +1,6 @@
-using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Diagnostics;
 using SImpl.DotNetStack.HostBuilders;
+using SImpl.NanoContainer;
 
 namespace SImpl.DotNetStack.Runtime.Core
 {
@@ -19,17 +19,17 @@ namespace SImpl.DotNetStack.Runtime.Core
             }
         }
 
-        public DotNetStackRuntimeServices(IDotNetStackHostBuilder hostBuilder, IDotNetStackApplicationBuilder applicationBuilder, IModuleManager moduleManager, IDiagnosticsCollector diagnostics, RuntimeFlags runtimeFlags)
+        public DotNetStackRuntimeServices(INanoContainer container, IDotNetStackHostBuilder hostBuilder, IModuleManager moduleManager, IDiagnosticsCollector diagnostics, RuntimeFlags runtimeFlags)
         {
+            BootContainer = container;
             HostBuilder = hostBuilder;
-            ApplicationBuilder = applicationBuilder;
             ModuleManager = moduleManager;
             Diagnostics = diagnostics;
             Flags = runtimeFlags;
         }
 
+        public INanoContainer BootContainer { get; }
         public IDotNetStackHostBuilder HostBuilder { get; }
-        public IDotNetStackApplicationBuilder ApplicationBuilder { get; }
         public IModuleManager ModuleManager { get; }
         public IDiagnosticsCollector Diagnostics { get; }
         public RuntimeFlags Flags { get; }

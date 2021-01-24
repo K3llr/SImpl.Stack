@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.Modules;
 
-namespace SImpl.DotNetStack.Runtime.Host
+namespace SImpl.DotNetStack.Runtime.Core
 {
     public interface IHostBootManager
     {

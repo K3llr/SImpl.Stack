@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace SImpl.NanoContainer
 {
@@ -19,5 +20,7 @@ namespace SImpl.NanoContainer
         object Resolve(Type serviceType);
 
         TService New<TService>();
+
+        TService New<TService>(IDictionary<Type,object> overrideScope);
     }
 }

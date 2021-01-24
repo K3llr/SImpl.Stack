@@ -3,7 +3,7 @@ using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.Hosts.GenericHost.Modules
 {
-    public interface IGenericStackApplicationModule : IApplicationModule<IGenericStackApplicationBuilder>
+    public interface IGenericHostApplicationModule : IApplicationModule<IGenericHostApplicationBuilder>
     {
         
     }

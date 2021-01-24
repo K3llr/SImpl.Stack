@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Diagnostics;
 using SImpl.DotNetStack.HostBuilders;
-using SImpl.DotNetStack.Runtime.Application;
 using SImpl.DotNetStack.Runtime.ApplicationBuilders;
 using SImpl.DotNetStack.Runtime.Core;
 using SImpl.DotNetStack.Runtime.Diagnostics;
@@ -59,7 +58,6 @@ namespace SImpl.DotNetStack.Runtime
             
             // register application builder and boot manager
             container.Register<IApplicationBootManager, ApplicationBootManager>();
-            container.Register<IDotNetStackApplicationBuilder, DotNetStackApplicationBuilder>();
             
             // Handle cli flags
             if (flags.Diagnostics)

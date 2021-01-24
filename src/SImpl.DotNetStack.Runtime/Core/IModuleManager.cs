@@ -9,6 +9,9 @@ namespace SImpl.DotNetStack.Runtime.Core
         void AttachModule<TModule>(TModule module)
             where TModule : IDotNetStackModule;
 
+        TModule AttachNewOrGetConfigured<TModule>(Func<TModule> factory)
+            where TModule : IDotNetStackModule;
+        
         void DisableModule<TModule>()
             where TModule : IDotNetStackModule;
         
