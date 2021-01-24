@@ -23,7 +23,6 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
 
                 var result = targetMethod.Invoke(_decorated, args);
 
-                // LogAfter(targetMethod, args, result);
                 return result;
             }
             catch (Exception ex) when (ex is TargetInvocationException)
@@ -53,11 +52,6 @@ namespace SImpl.DotNetStack.Runtime.Verbosity
         private void LogException(Exception exception, MethodInfo methodInfo = null)
         {
             _logger.LogDebug($"  {typeof(T).Name} > {_decorated.Name} > {methodInfo?.Name}  threw exception:\n{exception}");
-        }
-
-        private void LogAfter(MethodInfo methodInfo, object[] args, object result)
-        {
-            _logger.LogDebug($"  {typeof(T).Name} > {_decorated.Name} > {methodInfo.Name} > ended");
         }
 
         private void LogBefore(MethodInfo methodInfo, object[] args)

@@ -27,7 +27,9 @@ namespace spike.stack.web
                 })
                 .AddDotNetStack(args, stack =>
                 {
-                    stack.ConfigureStackWebHostApp(app =>
+                    stack.ConfigureWebHostStackApp<Startup>();
+                    
+                    /*stack.ConfigureWebHostStackApp(app =>
                     {
                         app.UseWebHostStackAppModule<GreetingsWebModule>();
                 
@@ -42,7 +44,7 @@ namespace spike.stack.web
                 
                         app.UseWebHostStackAppModule<WebHostApplicationTestModule>();
                         //stack.UseWebApplicationTestModule();
-                    });
+                    });*/
                     /*stack.ConfigureServices(services =>
                     {
                         // Works
