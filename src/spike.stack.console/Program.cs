@@ -3,15 +3,12 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.HostBuilders;
-using SImpl.DotNetStack.Hosts.GenericHost.Extensions;
-using SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders;
-using SImpl.DotNetStack.Runtime.HostBuilders;
-using SImpl.DotNetStack.Runtime.ApplicationBuilders;
+using SImpl.Stack.ApplicationBuilders;
+using SImpl.Stack.Hosts.GenericHost.Extensions;
 using spike.stack.app.Application;
 using spike.stack.app.Domain;
 using spike.stack.module;
+using HostBuilderExtensions = SImpl.Stack.Runtime.HostBuilders.HostBuilderExtensions;
 
 namespace spike.stack.console
 {
@@ -19,8 +16,7 @@ namespace spike.stack.console
     {
         public static async Task Main(string[] args)
         {
-            await Host.CreateDefaultBuilder(args)
-                .SImply(args, stack =>
+            await HostBuilderExtensions.SImply(Host.CreateDefaultBuilder(args), args, stack =>
                 {
                    /* stack.ConfigureServices(services =>
                     {
@@ -32,16 +28,16 @@ namespace spike.stack.console
 
                     // stack.ConfigureGenericHostStackApp<Startup>();
                     
-                    stack.ConfigureGenericHostStackApp(host => 
+                    DotNetStackHostBuilderExtensions.ConfigureGenericHostStackApp(stack, host => 
                     { 
                         host.UseStartup<Startup>();
                         host.ConfigureStackApplication(app =>
                         {
-                            app.UseStackAppModule<TestStackedApplicationModule>();
+                            DotNetStackApplicationBuilderExtensions.UseStackAppModule<TestStackedApplicationModule>(app);
             
-                            app.UseStackAppModule<ApplicationTestModule>();
+                            DotNetStackApplicationBuilderExtensions.UseStackAppModule<ApplicationTestModule>(app);
                             //stack.UseApplicationTestModule();
-                            app.UseGenericHostStackAppModule<GenericHostApplicationTestModule>();
+                            GenericHostApplicationBuilderExtensions.UseGenericHostStackAppModule<GenericHostApplicationTestModule>(app);
                             //stack.UseGenericHostApplicationTestModule();*/
                         });
                     });

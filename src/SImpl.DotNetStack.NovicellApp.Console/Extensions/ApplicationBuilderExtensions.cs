@@ -1,7 +1,7 @@
 using System;
 using Novicell.App.AppBuilders;
 using Novicell.App.Console;
-using SImpl.DotNetStack.ApplicationBuilders;
+using SImpl.Stack.ApplicationBuilders;
 
 namespace SImpl.DotNetStack.App.Extensions
 {

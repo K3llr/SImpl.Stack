@@ -1,4 +1,4 @@
-using SImpl.DotNetStack.HostBuilders;
+using SImpl.Stack.HostBuilders;
 
 namespace SImpl.DotNetStack.GenericHost.DependencyInjection.Configuration
 {

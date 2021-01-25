@@ -3,10 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.Hosts.WebHost.ApplicationBuilder;
-using SImpl.DotNetStack.Hosts.WebHost.Modules;
-using SImpl.DotNetStack.Modules;
+using SImpl.Stack.ApplicationBuilders;
+using SImpl.Stack.Hosts.WebHost.Modules;
+using SImpl.Stack.Modules;
 using spike.stack.app.Application;
 using spike.stack.app.Domain;
 

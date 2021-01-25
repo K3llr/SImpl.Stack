@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SImpl.DotNetStack.Hosts.WebHost\SImpl.DotNetStack.Hosts.WebHost.csproj" />
     <ProjectReference Include="..\spike.stack.module\spike.stack.module.csproj" />
   </ItemGroup>
 

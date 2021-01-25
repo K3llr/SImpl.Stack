@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Novicell.App.AppBuilders;
-using SImpl.DotNetStack.Modules;
+using SImpl.Stack.Modules;
 
 namespace spike.stack.module
 {

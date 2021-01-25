@@ -1,16 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SImpl.DotNetStack.HostBuilders;
-using SImpl.DotNetStack.Hosts.WebHost;
-using SImpl.DotNetStack.Hosts.WebHost.Extensions;
-using SImpl.DotNetStack.Runtime.HostBuilders;
-using spike.stack.app.Application;
-using spike.stack.app.Domain;
-using spike.stack.module;
-using SImpl.DotNetStack.Hosts.WebHost.ApplicationBuilder;
-using SImpl.DotNetStack.Runtime.ApplicationBuilders;
+using SImpl.Stack.Hosts.WebHost.Extensions;
+using SImpl.Stack.Runtime.HostBuilders;
 
 namespace spike.stack.web
 {

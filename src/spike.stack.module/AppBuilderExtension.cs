@@ -1,8 +1,7 @@
 using System;
 using Novicell.App.AppBuilders;
-using SImpl.DotNetStack.HostBuilders;
-using SImpl.DotNetStack.Runtime.HostBuilders;
-using SImpl.DotNetStack.Runtime.ApplicationBuilders;
+using SImpl.Stack.HostBuilders;
+using SImpl.Stack.Runtime.HostBuilders;
 
 namespace spike.stack.module
 {

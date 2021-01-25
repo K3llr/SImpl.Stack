@@ -1,7 +1,7 @@
 using System;
 using Novicell.App;
 using Novicell.App.AppBuilders;
-using SImpl.DotNetStack.Modules;
+using SImpl.Stack.Modules;
 
 namespace spike.stack.module
 {
