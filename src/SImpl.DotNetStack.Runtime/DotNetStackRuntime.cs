@@ -10,6 +10,7 @@ using SImpl.DotNetStack.Runtime.Core;
 using SImpl.DotNetStack.Runtime.Diagnostics;
 using SImpl.DotNetStack.Runtime.Host;
 using SImpl.DotNetStack.Runtime.HostBuilders;
+using SImpl.DotNetStack.Runtime.Modules;
 using SImpl.DotNetStack.Runtime.Verbosity;
 using SImpl.NanoContainer;
 
@@ -17,7 +18,7 @@ namespace SImpl.DotNetStack.Runtime
 {
     public class DotNetStackRuntime
     {
-        public static IHostBuilder Init(IHostBuilder hostBuilder, string[] args, Action<IDotNetStackHostBuilder> configureDelegate)
+        public static IHostBuilder Boot(IHostBuilder hostBuilder, string[] args, Action<IDotNetStackHostBuilder> configureDelegate)
         {
             var diagnostics = DiagnosticsCollector.Create();
             
@@ -27,54 +28,60 @@ namespace SImpl.DotNetStack.Runtime
             // Parse command line arguments
             var flags = ParseArgs(args);
 
+            // Init boot container
+            var bootContainer = InitBootContainer(hostBuilder, flags, diagnostics);
+            
+            // Init runtime services
+            DotNetStackRuntimeServices.Init(bootContainer.Resolve<IDotNetStackRuntimeServices>());
+            
             // Create .NET Stack host builder
-            var dotNetStackHostBuilder = CreateDotNetStackHostBuilder(hostBuilder, flags, diagnostics);
+            var dotNetStackHostBuilder = bootContainer.Resolve<IDotNetStackHostBuilder>();
+            
+            // Pre-installed module
+            dotNetStackHostBuilder.Use(() => new StackRuntimeModule(bootContainer));
             
             // Start configuration of the host builder
             dotNetStackHostBuilder.Configure(dotNetStackHostBuilder, configureDelegate);
             
             return dotNetStackHostBuilder;
         }
-        
-        private static IDotNetStackHostBuilder CreateDotNetStackHostBuilder(IHostBuilder hostBuilder, RuntimeFlags flags, DiagnosticsCollector diagnostics)
+
+        private static INanoContainer InitBootContainer(IHostBuilder hostBuilder, RuntimeFlags flags, DiagnosticsCollector diagnostics)
         {
             var container = new NanoContainer.NanoContainer();
-            
+
             // Register container
             container.Register<INanoContainer>(container);
-            
+
             // Register parameters
             container.Register<IHostBuilder>(hostBuilder);
             container.Register<IDiagnosticsCollector>(diagnostics);
             container.Register<RuntimeFlags>(flags);
-            
+
             // Register core services
             container.Register<IModuleManager, ModuleManager>();
             container.Register<IBootSequenceFactory, BootSequenceFactory>();
             container.Register<IDotNetStackRuntimeServices, DotNetStackRuntimeServices>();
-            
+
             // Register host builder and boot manager
             container.Register<IHostBootManager, HostBootManager>();
             container.Register<IDotNetStackHostBuilder, DotNetStackHostBuilder>();
-            
+
             // register application builder and boot manager
             container.Register<IApplicationBootManager, ApplicationBootManager>();
-            
+
             // Handle cli flags
             if (flags.Diagnostics)
             {
                 container.AddDiagnostics();
             }
-            
+
             if (flags.Verbose)
             {
                 container.AddVerbosity();
             }
 
-            // Init runtime servcies
-            DotNetStackRuntimeServices.Init(container.Resolve<IDotNetStackRuntimeServices>());
-            
-            return container.Resolve<IDotNetStackHostBuilder>();
+            return container;
         }
 
         private static RuntimeFlags ParseArgs(string[] args)

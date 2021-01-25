@@ -1,6 +1,6 @@
-using SImpl.DotNetStack.Hosts.GenericHost.Modules;
+using SImpl.DotNetStack.Modules;
 
-namespace SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders
+namespace SImpl.DotNetStack.ApplicationBuilders
 {
     public static class GenericHostApplicationBuilderExtensions
     {

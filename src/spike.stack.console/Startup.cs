@@ -12,7 +12,7 @@ using spike.stack.module;
 
 namespace spike.stack.console
 {
-    public class Startup : IStartup
+    public class Startup : IGenericHostStackApplicationStartup
     {
         public void ConfigureServices(IServiceCollection services)
         {
@@ -22,21 +22,18 @@ namespace spike.stack.console
             //services.AddHostedService<GreetingHostedService>();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void ConfigureStackApplication(IGenericHostApplicationBuilder builder)
         {
-            app.UseDotNetStackGenericApp(stack =>
-            {
-                stack.UseStackAppModule<TestStackedApplicationModule>();
-                
-                stack.UseStackAppModule<ApplicationTestModule>();
-                //stack.UseApplicationTestModule();
-                stack.UseGenericHostStackAppModule<GenericHostApplicationTestModule>();
-                //stack.UseGenericHostApplicationTestModule();
-                
-                // NOTE: Below is not supposed to work
-                //stack.UseWebHostStackAppModule<WebHostApplicationTestModule>();
-                //stack.UseWebApplicationTestModule();
-            });
+            builder.UseStackAppModule<TestStackedApplicationModule>();
+            
+            builder.UseStackAppModule<ApplicationTestModule>();
+            //stack.UseApplicationTestModule();
+            builder.UseGenericHostStackAppModule<GenericHostApplicationTestModule>();
+            //stack.UseGenericHostApplicationTestModule();
+            
+            // NOTE: Below is not supposed to work
+            //stack.UseWebHostStackAppModule<WebHostApplicationTestModule>();
+            //stack.UseWebApplicationTestModule();
 
             /*stackBuilder.UseNovicellConsoleApp(consoleApp =>
             {

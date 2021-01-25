@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace SImpl.DotNetStack.ApplicationBuilders
+namespace SImpl.DotNetStack.Application
 {
     public interface IDotNetStackApplication
     {

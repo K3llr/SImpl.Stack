@@ -1,44 +1,39 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders;
 
 namespace SImpl.DotNetStack.Hosts.GenericHost.Startup
 {
-    public class GenericHostStartupConfiguration : IStartupConfiguration
+    public class GenericHostStartupConfiguration
     {
-        private IStartup _startup;
-        private Action<IServiceCollection> _serviceDelegate;
+        private IGenericHostStackApplicationStartup _startup;
+        private readonly GenericHostConfigurableStartup _configurableStartup = new GenericHostConfigurableStartup();
 
         public void UseStartup<TStartup>()
-            where TStartup : IStartup, new()
+            where TStartup : IGenericHostStackApplicationStartup, new()
         {
             UseStartup(new TStartup());
         }
         
-        public void UseStartup(Action<IApplicationBuilder> appBuilder)
-        {
-            UseStartup(new ConfigurableStartup(appBuilder));
-        }
-        
-        public void UseStartup(IStartup startup)
+        public void UseStartup(IGenericHostStackApplicationStartup startup)
         {
             _startup = startup;
         }
-
-        public void UseServiceConfiguration(Action<IServiceCollection> services)
+        
+        public void ConfigureStackApplication(Action<IGenericHostApplicationBuilder> configureDelegate)
         {
-            _serviceDelegate = services;
+            _configurableStartup.WithStackApplicationConfiguration(configureDelegate);
+        }
+        
+        public void ConfigureServices(Action<IServiceCollection> services)
+        {
+            _configurableStartup.WithServiceConfiguration(services);
         }
 
-        public IStartup GetConfiguredStartup()
+        public IGenericHostStackApplicationStartup GetConfiguredStartup()
         {
-            return new ConfigurableStartup()
-                .WithConfiguration(configureDelegate => _startup?.Configure(configureDelegate))
-                .WithServiceConfiguration(services =>
-                {
-                    _serviceDelegate?.Invoke(services);
-                    _startup?.ConfigureServices(services);
-                });
+            return _startup ?? _configurableStartup;
         }
     }
 }

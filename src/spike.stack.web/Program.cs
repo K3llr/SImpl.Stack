@@ -25,9 +25,29 @@ namespace spike.stack.web
                 {
                     webHostBuilder.UseStartup<Startup>();
                 })
-                .AddDotNetStack(args, stack =>
+                .SImply(args, stack =>
                 {
-                    stack.ConfigureWebHostStackApp<Startup>();
+                    stack.ConfigureWebHostStackApp(host =>
+                    {
+                        host.UseStartup<Startup>();
+                        
+                        /*host.ConfigureStackApplication(app =>
+                        {
+                            app.UseWebHostStackAppModule<GreetingsWebModule>();
+                
+                            app.UseStackAppModule<TestStackedApplicationModule>();
+                        
+                            app.UseStackAppModule<ApplicationTestModule>();
+                            //stack.UseApplicationTestModule();
+                
+                            // NOTE: Below is not supposed to work
+                            //stack.UseGenericHostStackAppModule<GenericHostApplicationTestModule>();
+                            //stack.UseGenericHostApplicationTestModule();
+                
+                            app.UseWebHostStackAppModule<WebHostApplicationTestModule>();
+                            //stack.UseWebApplicationTestModule();
+                        });*/
+                    });
                     
                     /*stack.ConfigureWebHostStackApp(app =>
                     {

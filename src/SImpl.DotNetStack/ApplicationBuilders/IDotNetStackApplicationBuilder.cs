@@ -1,4 +1,5 @@
 using System;
+using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.ApplicationBuilders

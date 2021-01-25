@@ -10,12 +10,18 @@ namespace SImpl.DotNetStack.Hosts.WebHost.AspNetCore
 {
     public class WebHostStackApplicationStartupFilter : IStartupFilter
     {
+        private readonly IBootSequenceFactory _bootSequenceFactory;
+
+        public WebHostStackApplicationStartupFilter(IBootSequenceFactory bootSequenceFactory)
+        {
+            _bootSequenceFactory = bootSequenceFactory;
+        }
+        
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
             return builder =>
             {
-                var moduleManager = DotNetStackRuntimeServices.Current.BootContainer.Resolve<IBootSequenceFactory>();
-                moduleManager.New().ForEach<IAspNetApplicationModule>(module => module.Configure(builder, builder.ApplicationServices.GetService<IWebHostEnvironment>()));
+                _bootSequenceFactory.New().ForEach<IAspNetApplicationModule>(module => module.Configure(builder, builder.ApplicationServices.GetService<IWebHostEnvironment>()));
                 
                 next(builder);
             };

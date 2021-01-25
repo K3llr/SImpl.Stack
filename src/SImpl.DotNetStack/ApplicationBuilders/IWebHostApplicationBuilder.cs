@@ -1,8 +1,7 @@
 using System;
-using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.Hosts.WebHost.Modules;
+using SImpl.DotNetStack.Modules;
 
-namespace SImpl.DotNetStack.Hosts.WebHost.ApplicationBuilder
+namespace SImpl.DotNetStack.ApplicationBuilders
 {
     public interface IWebHostApplicationBuilder : IDotNetStackApplicationBuilder
     {

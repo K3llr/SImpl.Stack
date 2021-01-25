@@ -1,6 +1,6 @@
-using SImpl.DotNetStack.Hosts.WebHost.Modules;
+using SImpl.DotNetStack.Modules;
 
-namespace SImpl.DotNetStack.Hosts.WebHost.ApplicationBuilder
+namespace SImpl.DotNetStack.ApplicationBuilders
 {
     public static class WebHostApplicationBuilderExtensions
     {

@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
+using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Diagnostics;
 using SImpl.DotNetStack.Hosts.WebHost.ApplicationBuilder;
@@ -15,13 +15,15 @@ namespace SImpl.DotNetStack.Hosts.WebHost
     {
         private readonly IWebHostApplicationBuilder _applicationBuilder;
         private readonly Action<IWebHostApplicationBuilder> _configureDelegate;
-        
+        private readonly Action<IServiceCollection> _servicesDelegate;
+
         private IDotNetStackApplication _application;
 
-        public WebHostStackApplicationModule(IWebHostApplicationBuilder applicationBuilder, Action<IWebHostApplicationBuilder> configureDelegate)
+        public WebHostStackApplicationModule(IWebHostApplicationBuilder applicationBuilder, Action<IWebHostApplicationBuilder> configureDelegate, Action<IServiceCollection> servicesDelegate)
         {
             _applicationBuilder = applicationBuilder;
             _configureDelegate = configureDelegate;
+            _servicesDelegate = servicesDelegate;
         }
         
         public string Name { get; } = nameof(WebHostStackApplicationModule);
@@ -29,6 +31,7 @@ namespace SImpl.DotNetStack.Hosts.WebHost
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IStartupFilter, WebHostStackApplicationStartupFilter>();
+            _servicesDelegate?.Invoke(services);
         }
 
         public void PreInit()

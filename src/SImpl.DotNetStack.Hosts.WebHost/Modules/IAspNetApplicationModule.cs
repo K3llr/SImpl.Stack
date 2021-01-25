@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using SImpl.DotNetStack.Modules;
 
 namespace SImpl.DotNetStack.Hosts.WebHost.Modules
 {

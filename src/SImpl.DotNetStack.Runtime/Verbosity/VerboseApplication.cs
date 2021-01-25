@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.ApplicationBuilders;
 
 namespace SImpl.DotNetStack.Runtime.Verbosity

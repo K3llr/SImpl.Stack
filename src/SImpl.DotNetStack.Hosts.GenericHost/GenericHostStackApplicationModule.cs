@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Diagnostics;
 using SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders;

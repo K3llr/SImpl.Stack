@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Builder;
+using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Hosts.WebHost.Application;
 using SImpl.DotNetStack.Hosts.WebHost.Modules;

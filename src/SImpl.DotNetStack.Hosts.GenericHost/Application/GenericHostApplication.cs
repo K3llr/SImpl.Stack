@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
+using SImpl.DotNetStack.Application;
 using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.Hosts.GenericHost.Modules;
+using SImpl.DotNetStack.Modules;
 using SImpl.DotNetStack.Runtime.Core;
 
 namespace SImpl.DotNetStack.Hosts.GenericHost.Application

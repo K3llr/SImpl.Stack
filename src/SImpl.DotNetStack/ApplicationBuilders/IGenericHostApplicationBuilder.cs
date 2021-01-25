@@ -1,8 +1,7 @@
 using System;
-using SImpl.DotNetStack.ApplicationBuilders;
-using SImpl.DotNetStack.Hosts.GenericHost.Modules;
+using SImpl.DotNetStack.Modules;
 
-namespace SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders
+namespace SImpl.DotNetStack.ApplicationBuilders
 {
     public interface IGenericHostApplicationBuilder : IDotNetStackApplicationBuilder
     { 

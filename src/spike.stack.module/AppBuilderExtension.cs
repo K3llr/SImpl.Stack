@@ -10,12 +10,12 @@ namespace spike.stack.module
     {
         public static void UseDotNetStackTestModule(this IDotNetStackHostBuilder stackHostBuilders)
         {
-            stackHostBuilders.UseStackAppModule<DotNetStackTestModule>();
+            stackHostBuilders.Use<DotNetStackTestModule>();
         }
         
         public static void UseHybridTestModule(this IDotNetStackHostBuilder stackHostBuilder)
         {
-            stackHostBuilder.UseStackAppModule<HybridTestModule>();
+            stackHostBuilder.Use<HybridTestModule>();
         }
         
         public static void UseHybridTestModule(this INovicellAppBuilder novicellAppBuilder)

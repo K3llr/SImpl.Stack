@@ -1,7 +1,6 @@
-using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Modules;
 
-namespace SImpl.DotNetStack.Runtime.ApplicationBuilders
+namespace SImpl.DotNetStack.ApplicationBuilders
 {
     public static class DotNetStackApplicationBuilderExtensions
     {

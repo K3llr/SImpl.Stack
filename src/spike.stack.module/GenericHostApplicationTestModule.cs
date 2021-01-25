@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
+using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders;
-using SImpl.DotNetStack.Hosts.GenericHost.Modules;
+using SImpl.DotNetStack.Modules;
 
 namespace spike.stack.module
 {

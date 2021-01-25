@@ -3,11 +3,15 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.HostBuilders;
 using SImpl.DotNetStack.Hosts.GenericHost.Extensions;
+using SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders;
 using SImpl.DotNetStack.Runtime.HostBuilders;
+using SImpl.DotNetStack.Runtime.ApplicationBuilders;
 using spike.stack.app.Application;
 using spike.stack.app.Domain;
+using spike.stack.module;
 
 namespace spike.stack.console
 {
@@ -16,7 +20,7 @@ namespace spike.stack.console
         public static async Task Main(string[] args)
         {
             await Host.CreateDefaultBuilder(args)
-                .AddDotNetStack(args, stack =>
+                .SImply(args, stack =>
                 {
                    /* stack.ConfigureServices(services =>
                     {
@@ -25,17 +29,21 @@ namespace spike.stack.console
                         services.AddScoped<IGreetingService, SpanishGreetingService>();
                         services.AddHostedService<GreetingHostedService>();
                     });*/
+
+                    // stack.ConfigureGenericHostStackApp<Startup>();
                     
-                    stack.ConfigureGenericHost(genericHostBuilder => 
-                    {
-                        genericHostBuilder.UseStartup<Startup>();
-                        /*genericHostBuilder.ConfigureServices(services =>
+                    stack.ConfigureGenericHostStackApp(host => 
+                    { 
+                        host.UseStartup<Startup>();
+                        host.ConfigureStackApplication(app =>
                         {
-                            // Works
-                            services.AddScoped<IGreetingAppService, GreetingAppService>();
-                            services.AddScoped<IGreetingService, SpanishGreetingService>();
-                            services.AddHostedService<GreetingHostedService>();
-                        });*/
+                            app.UseStackAppModule<TestStackedApplicationModule>();
+            
+                            app.UseStackAppModule<ApplicationTestModule>();
+                            //stack.UseApplicationTestModule();
+                            app.UseGenericHostStackAppModule<GenericHostApplicationTestModule>();
+                            //stack.UseGenericHostApplicationTestModule();*/
+                        });
                     });
                 })
                 /*.ConfigureServices(services =>

@@ -1,16 +1,17 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using SImpl.DotNetStack.ApplicationBuilders;
 using SImpl.DotNetStack.Hosts.GenericHost.ApplicationBuilders;
 using SImpl.DotNetStack.Hosts.GenericHost.Startup;
 
 namespace SImpl.DotNetStack.Hosts.GenericHost.HostBuilders
 {
-    public interface IGenericHostBuilder
+    public interface IStackApplicationGenericHostBuilder
     {
         void UseStartup<TStartup>()
-            where TStartup : IStartup, new();
+            where TStartup : IGenericHostStackApplicationStartup, new();
 
-        void Configure(Action<IApplicationBuilder> appBuilder);
+        void ConfigureStackApplication(Action<IGenericHostApplicationBuilder> app);
         
         void ConfigureServices(Action<IServiceCollection> services);
     }
