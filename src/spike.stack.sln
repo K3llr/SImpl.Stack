@@ -9,29 +9,35 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spike.stack.module", "spike
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spike.stack.console", "spike.stack.console\spike.stack.console.csproj", "{B7BC8720-3C3C-41BC-BE66-434D2E2ED09B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Stack.Hosts.GenericHost", "SImpl.Stack.Hosts.GenericHost\SImpl.Stack.Hosts.GenericHost.csproj", "{B8B06929-6353-445B-BA72-508A2E2AC9D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Hosts.GenericHost", "SImpl.Hosts.GenericHost\SImpl.Hosts.GenericHost.csproj", "{B8B06929-6353-445B-BA72-508A2E2AC9D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Stack.Hosts.WebHost", "SImpl.Stack.Hosts.WebHost\SImpl.Stack.Hosts.WebHost.csproj", "{0CCC2DE8-DA95-422C-8ED2-9EFB137929E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Hosts.WebHost", "SImpl.Hosts.WebHost\SImpl.Hosts.WebHost.csproj", "{0CCC2DE8-DA95-422C-8ED2-9EFB137929E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spike.stack.app", "spike.stack.app\spike.stack.app.csproj", "{1F2D5E89-1DFE-4115-B634-6CEDDE3C5B80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Stack.Runtime", "SImpl.Stack.Runtime\SImpl.Stack.Runtime.csproj", "{086129D5-5E6F-4331-939D-BAFE20B35E53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Runtime", "SImpl.Runtime\SImpl.Runtime.csproj", "{086129D5-5E6F-4331-939D-BAFE20B35E53}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.DotNetStack.GenericHost.DependencyInjection", "SImpl.DotNetStack.GenericHost.DependencyInjection\SImpl.DotNetStack.GenericHost.DependencyInjection.csproj", "{C1E45B7F-9C74-4453-ADD7-3AC4C305209F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.DotNetStack.NovicellApp.Console", "SImpl.DotNetStack.NovicellApp.Console\SImpl.DotNetStack.NovicellApp.Console.csproj", "{2C975114-3C9D-4F8A-A9C6-EFBB3F91F64E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SImpl.Stack", "SImpl.Stack", "{274E438E-C96E-485A-844D-D8A4F79AF14E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SImpl", "SImpl", "{274E438E-C96E-485A-844D-D8A4F79AF14E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SImpl.DotNetStack.NovicellApp", "SImpl.DotNetStack.NovicellApp", "{1FA3BA58-1B02-489E-B29B-6C9787994DD8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SImpl.Novicell.DotNetStack", "SImpl.Novicell.DotNetStack", "{1FA3BA58-1B02-489E-B29B-6C9787994DD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Stack", "SImpl.Stack\SImpl.Stack.csproj", "{B21DD6A5-855B-4995-B016-153F90311CE8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl", "SImpl\SImpl.csproj", "{B21DD6A5-855B-4995-B016-153F90311CE8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.NanoContainer", "SImpl.NanoContainer\SImpl.NanoContainer.csproj", "{8F0F76B9-2274-4F8E-A8AF-5F8C799A5F29}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Simpl.NanoContanier", "Simpl.NanoContanier", "{975ADD85-4237-4567-9627-10BE8E3C901E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Stack.Diagnostics", "SImpl.Stack.Diagnostics\SImpl.Stack.Diagnostics.csproj", "{0FBBE392-E9AA-42CE-AAC2-800F3F1D802A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Runtime.Diagnostics", "SImpl.Runtime.Diagnostics\SImpl.Runtime.Diagnostics.csproj", "{0FBBE392-E9AA-42CE-AAC2-800F3F1D802A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SImpl.Templates", "SImpl.Templates", "{9D249F5B-6239-40C3-B02C-67948864E0E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spike", "Spike", "{9D598C21-9378-49C4-8ED3-BBD8C3489D58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Templates.WebApi", "SImpl.Templates.WebApi\SImpl.Templates.WebApi.csproj", "{BE024A4A-2AA2-4465-8A37-2809D7E296BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -190,6 +196,18 @@ Global
 		{0FBBE392-E9AA-42CE-AAC2-800F3F1D802A}.Release|x64.Build.0 = Release|Any CPU
 		{0FBBE392-E9AA-42CE-AAC2-800F3F1D802A}.Release|x86.ActiveCfg = Release|Any CPU
 		{0FBBE392-E9AA-42CE-AAC2-800F3F1D802A}.Release|x86.Build.0 = Release|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Debug|x64.Build.0 = Debug|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Debug|x86.Build.0 = Debug|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Release|x64.ActiveCfg = Release|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Release|x64.Build.0 = Release|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Release|x86.ActiveCfg = Release|Any CPU
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{086129D5-5E6F-4331-939D-BAFE20B35E53} = {274E438E-C96E-485A-844D-D8A4F79AF14E}
@@ -200,5 +218,10 @@ Global
 		{B21DD6A5-855B-4995-B016-153F90311CE8} = {274E438E-C96E-485A-844D-D8A4F79AF14E}
 		{8F0F76B9-2274-4F8E-A8AF-5F8C799A5F29} = {975ADD85-4237-4567-9627-10BE8E3C901E}
 		{0FBBE392-E9AA-42CE-AAC2-800F3F1D802A} = {274E438E-C96E-485A-844D-D8A4F79AF14E}
+		{1F2D5E89-1DFE-4115-B634-6CEDDE3C5B80} = {9D598C21-9378-49C4-8ED3-BBD8C3489D58}
+		{B7BC8720-3C3C-41BC-BE66-434D2E2ED09B} = {9D598C21-9378-49C4-8ED3-BBD8C3489D58}
+		{090D1E92-D6B7-4544-AF51-C4C6AD4A2BC2} = {9D598C21-9378-49C4-8ED3-BBD8C3489D58}
+		{011F7ACB-42FC-44DD-8BC6-C05F62275465} = {9D598C21-9378-49C4-8ED3-BBD8C3489D58}
+		{BE024A4A-2AA2-4465-8A37-2809D7E296BE} = {9D249F5B-6239-40C3-B02C-67948864E0E0}
 	EndGlobalSection
 EndGlobal

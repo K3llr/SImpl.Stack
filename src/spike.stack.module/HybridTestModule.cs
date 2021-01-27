@@ -1,11 +1,11 @@
 using System;
 using Novicell.App;
 using Novicell.App.AppBuilders;
-using SImpl.Stack.Modules;
+using SImpl.Modules;
 
 namespace spike.stack.module
 {
-    public class HybridTestModule : IDotNetStackModule, INovicellModule
+    public class HybridTestModule : ISImplModule, INovicellModule
     {
         public void Configure(INovicellAppBuilder appBuilder)
         {

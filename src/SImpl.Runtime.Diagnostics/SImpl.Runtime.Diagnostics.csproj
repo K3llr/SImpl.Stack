@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Title>SImpl.Runtime.Diagnostics</Title>
+    <Authors>Mikkel Keller</Authors>
+    <Description>SImpl.Runtime.Diagnostics</Description>
+    <PackageTags>SImpl.Runtime.Diagnostics</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SImpl\SImpl.csproj" />
+  </ItemGroup>
+
+</Project>

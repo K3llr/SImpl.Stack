@@ -5,6 +5,8 @@ namespace SImpl.NanoContainer
 {
     public interface INanoContainer
     {
+        INanoContainer Register<TService>(IServiceResolver serviceResolver);
+        
         INanoContainer Register<TService, TImplementation>()
             where TImplementation : TService;
 

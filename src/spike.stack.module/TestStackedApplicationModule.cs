@@ -1,17 +1,17 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using SImpl.Stack.ApplicationBuilders;
-using SImpl.Stack.Modules;
-using SImpl.Stack.Modules.Dependencies;
+using SImpl.Application.Builders;
+using SImpl.Modules;
+using SImpl.Runtime;
 
 namespace spike.stack.module
 {
     [DependsOn(typeof(TestApplicationModule))]
     public class TestStackedApplicationModule : IApplicationModule, IServicesCollectionConfigureModule, IPreInitModule
     {
-        public void Configure(IDotNetStackApplicationBuilder builder)
+        public void Configure(ISImplApplicationBuilder builder)
         {
-            builder.AttachNewOrGetConfiguredModule<TestApplicationModule>();
+            builder.AttachNewAppModuleOrGetConfigured<TestApplicationModule>();
         }
 
         public string Name => nameof(TestStackedApplicationModule);

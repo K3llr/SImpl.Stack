@@ -1,11 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
-using SImpl.Stack.ApplicationBuilders;
-using SImpl.Stack.Hosts.GenericHost.Startup;
+using SImpl.Application.Builders;
+using SImpl.Hosts.GenericHost;
+using SImpl.Hosts.GenericHost.Startup;
+using SImpl.Runtime;
 using spike.stack.module;
 
 namespace spike.stack.console
 {
-    public class Startup : IGenericHostStackApplicationStartup
+    public class Startup : IGenericHostApplicationStartup
     {
         public void ConfigureServices(IServiceCollection services)
         {
@@ -15,13 +17,13 @@ namespace spike.stack.console
             //services.AddHostedService<GreetingHostedService>();
         }
 
-        public void ConfigureStackApplication(IGenericHostApplicationBuilder builder)
+        public void ConfigureApplication(IGenericHostApplicationBuilder builder)
         {
-            builder.UseStackAppModule<TestStackedApplicationModule>();
+            builder.UseAppModule<TestStackedApplicationModule>();
             
-            builder.UseStackAppModule<ApplicationTestModule>();
+            builder.UseAppModule<ApplicationTestModule>();
             //stack.UseApplicationTestModule();
-            builder.UseGenericHostStackAppModule<GenericHostApplicationTestModule>();
+            builder.UseGenericHostAppModule<GenericHostApplicationTestModule>();
             //stack.UseGenericHostApplicationTestModule();
             
             // NOTE: Below is not supposed to work

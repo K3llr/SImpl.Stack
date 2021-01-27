@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using SImpl.Stack.ApplicationBuilders;
-using SImpl.Stack.Modules;
+using SImpl.Application.Builders;
+using SImpl.Modules;
 
 namespace spike.stack.module
 {
@@ -28,7 +28,7 @@ namespace spike.stack.module
     {
         public static void UseGenericHostApplicationTestModule(this IGenericHostApplicationBuilder applicationBuilder)
         {
-            applicationBuilder.AttachNewGenericHostStackAppModuleOrGetConfigured(() => new GenericHostApplicationTestModule());
+            applicationBuilder.AttachNewGenericHostAppModuleOrGetConfigured(() => new GenericHostApplicationTestModule());
         }
     }
 }

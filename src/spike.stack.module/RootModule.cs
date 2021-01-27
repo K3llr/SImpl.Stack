@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
-using SImpl.Stack.Modules;
-using SImpl.Stack.Modules.Dependencies;
+using SImpl.Modules;
 
 namespace spike.stack.module
 {

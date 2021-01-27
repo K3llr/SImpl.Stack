@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using SImpl.Stack.ApplicationBuilders;
-using SImpl.Stack.Modules;
+using SImpl.Application.Builders;
+using SImpl.Modules;
 using spike.stack.app.Application;
 using spike.stack.app.Domain;
 
@@ -10,7 +10,7 @@ namespace spike.stack.module
 {
     public class TestApplicationModule : IApplicationModule, IServicesCollectionConfigureModule, IPreInitModule
     {
-        public void Configure(IDotNetStackApplicationBuilder builder)
+        public void Configure(ISImplApplicationBuilder builder)
         {
             
         }

@@ -3,14 +3,13 @@ using System.Threading.Tasks;
 using Novicell.App.AppBuilders;
 using Novicell.App.Console;
 using Novicell.App.Console.Configuration;
-using SImpl.Stack.ApplicationBuilders;
-using SImpl.Stack.Hosts.GenericHost;
-using SImpl.Stack.Modules;
-using SImpl.Stack.Modules.Dependencies;
+using SImpl.Application.Builders;
+using SImpl.Hosts.GenericHost;
+using SImpl.Modules;
 
 namespace SImpl.DotNetStack.App
 {
-    [DependsOn(typeof(GenericHostStackApplicationModule))]
+    [DependsOn(typeof(GenericHostApplicationModule))]
     public class NovicellAppConsoleRuntimeModule : IApplicationModule
     {
         private readonly Action<IConsoleAppBuilder> _configure;
@@ -20,7 +19,7 @@ namespace SImpl.DotNetStack.App
             _configure = configure;
         }
 
-        public void Configure(IDotNetStackApplicationBuilder builder)
+        public void Configure(ISImplApplicationBuilder builder)
         {
             
         }

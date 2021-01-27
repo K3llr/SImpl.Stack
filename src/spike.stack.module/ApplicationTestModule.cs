@@ -1,12 +1,13 @@
 using System.Threading.Tasks;
-using SImpl.Stack.ApplicationBuilders;
-using SImpl.Stack.Modules;
+using SImpl.Application.Builders;
+using SImpl.Modules;
+using SImpl.Runtime;
 
 namespace spike.stack.module
 {
     public class ApplicationTestModule : IApplicationModule
     {
-        public void Configure(IDotNetStackApplicationBuilder builder)
+        public void Configure(ISImplApplicationBuilder builder)
         {
       
         }
@@ -26,9 +27,9 @@ namespace spike.stack.module
 
     public static partial class AppBuilderExtension
     {
-        public static void UseApplicationTestModule(this IDotNetStackApplicationBuilder applicationBuilder)
+        public static void UseApplicationTestModule(this ISImplApplicationBuilder applicationBuilder)
         {
-            applicationBuilder.UseStackAppModule<ApplicationTestModule>();
+            applicationBuilder.UseAppModule<ApplicationTestModule>();
         }
     }
 }

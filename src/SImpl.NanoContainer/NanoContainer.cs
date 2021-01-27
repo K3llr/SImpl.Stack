@@ -6,18 +6,23 @@ namespace SImpl.NanoContainer
 {
     public class NanoContainer : INanoContainer
     {
-        private readonly IDictionary<Type, INanoServiceRegistration> _instances = new Dictionary<Type, INanoServiceRegistration>();
-        private bool _hasResolved = false;
-        
+        private readonly IDictionary<Type, IServiceResolver> _instances = new Dictionary<Type, IServiceResolver>();
+        private bool _allowRegistrations = true;
+
+        public INanoContainer Register<TService>(IServiceResolver serviceResolver)
+        {
+            return AddServiceRegistration(typeof(TService), serviceResolver);
+        }
+
         public INanoContainer Register<TService, TImplementation>()
             where TImplementation : TService
         {
-            return AddServiceRegistration(typeof(TService), new TypedServiceRegistration<TImplementation>(Resolve));
+            return AddServiceRegistration(typeof(TService), new TypedServiceResolver<TImplementation>(Resolve));
         }
         
         public INanoContainer Register<TService>(Func<TService> factory)
         {
-            return AddServiceRegistration(typeof(TService), new FactoryServiceRegistration<TService>(factory));
+            return AddServiceRegistration(typeof(TService), new FactoryServiceResolver<TService>(factory));
         }
 
         public INanoContainer Register<TService>(TService instance)
@@ -36,13 +41,13 @@ namespace SImpl.NanoContainer
             }
             
             var currentServiceRegistration = _instances[key];
-            AddServiceRegistration(typeof(TDecorator), new TypedServiceRegistration<TDecorator>(
+            AddServiceRegistration(typeof(TDecorator), new TypedServiceResolver<TDecorator>(
                 t =>
                     typeof(TService).IsAssignableFrom(t)
                         ? currentServiceRegistration.Resolve()
                         : Resolve(t)));
             
-            AddServiceRegistration(key, new DecoratorServiceRegistration<TDecorator>(Resolve), true);
+            AddServiceRegistration(key, new DecoratorServiceResolver<TDecorator>(Resolve), true);
 
             return this;
         }
@@ -54,7 +59,7 @@ namespace SImpl.NanoContainer
 
         public object Resolve(Type serviceType)
         {
-            _hasResolved = true;
+            _allowRegistrations = false;
             
             if (!_instances.ContainsKey(serviceType))
             {
@@ -71,14 +76,14 @@ namespace SImpl.NanoContainer
         
         public TService New<TService>(IDictionary<Type, object> overrideScope)
         {
-            return (TService)new TypedServiceRegistration<TService>(key => overrideScope.ContainsKey(key) ? overrideScope[key] : Resolve(key)).Resolve();
+            return (TService)new TypedServiceResolver<TService>(key => overrideScope.ContainsKey(key) ? overrideScope[key] : Resolve(key)).Resolve();
         }
 
-        private INanoContainer AddServiceRegistration(Type key, INanoServiceRegistration registration, bool overwrite = false)
+        private INanoContainer AddServiceRegistration(Type key, IServiceResolver resolver, bool overwrite = false)
         {
             // TODO: Detect recursive dependency
             
-            if (_hasResolved)
+            if (!_allowRegistrations)
             {
                 throw new Exception($"Cannot add new registrations after first Resolve()");
             }
@@ -88,7 +93,7 @@ namespace SImpl.NanoContainer
                 throw new Exception($"NanoContainer already contains a registration for type {key.FullName}");
             }
 
-            _instances[key] = registration;
+            _instances[key] = resolver;
 
             return this;
         }

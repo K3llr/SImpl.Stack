@@ -4,7 +4,7 @@ using Novicell.App;
 using Novicell.App.AppBuilders;
 using Novicell.App.DependencyInjection.Configuration;
 using SImpl.DotNetStack.GenericHost.DependencyInjection.Configuration;
-using SImpl.Stack.Modules;
+using SImpl.Modules;
 using SimpleInjector;
 
 namespace SImpl.DotNetStack.GenericHost.DependencyInjection
