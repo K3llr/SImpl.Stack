@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using spike.stack.app.Application;
+using spike.stack.application;
 
 namespace spike.stack.module
 {

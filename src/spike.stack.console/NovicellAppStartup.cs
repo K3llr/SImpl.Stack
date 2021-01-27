@@ -6,8 +6,8 @@ using SImpl.DotNetStack.App.Extensions;
 using SImpl.DotNetStack.GenericHost.DependencyInjection;
 using SImpl.DotNetStack.GenericHost.DependencyInjection.Configuration;
 using SimpleInjector;
-using spike.stack.app.Application;
-using spike.stack.app.Domain;
+using spike.stack.application;
+using spike.stack.application.Domain;
 using spike.stack.module;
 
 namespace spike.stack.console

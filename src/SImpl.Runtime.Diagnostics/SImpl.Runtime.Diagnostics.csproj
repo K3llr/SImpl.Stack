@@ -6,6 +6,9 @@
     <Authors>Mikkel Keller</Authors>
     <Description>SImpl.Runtime.Diagnostics</Description>
     <PackageTags>SImpl.Runtime.Diagnostics</PackageTags>
+    <dependencies>
+      <dependency id="SImpl" version="1.0.0" exclude="Build,Analyzers" />
+    </dependencies>
   </PropertyGroup>
 
   <ItemGroup>

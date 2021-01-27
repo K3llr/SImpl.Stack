@@ -6,8 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using SImpl.Application.Builders;
 using SImpl.Hosts.WebHost.Modules;
 using SImpl.Modules;
-using spike.stack.app.Application;
-using spike.stack.app.Domain;
+using spike.stack.application;
+using spike.stack.application.Domain;
 
 namespace spike.stack.module
 {

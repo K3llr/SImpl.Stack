@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.Application.Builders;
 using SImpl.Modules;
-using spike.stack.app.Application;
-using spike.stack.app.Domain;
+using spike.stack.application;
+using spike.stack.application.Domain;
 
 namespace spike.stack.module
 {

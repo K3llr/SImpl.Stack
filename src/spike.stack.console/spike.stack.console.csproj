@@ -18,7 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SImpl.DotNetStack.GenericHost.DependencyInjection\SImpl.DotNetStack.GenericHost.DependencyInjection.csproj" />
     <ProjectReference Include="..\SImpl.Hosts.GenericHost\SImpl.Hosts.GenericHost.csproj" />
-    <ProjectReference Include="..\spike.stack.app\spike.stack.app.csproj" />
+    <ProjectReference Include="..\spike.stack.application\spike.stack.application.csproj" />
     <ProjectReference Include="..\spike.stack.module\spike.stack.module.csproj" />
   </ItemGroup>
 
