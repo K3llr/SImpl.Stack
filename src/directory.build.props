@@ -1,0 +1,16 @@
+<Project>
+
+    <Import Project="../version.props"/>
+
+    <PropertyGroup>
+        <Title>SImpl .NET</Title>
+        <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+        <AssemblyVersion>$(Version)</AssemblyVersion>
+    </PropertyGroup>    
+
+    <PropertyGroup>
+        <Authors>Mikkel Keller</Authors>
+        <PackageOutputPath>$(MSBuildProjectDirectory)/../../dist</PackageOutputPath>
+    </PropertyGroup>
+
+</Project>

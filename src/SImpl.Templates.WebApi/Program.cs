@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using SImpl.Hosts.WebHost;
+using SImpl.Runtime;
 
 namespace SImpl.Templates.WebApi
 {
@@ -16,10 +18,16 @@ namespace SImpl.Templates.WebApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
-                /*.Simply(args, simpl =>
+                })
+                .SImplify(args, simpl => 
                 {
-                    
-                });*/
+                    simpl.ConfigureWebHostStackApp(host =>
+                    {
+                        host.ConfigureApplication(app =>
+                        {
+
+                        });
+                    });
+                });
     }
 }

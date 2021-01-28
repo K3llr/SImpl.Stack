@@ -10,6 +10,7 @@
     <Authors>Mikkel Keller</Authors>
     <Description>SImpl.Hosts.WebHost</Description>
     <PackageTags>SImpl.Hosts.WebHost</PackageTags>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

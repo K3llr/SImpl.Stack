@@ -25,8 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SImpl.Novicell.DotNetStack"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl", "SImpl\SImpl.csproj", "{B21DD6A5-855B-4995-B016-153F90311CE8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Simpl.NanoContanier", "Simpl.NanoContanier", "{975ADD85-4237-4567-9627-10BE8E3C901E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Runtime.Diagnostics", "SImpl.Runtime.Diagnostics\SImpl.Runtime.Diagnostics.csproj", "{0FBBE392-E9AA-42CE-AAC2-800F3F1D802A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SImpl.Templates", "SImpl.Templates", "{9D249F5B-6239-40C3-B02C-67948864E0E0}"
