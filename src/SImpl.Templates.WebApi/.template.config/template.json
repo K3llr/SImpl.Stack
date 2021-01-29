@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Mikkel Keller",
+  "classifications": [ "SImpl", "Template", "WebApi" ],
+  "identity": "SImpl.Templates.WebApi",
+  "name": "SImpl WebApi Template",
+  "shortName": "simplwebapi",
+  "sourceName": "SImpl.Templates.WebApi",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sources": [
+    {
+      "include": [
+        "**/*"
+      ],
+      "rename": {
+        "dotdockerignore": ".dockerignore"
+      },
+      "exclude": [
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        ".template.config/**/*",
+        "**/*.filelist",
+        "**/*.user",
+        "**/*.lock.json",
+        "**/.vs/**",
+        ".git",
+        "**/lib/packages/**/*",
+        "**/.idea/**",
+        "**/packages/**/*"
+      ]
+    }
+  ],
+  "symbols" : {
+    "httpsPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use to configure SSL in .csproj"
+    },
+    "httpsPortGenerated": {
+      "type": "generated",
+      "generator": "random",
+      "parameters": {
+        "low": 44300,
+        "high": 44399
+      }
+    },
+    "httpsPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "httpsPort",
+        "fallbackVariableName": "httpsPortGenerated"
+      },
+      "replaces": "44313"
+    },
+    "iisExpressPort": {
+      "type": "parameter",
+      "datatype": "integer",
+      "description": "Port number to use to configure IIS Express in .csproj"
+    },
+    "iisExpressPortGenerated": {
+      "type": "generated",
+      "generator": "port"
+    },
+    "iisExpressPortReplacer": {
+      "type": "generated",
+      "generator": "coalesce",
+      "parameters": {
+        "sourceVariableName": "iisExpressPort",
+        "fallbackVariableName": "iisExpressPortGenerated"
+      },
+      "replaces": "60243"
+    }
+  }
+}

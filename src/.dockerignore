@@ -1,0 +1,13 @@
+**/bin
+**/obj
+**/out
+**/.vscode
+**/.vs
+.dotnet
+.Microsoft.DotNet.ImageBuilder
+.dockerignore
+.env
+.git
+.gitignore
+**/.toolstarget
+.idea
