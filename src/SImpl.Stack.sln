@@ -29,6 +29,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Templates.WebApi", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spike.stack.application", "spike.stack.application\spike.stack.application.csproj", "{CA73B054-AEBF-41D6-BDAB-F8258DB4476D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".template.config", ".template.config", "{C9953566-C0C0-40B2-BA9E-D0656FAA2741}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SImpl.Templates.WebApi", "SImpl.Templates.WebApi", "{3932F184-2A42-4BD0-A5CB-6C89480C27BD}"
+ProjectSection(SolutionItems) = preProject
+	SImpl.Templates.WebApi\.template.config\template.json = SImpl.Templates.WebApi\.template.config\template.json
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -174,5 +181,7 @@ Global
 		{011F7ACB-42FC-44DD-8BC6-C05F62275465} = {9D598C21-9378-49C4-8ED3-BBD8C3489D58}
 		{BE024A4A-2AA2-4465-8A37-2809D7E296BE} = {9D249F5B-6239-40C3-B02C-67948864E0E0}
 		{CA73B054-AEBF-41D6-BDAB-F8258DB4476D} = {9D598C21-9378-49C4-8ED3-BBD8C3489D58}
+		{C9953566-C0C0-40B2-BA9E-D0656FAA2741} = {9D249F5B-6239-40C3-B02C-67948864E0E0}
+		{3932F184-2A42-4BD0-A5CB-6C89480C27BD} = {C9953566-C0C0-40B2-BA9E-D0656FAA2741}
 	EndGlobalSection
 EndGlobal

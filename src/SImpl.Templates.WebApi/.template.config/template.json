@@ -4,7 +4,7 @@
   "classifications": [ "SImpl", "Template", "WebApi" ],
   "identity": "SImpl.Templates.WebApi",
   "name": "SImpl WebApi Template",
-  "shortName": "simplwebapi",
+  "shortName": "simplapi",
   "sourceName": "SImpl.Templates.WebApi",
   "preferNameDirectory": true,
   "tags": {
