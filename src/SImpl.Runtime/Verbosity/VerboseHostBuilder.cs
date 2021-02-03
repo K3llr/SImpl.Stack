@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SImpl.Host.Builders;
 using SImpl.Modules;
 using SImpl.Runtime.Host.Builders;
 
@@ -12,9 +13,9 @@ namespace SImpl.Runtime.Verbosity
     public class VerboseHostBuilder : ISImplHostBuilder
     {
         private readonly ISImplHostBuilder _hostBuilder;
-        private readonly ILogger<SImply> _logger;
+        private readonly ILogger _logger;
 
-        public VerboseHostBuilder(ISImplHostBuilder hostBuilder, ILogger<SImply> logger)
+        public VerboseHostBuilder(ISImplHostBuilder hostBuilder, ILogger logger)
         {
             _hostBuilder = hostBuilder;
             _logger = logger;

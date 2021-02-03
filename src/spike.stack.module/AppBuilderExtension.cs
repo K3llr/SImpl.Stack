@@ -1,5 +1,6 @@
 using System;
 using Novicell.App.AppBuilders;
+using SImpl.Host.Builders;
 using SImpl.Runtime;
 using SImpl.Runtime.Host.Builders;
 

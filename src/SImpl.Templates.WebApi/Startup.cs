@@ -37,7 +37,6 @@ namespace SImpl.Templates.WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SImpl.Templates.WebApi v1"));
             }
 
-            app.UseStaticFiles();
             app.UseDefaultFiles();
             
             app.UseHttpsRedirection();

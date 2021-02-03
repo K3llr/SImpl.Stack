@@ -9,9 +9,9 @@ namespace SImpl.Runtime.Verbosity
     public class VerboseHost : IHost
     {
         private readonly IHost _host;
-        private readonly ILogger<SImply> _logger;
+        private readonly ILogger _logger;
 
-        public VerboseHost(IHost host, ILogger<SImply> logger)
+        public VerboseHost(IHost host, ILogger logger)
         {
             _host = host;
             _logger = logger;

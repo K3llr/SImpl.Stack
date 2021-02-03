@@ -10,7 +10,7 @@ namespace SImpl.Runtime.Verbosity
         where T : ISImplModule
     {
         private T _decorated;
-        private readonly ILogger<SImply> _logger = RuntimeServices.Current.BootContainer.Resolve<ILogger<SImply>>();
+        private readonly ILogger _logger = RuntimeServices.Current.BootContainer.Resolve<ILogger>();
 
         protected override object Invoke(MethodInfo targetMethod, object[] args)
         {
@@ -51,12 +51,12 @@ namespace SImpl.Runtime.Verbosity
 
         private void LogException(Exception exception, MethodInfo methodInfo = null)
         {
-            _logger.LogDebug($"  {typeof(T).Name} > {_decorated.Name} > {methodInfo?.Name}  threw exception:\n{exception}");
+            _logger.LogDebug($"{typeof(T).Name} > {_decorated.Name} > {methodInfo?.Name}  threw exception:\n{exception}");
         }
 
         private void LogBefore(MethodInfo methodInfo, object[] args)
         {
-            _logger.LogDebug($"  {typeof(T).Name} > {_decorated.Name} > {methodInfo.Name} > Started");
+            _logger.LogDebug($"{typeof(T).Name} > {_decorated.Name} > {methodInfo.Name} > Started");
         }
     }
 }

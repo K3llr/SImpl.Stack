@@ -13,9 +13,9 @@ namespace SImpl.Runtime.Verbosity
         private readonly IHostBootManager _bootManager;
         private readonly IModuleManager _moduleManager;
         private readonly IBootSequenceFactory _bootSequenceFactory;
-        private readonly ILogger<SImply> _logger;
+        private readonly ILogger _logger;
 
-        public VerboseHostBootManager(IHostBootManager bootManager, IModuleManager moduleManager, IBootSequenceFactory bootSequenceFactory, ILogger<SImply> logger)
+        public VerboseHostBootManager(IHostBootManager bootManager, IModuleManager moduleManager, IBootSequenceFactory bootSequenceFactory, ILogger logger)
         {
             _bootManager = bootManager;
             _moduleManager = moduleManager;
@@ -25,56 +25,56 @@ namespace SImpl.Runtime.Verbosity
 
         public IEnumerable<IPreInitModule> PreInit()
         {
-            _logger.LogDebug(" HostBootManager > PreInit > started");
+            _logger.LogDebug("HostBootManager > PreInit > started");
             var processed = _bootManager.PreInit().ToArray();
-            _logger.LogDebug(" HostBootManager > PreInit > Module PreInit sequence");
+            _logger.LogDebug("HostBootManager > PreInit > Module PreInit sequence"); 
             foreach (var module in processed)
             {
-                _logger.LogDebug($"  - {module.Name}");
+                _logger.LogDebug($" - {module.Name}");
             }
-            _logger.LogDebug(" HostBootManager > PreInit > Module boot sequence");
+            _logger.LogDebug("HostBootManager > PreInit > Module boot sequence");
             foreach (var module in _bootSequenceFactory.New())
             {
-                _logger.LogDebug($"  - {module.Name}");
+                _logger.LogDebug($" - {module.Name}");
             }
-            _logger.LogDebug(" HostBootManager > PreInit > ended");
+            _logger.LogDebug("HostBootManager > PreInit > ended");
 
             return processed;
         }
 
         public void ConfigureServices(IHostBuilder hostBuilder)
         {
-            _logger.LogDebug(" HostBootManager > ConfigureServices > started");
+            _logger.LogDebug("HostBootManager > ConfigureServices > started");
             _bootManager.ConfigureServices(hostBuilder);
-            _logger.LogDebug(" HostBootManager > ConfigureServices > ended");
+            _logger.LogDebug("HostBootManager > ConfigureServices > ended");
         }
 
         public void ConfigureHostBuilder(IHostBuilder hostBuilder)
         {
-            _logger.LogDebug(" HostBootManager > ConfigureHostBuilder > started");
+            _logger.LogDebug("HostBootManager > ConfigureHostBuilder > started");
             _bootManager.ConfigureHostBuilder(hostBuilder);
-            _logger.LogDebug(" HostBootManager > ConfigureHostBuilder > ended");
+            _logger.LogDebug("HostBootManager > ConfigureHostBuilder > ended");
         }
 
         public void ConfigureHost(IHost host)
         {
-            _logger.LogDebug(" HostBootManager > ConfigureHost > started");
+            _logger.LogDebug("HostBootManager > ConfigureHost > started");
             _bootManager.ConfigureHost(host);
-            _logger.LogDebug(" HostBootManager > ConfigureHost > ended");
+            _logger.LogDebug("HostBootManager > ConfigureHost > ended");
         }
 
         public async Task StartAsync()
         {
-            _logger.LogDebug(" HostBootManager > StartAsync > started"); 
+            _logger.LogDebug("HostBootManager > StartAsync > started"); 
             await _bootManager.StartAsync();
-            _logger.LogDebug(" HostBootManager > StartAsync > ended");
+            _logger.LogDebug("HostBootManager > StartAsync > ended");
         }
 
         public async Task StopAsync()
         {
-            _logger.LogDebug(" HostBootManager > StopAsync > started"); 
+            _logger.LogDebug("HostBootManager > StopAsync > started"); 
             await _bootManager.StopAsync();
-            _logger.LogDebug(" HostBootManager > StopAsync > ended");
+            _logger.LogDebug("HostBootManager > StopAsync > ended");
         }
     }
 }

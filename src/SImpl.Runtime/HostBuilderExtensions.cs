@@ -1,5 +1,7 @@
 using System;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using SImpl.Host.Builders;
 using SImpl.Runtime.Host.Builders;
 
 namespace SImpl.Runtime
@@ -13,7 +15,12 @@ namespace SImpl.Runtime
         
         public static IHostBuilder SImplify(this IHostBuilder hostBuilder, string[] args, Action<ISImplHostBuilder> simpl = null)
         {
-            return SImply.Boot(hostBuilder, args, simpl);
+            return hostBuilder.SImplify(args, null, simpl);
+        }
+        
+        public static IHostBuilder SImplify(this IHostBuilder hostBuilder, string[] args, ILogger logger, Action<ISImplHostBuilder> simpl = null)
+        {
+            return SImply.Boot(hostBuilder, args, logger, simpl);
         }
     }
 }

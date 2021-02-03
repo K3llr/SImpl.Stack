@@ -2,7 +2,7 @@ using System;
 using Microsoft.Extensions.Hosting;
 using SImpl.Modules;
 
-namespace SImpl.Runtime.Host.Builders
+namespace SImpl.Host.Builders
 {
     public interface ISImplHostBuilder : IHostBuilder
     {

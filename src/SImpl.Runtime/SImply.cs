@@ -3,6 +3,7 @@ using System.CommandLine;
 using System.CommandLine.Invocation;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SImpl.Host.Builders;
 using SImpl.NanoContainer;
 using SImpl.Runtime.Core;
 using SImpl.Runtime.Diagnostics;
@@ -14,7 +15,7 @@ namespace SImpl.Runtime
 {
     public class SImply
     {
-        public static IHostBuilder Boot(IHostBuilder hostBuilder, string[] args, Action<ISImplHostBuilder> configureDelegate)
+        public static IHostBuilder Boot(IHostBuilder hostBuilder, string[] args, ILogger logger, Action<ISImplHostBuilder> configureDelegate)
         {
             var diagnostics = DiagnosticsCollector.Create();
             
@@ -23,9 +24,9 @@ namespace SImpl.Runtime
             
             // Parse command line arguments
             var flags = ParseArgs(args);
-
+            
             // Init boot container
-            var bootContainer = InitBootContainer(hostBuilder, flags, diagnostics);
+            var bootContainer = InitBootContainer(hostBuilder, logger ?? CreateLogger(), flags, diagnostics);
             
             // Init runtime services
             RuntimeServices.Init(bootContainer.Resolve<IRuntimeServices>());
@@ -45,7 +46,7 @@ namespace SImpl.Runtime
             return dotNetStackHostBuilder;
         }
 
-        private static INanoContainer InitBootContainer(IHostBuilder hostBuilder, RuntimeFlags flags, DiagnosticsCollector diagnostics)
+        private static INanoContainer InitBootContainer(IHostBuilder hostBuilder, ILogger logger, RuntimeFlags flags, DiagnosticsCollector diagnostics)
         {
             var container = new NanoContainer.NanoContainer();
 
@@ -53,22 +54,7 @@ namespace SImpl.Runtime
             container.Register<INanoContainer>(container);
 
             // Register logging
-            container.Register(() =>
-            {
-                using var loggerFactory = LoggerFactory.Create(logging =>
-                {
-                    logging
-                        .AddSimpleConsole(options =>
-                        {
-                            options.IncludeScopes = true;
-                            options.SingleLine = true;
-                            options.TimestampFormat = "hh:mm:ss.fff ";
-                        })
-                        .SetMinimumLevel(LogLevel.Trace);
-                });
-
-                return loggerFactory.CreateLogger<SImply>();
-            });
+            container.Register<ILogger>(() => logger);
             
             // Register parameters
             container.Register<IHostBuilder>(hostBuilder);
@@ -144,6 +130,23 @@ namespace SImpl.Runtime
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"SImpl runtime version {typeof(SImply).Assembly.GetName().Version}");
             Console.ResetColor();
+        }
+
+        private static ILogger CreateLogger()
+        {
+            using var loggerFactory = LoggerFactory.Create(logging =>
+            {
+                logging
+                    .AddSimpleConsole(options =>
+                    {
+                        options.IncludeScopes = true;
+                        options.SingleLine = true;
+                        options.TimestampFormat = "hh:mm:ss.fff ";
+                    })
+                    .SetMinimumLevel(LogLevel.Trace);
+            });
+
+            return loggerFactory.CreateLogger<SImply>();
         }
     }
 }
