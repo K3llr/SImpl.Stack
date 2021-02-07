@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace SImpl.Storage.KeyValue.Services
 {
-    public class InMemoryKeyValueStorage<TKey, TModel> : IKeyValueStorage<TKey, TModel>
+    public class InMemoryKeyValueStorage<TKey, TModel> : IInMemoryKeyValueStorage<TKey, TModel>
     {
         private readonly IDictionary<TKey, TModel> _store = new Dictionary<TKey, TModel>();
         
@@ -13,7 +13,7 @@ namespace SImpl.Storage.KeyValue.Services
                 return _store[key];
             }
 
-            throw new KeyNotFoundException($"No such key: {key}");
+            return default;
         }
 
         public TModel[] Fetch(TKey[] keys)
@@ -22,7 +22,10 @@ namespace SImpl.Storage.KeyValue.Services
             foreach (var key in keys)
             {
                 var model = Fetch(key);
-                list.Add(model);
+                if (model is not null)
+                {
+                    list.Add(model);
+                }
             }
 
             return list.ToArray();
@@ -33,11 +36,9 @@ namespace SImpl.Storage.KeyValue.Services
             _store[key] = model;
         }
 
-        public TModel Remove(TKey key)
+        public void Remove(TKey key)
         {
-            var model = Fetch(key);
             _store.Remove(key);
-            return model;
         }
     }
 }

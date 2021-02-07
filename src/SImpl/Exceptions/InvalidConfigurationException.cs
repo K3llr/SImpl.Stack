@@ -1,6 +1,6 @@
 using System;
 
-namespace SImpl.Runtime.Exceptions
+namespace SImpl.Exceptions
 {
     public class InvalidConfigurationException : Exception
     {

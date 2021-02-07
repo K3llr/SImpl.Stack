@@ -1,4 +1,4 @@
-namespace SImpl.Domain
+namespace SImpl.Common
 {
     public interface IEntity<out T>
     {

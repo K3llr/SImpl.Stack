@@ -11,6 +11,8 @@ namespace SImpl.Storage.KeyValue.Module
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(typeof(IKeyValueStorage<,>), typeof(InMemoryKeyValueStorage<,>));
+            services.AddSingleton(typeof(IInMemoryKeyValueStorage<,>), typeof(InMemoryKeyValueStorage<,>));
+
         }
     }
 }

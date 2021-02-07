@@ -5,8 +5,8 @@ namespace SImpl.Storage.KeyValue
         TModel Fetch(TKey key);
         
         TModel[] Fetch(TKey[] keys);
-        void Store(TKey key, TModel spaceViewModel);
+        void Store(TKey key, TModel model);
 
-        TModel Remove(TKey key);
+        void Remove(TKey key);
     }
 }
