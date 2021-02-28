@@ -9,9 +9,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Novicell.App" Version="3.0.6" />
-    <PackageReference Include="Novicell.App.Console" Version="3.0.5" />
-    <PackageReference Include="Novicell.App.DependencyInjection" Version="3.0.10" />
     <PackageReference Include="SimpleInjector" Version="4.7.1" />
     <PackageReference Include="SimpleInjector.Integration.GenericHost" Version="4.7.1" />
   </ItemGroup>

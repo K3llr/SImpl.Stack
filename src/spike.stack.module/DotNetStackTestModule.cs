@@ -1,19 +1,12 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Novicell.App.AppBuilders;
 using SImpl.Modules;
 
 namespace spike.stack.module
 {
     public class DotNetStackTestModule : IStartableModule, IHostBuilderConfigureModule, IHostConfigureModule, IServicesCollectionConfigureModule
     {
-        public void Configure(INovicellAppBuilder appBuilder)
-        {
-            // Console.WriteLine($"Configure: {Name}");
-        }
-
         public void Init()
         {
             // Console.WriteLine($"Init: {Name}");
