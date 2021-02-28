@@ -5,21 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SImpl" Version="1.0.0.4" />
-    <PackageReference Include="StackExchange.Redis" Version="2.2.4" />
+    <ProjectReference Include="..\SImpl.CQRS.Commands\SImpl.CQRS.Commands.csproj" />
+    <ProjectReference Include="..\SImpl.CQRS.Queries\SImpl.CQRS.Queries.csproj" />
+    <ProjectReference Include="..\SImpl\SImpl.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
       <HintPath>..\..\..\..\..\..\usr\local\share\dotnet\packs\Microsoft.AspNetCore.App.Ref\5.0.0\ref\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Hosting.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
-      <HintPath>..\..\..\..\..\..\usr\local\share\dotnet\packs\Microsoft.AspNetCore.App.Ref\5.0.0\ref\net5.0\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SImpl\SImpl.csproj" />
   </ItemGroup>
 
 </Project>

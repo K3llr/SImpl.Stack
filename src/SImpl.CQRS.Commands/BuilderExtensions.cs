@@ -6,14 +6,14 @@ namespace SImpl.CQRS.Commands
 {
     public static class BuilderExtensions
     {
-        public static ISImplHostBuilder UseInMemoryCommandDispatcher(this ISImplHostBuilder host)
+        public static ISImplHostBuilder UseCqrsInMemoryCommandDispatcher(this ISImplHostBuilder host)
         {
             var module = host.AttachNewOrGetConfiguredModule(() => new CommandModule(new CommandModuleConfig()));
             module.Config.EnableInMemoryCommandDispatcher = true;
             return host;
         }
 
-        public static ISImplHostBuilder UseCommands(this ISImplHostBuilder host, Action<CommandModuleConfig> configureDelegate)
+        public static ISImplHostBuilder UseCqrsCommands(this ISImplHostBuilder host, Action<CommandModuleConfig> configureDelegate)
         {
             var module = host.AttachNewOrGetConfiguredModule(() => new CommandModule(new CommandModuleConfig()));
             configureDelegate?.Invoke(module.Config);
