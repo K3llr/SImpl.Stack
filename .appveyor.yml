@@ -1,0 +1,10 @@
+# configuration for "master" branch
+-
+  branches:
+    only:
+      - master
+  configuration: Release
+  before_build:
+    - ps: nuget restore .\src\SImpl.Stack.sln
+  build:
+    project: .\src\SImpl.Stack.sln
