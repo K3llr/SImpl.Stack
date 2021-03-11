@@ -58,7 +58,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Http.CQRS", "SImpl.Ht
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Messaging.CQRS", "SImpl.Messaging.CQRS\SImpl.Messaging.CQRS.csproj", "{D3066559-AB4B-49CA-A4BC-8201BF0C742B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.JobQueues", "SImpl\SImpl.JobQueues\SImpl.JobQueues.csproj", "{FF91031F-CFA2-4AB5-839A-B5E85DE9DA0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.JobQueues", "SImpl.JobQueues\SImpl.JobQueues.csproj", "{FF91031F-CFA2-4AB5-839A-B5E85DE9DA0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
