@@ -9,6 +9,7 @@
     <dependencies>
       <dependency id="SImpl" version="1.0.0" exclude="Build,Analyzers" />
     </dependencies>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

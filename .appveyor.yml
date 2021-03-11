@@ -7,4 +7,12 @@
   before_build:
     - ps: nuget restore .\src\SImpl.Stack.sln
   build:
+    publish_nuget: true
     project: .\src\SImpl.Stack.sln
+  
+  deploy:
+    provider: NuGet
+    api_key:
+      secure: 4tlN94KhoDTJOrHn206SKYpZOgZGXdbosupzi5I7o7W96h8cGs6cPqia2tIBqCm6
+    skip_symbols: false
+    artifact: /.*(\.|\.s)nupkg/

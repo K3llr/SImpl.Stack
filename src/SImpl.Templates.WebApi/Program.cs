@@ -26,7 +26,7 @@ namespace SImpl.Templates.WebApi
         }
 
         private static IHostBuilder CreateHostBuilder(string[] args, ILogger logger) =>
-            Host.CreateDefaultBuilder(args)
+            Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
