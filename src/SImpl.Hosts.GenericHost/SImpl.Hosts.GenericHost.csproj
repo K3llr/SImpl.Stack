@@ -9,7 +9,6 @@
     <Authors>Mikkel Keller</Authors>
     <Description>SImpl.Hosts.GenericHost</Description>
     <PackageTags>SImpl.Hosts.GenericHost</PackageTags>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

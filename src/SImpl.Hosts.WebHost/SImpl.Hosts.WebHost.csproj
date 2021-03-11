@@ -11,7 +11,6 @@
     <Description>SImpl.Hosts.WebHost</Description>
     <PackageTags>SImpl.Hosts.WebHost</PackageTags>
     <IsPackable>true</IsPackable>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
