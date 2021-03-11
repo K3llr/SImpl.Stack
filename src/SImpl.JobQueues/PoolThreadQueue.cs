@@ -6,13 +6,13 @@ namespace SImpl.JobQueues
 {
     public class PoolThreadQueue<T>
     {
+        private readonly IDeQueueAction<T> _deQueueAction;
         private Queue<T> _jobs = new();
         private bool _delegateQueuedOrRunning = false;
-        private readonly Action<T> _onDeQueue;
 
-        public PoolThreadQueue(Action<T> onDeQueue)
+        public PoolThreadQueue(IDeQueueAction<T> deQueueAction)
         {
-            _onDeQueue = onDeQueue;
+            _deQueueAction = deQueueAction;
         }
 
         public void Enqueue(T job)
@@ -47,7 +47,7 @@ namespace SImpl.JobQueues
                 try
                 {
                     //do job
-                    _onDeQueue.Invoke(item);
+                    _deQueueAction.DeQueueAction(item);
                 }
                 catch
                 {

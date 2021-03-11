@@ -15,7 +15,20 @@ namespace SImpl.CQRS.Commands.Module
                 services.AddSingleton<IQueueManager, InMemoryQueueManager>();
                 services.AddSingleton<IInMemoryQueueManager, InMemoryQueueManager>();
             }
-            services.AddSingleton(typeof(IQueue<>),Config.RegisteredQueues);
+            services.Scan(s =>
+                s.FromAssemblies(Config.RegisteredAssemblies)
+                    .AddClasses(c => c.AssignableTo(typeof(IQueue<>)))
+                    .AsImplementedInterfaces()
+                    .WithTransientLifetime());
+            services.Scan(s =>
+                s.FromAssemblies(Config.RegisteredAssemblies)
+                    .AddClasses(c => c.AssignableTo(typeof(IDeQueueAction<>)))
+                    .AsImplementedInterfaces()
+                    .WithTransientLifetime());
+            foreach (var queryHandlerType in Config.RegisteredQueues)
+            {
+                // TODO:
+            }
         }
 
         public QueueModuleConfig Config { get; }

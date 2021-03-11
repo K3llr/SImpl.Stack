@@ -7,21 +7,20 @@ namespace SImpl.JobQueues
 {
     public class BlockingCollectionQueue<T> : IQueue<T>
     {
-        private Action<T> _onDeQueue;
+        private readonly IDeQueueAction<T> _deQueueAction;
+
         private BlockingCollection<T> _jobs = new();
         private bool _delegateQueuedOrRunning = false;
 
-        public BlockingCollectionQueue()
+        public BlockingCollectionQueue(IDeQueueAction<T> deQueueAction)
         {
+            _deQueueAction = deQueueAction;
             var thread = new Thread(new ThreadStart(OnStart));
             thread.IsBackground = true;
             thread.Start();
         }
 
-        public void DefineDeQueueAction(Action<T> onDeQueue)
-        {
-            _onDeQueue = onDeQueue;
-        }
+  
 
         public void Enqueue(T job)
         {
@@ -30,7 +29,7 @@ namespace SImpl.JobQueues
 
         private void ProcessQueuedItem(T item)
         {
-            _onDeQueue.Invoke(item);
+            _deQueueAction.DeQueueAction(item);
         }
         private void OnStart()
         {

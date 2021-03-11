@@ -7,14 +7,22 @@ namespace SImpl.CQRS.Commands.Module
 {
     public class QueueModuleConfig
     {
-        private readonly List<IQueue> _queues = new();
-        
-        public IReadOnlyList<IQueue> RegisteredQueues => _queues.AsReadOnly();
+        private readonly List<Assembly> _assemblies = new();
+        private readonly List<Type> _queues = new();
+        private readonly List<Type> _dequeueActions = new();
+        public IReadOnlyList<Assembly> RegisteredAssemblies => _assemblies.AsReadOnly();
+        public IReadOnlyList<Type> RegisteredQueues => _queues.AsReadOnly();
+        public IReadOnlyList<Type> RegisteredDequeueActions  => _queues.AsReadOnly();
         public bool EnableInMemoryQueueManager { get; internal set; }
-
-        public QueueModuleConfig AddQueue<T>(IQueue<T> queue)
+        public QueueModuleConfig AddQueuesAndDequeuActionsFromAssembly(Assembly assembly)
         {
-            _queues.Add(queue);
+            _assemblies.Add(assembly);
+            return this;
+        }
+        
+        public QueueModuleConfig AddQueuesAndDequeuActionsFromAssemblyOf<T>()
+        {
+            AddQueuesAndDequeuActionsFromAssembly(typeof(T).Assembly);
             return this;
         }
     }
