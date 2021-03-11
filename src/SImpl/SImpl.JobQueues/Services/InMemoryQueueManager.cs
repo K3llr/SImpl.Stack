@@ -2,7 +2,7 @@
 
 namespace SImpl.JobQueues.Services
 {
-    public class InMemoryQueueManager : IQueueManager
+    public class InMemoryQueueManager : IInMemoryQueueManager
     {
         private readonly IServiceScopeFactory _serviceFactory;
 

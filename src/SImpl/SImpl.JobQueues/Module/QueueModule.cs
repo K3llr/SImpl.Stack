@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SImpl.JobQueues;
+using SImpl.JobQueues.Services;
 using SImpl.Modules;
 
 namespace SImpl.CQRS.Commands.Module
@@ -9,6 +10,11 @@ namespace SImpl.CQRS.Commands.Module
         public string Name { get; } = nameof(QueueModule);
         public void ConfigureServices(IServiceCollection services)
         {
+            if (Config.EnableInMemoryQueueManager)
+            {
+                services.AddSingleton<IQueueManager, InMemoryQueueManager>();
+                services.AddSingleton<IInMemoryQueueManager, InMemoryQueueManager>();
+            }
             services.AddSingleton(typeof(IQueue<>),Config.RegisteredQueues);
         }
 
