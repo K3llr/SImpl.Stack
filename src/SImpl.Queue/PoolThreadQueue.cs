@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 
-namespace SImpl.JobQueues
+namespace SImpl.Queue
 {
     public class PoolThreadQueue<T>
     {
-        private readonly IDeQueueAction<T> _deQueueAction;
-        private Queue<T> _jobs = new();
+        private readonly IDequeueAction<T> _dequeueAction;
+        private readonly Queue<T> _jobs = new();
         private bool _delegateQueuedOrRunning = false;
 
-        public PoolThreadQueue(IDeQueueAction<T> deQueueAction)
+        public PoolThreadQueue(IDequeueAction<T> dequeueAction)
         {
-            _deQueueAction = deQueueAction;
+            _dequeueAction = dequeueAction;
         }
 
         public void Enqueue(T job)
@@ -47,7 +46,7 @@ namespace SImpl.JobQueues
                 try
                 {
                     //do job
-                    _deQueueAction.DeQueueAction(item);
+                    _dequeueAction.DequeueAction(item);
                 }
                 catch
                 {

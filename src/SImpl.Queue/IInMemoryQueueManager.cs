@@ -1,4 +1,4 @@
-﻿namespace SImpl.JobQueues
+﻿namespace SImpl.Queue
 {
     public interface IInMemoryQueueManager : IQueueManager
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace SImpl.JobQueues.Services
+namespace SImpl.Queue.Services
 {
     public class InMemoryQueueManager : IInMemoryQueueManager
     {
@@ -10,12 +10,14 @@ namespace SImpl.JobQueues.Services
         {
             _serviceFactory = serviceFactory;
         }
+        
         public void Enqueue<T>(T job)
         {
             using var scope = _serviceFactory.CreateScope();
             
             var queueType = typeof(IQueue<>).MakeGenericType(typeof(T));
             var queue = scope.ServiceProvider.GetRequiredService(queueType);
+            
             queueType
                 .GetMethod(nameof(IQueue<T>.Enqueue))?
                 .Invoke(queue, new object[] {job});

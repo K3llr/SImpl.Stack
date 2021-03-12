@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SImpl.JobQueues;
-using SImpl.JobQueues.Services;
 using SImpl.Modules;
+using SImpl.Queue.Services;
 
-namespace SImpl.CQRS.Commands.Module
+namespace SImpl.Queue.Module
 {
     public class QueueModule : IServicesCollectionConfigureModule
     {
@@ -15,16 +14,19 @@ namespace SImpl.CQRS.Commands.Module
                 services.AddSingleton<IQueueManager, InMemoryQueueManager>();
                 services.AddSingleton<IInMemoryQueueManager, InMemoryQueueManager>();
             }
+            
             services.Scan(s =>
                 s.FromAssemblies(Config.RegisteredAssemblies)
                     .AddClasses(c => c.AssignableTo(typeof(IQueue<>)))
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
+            
             services.Scan(s =>
                 s.FromAssemblies(Config.RegisteredAssemblies)
-                    .AddClasses(c => c.AssignableTo(typeof(IDeQueueAction<>)))
+                    .AddClasses(c => c.AssignableTo(typeof(IDequeueAction<>)))
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
+            
             foreach (var queryHandlerType in Config.RegisteredQueues)
             {
                 // TODO:

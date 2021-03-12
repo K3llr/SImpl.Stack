@@ -1,8 +1,8 @@
 using System;
-using SImpl.CQRS.Commands.Module;
 using SImpl.Host.Builders;
+using SImpl.Queue.Module;
 
-namespace SImpl.CQRS.Queries
+namespace SImpl.Queue
 {
     public static class BuilderExtensions
     {
@@ -10,10 +10,11 @@ namespace SImpl.CQRS.Queries
         {
             var config = new QueueModuleConfig();
             queueConfig.Invoke(config);
+            
             var module = host.AttachNewOrGetConfiguredModule(() => new QueueModule(config));
             module.Config.EnableInMemoryQueueManager = true;
+            
             return host;
         }
-
     }
 }
