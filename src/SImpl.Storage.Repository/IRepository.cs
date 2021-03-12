@@ -7,9 +7,9 @@ namespace SImpl.Storage.Repository
         where TEntity : IEntity<TId>
     {
         IEnumerable<TEntity> GetAll();
-        void Delete(TId id);
+        void Delete<TEntity>(TId id);
         TEntity Get(TId id);
-        int SaveRange(IEnumerable<TEntity> list);
+        void SaveRange(IEnumerable<TEntity> list);
         void Update(TEntity entity);
         void Insert(TEntity entity);
     }

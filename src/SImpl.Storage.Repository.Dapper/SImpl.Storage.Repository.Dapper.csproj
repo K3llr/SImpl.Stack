@@ -5,4 +5,13 @@
     <RootNamespace>SImpl.Storage.Dapper</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Dommel" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SImpl.Storage.Repository\SImpl.Storage.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

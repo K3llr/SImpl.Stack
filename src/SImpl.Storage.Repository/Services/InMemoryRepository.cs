@@ -13,9 +13,9 @@ namespace SImpl.Storage.Repository.Services
             return _repository.GetAllAsync().Result;
         }
 
-        public void Delete(TId id)
+        public void Delete<TEntity>(TId id)
         {
-            _repository.DeleteAsync(id);
+            _repository.DeleteAsync<TEntity>(id);
         }
 
         public TEntity Get(TId id)
@@ -23,9 +23,9 @@ namespace SImpl.Storage.Repository.Services
             return _repository.GetAsync(id).Result;
         }
 
-        public int SaveRange(IEnumerable<TEntity> list)
+        public void SaveRange(IEnumerable<TEntity> list)
         {
-            return _repository.SaveRangeAsync(list).Result;
+             _repository.SaveRangeAsync(list);
         }
 
         public void Update(TEntity entity)
