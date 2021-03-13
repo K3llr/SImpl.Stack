@@ -1,5 +1,4 @@
 # SImpl Stack - A .NET host runtime with a unified and stackable module abstraction
-=
 
 [![Build status](https://ci.appveyor.com/api/projects/status/qdy4xmxq81tapubr/branch/master?svg=true)](https://ci.appveyor.com/project/SImpl/simpl-stack/branch/master)
 
