@@ -3,13 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AssemblyName>SImpl.Hosts.WebHost</AssemblyName>
-    <RootNamespace>SImpl.Hosts.WebHost</RootNamespace>
-    <PackageId>SImpl.Hosts.WebHost</PackageId>
-    <Title>SImpl.Hosts.WebHost</Title>
-    <Authors>Mikkel Keller</Authors>
-    <Description>SImpl.Hosts.WebHost</Description>
-    <PackageTags>SImpl.Hosts.WebHost</PackageTags>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 

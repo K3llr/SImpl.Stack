@@ -2,15 +2,18 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <IsPackable>true</IsPackable>
         <Authors>Arkadiusz Biel</Authors>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\SImpl\SImpl.csproj" />
     </ItemGroup>
+    
     <ItemGroup>
         <PackageReference Include="Scrutor" Version="3.3.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     </ItemGroup>
+    
 </Project>
