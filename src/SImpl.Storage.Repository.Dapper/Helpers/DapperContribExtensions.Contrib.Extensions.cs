@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using Dapper;
 using Dapper.Contrib.Extensions;
 namespace SImpl.Storage.Dapper.Helpers
@@ -61,6 +62,38 @@ namespace SImpl.Storage.Dapper.Helpers
             var deleted = connection.Execute(sb.ToString(), id, transaction, commandTimeout);
             return deleted > 0;
         }
+        public static async Task<bool> DeleteByIdAsync<T>(this IDbConnection connection, object id, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+            if (id == null)
+                throw new ArgumentException("Cannot Delete null Object", nameof(id));
+
+            var type = typeof(T);
+
+            if (type.IsArray)
+            {
+                type = type.GetElementType();
+            }
+            else if (type.IsGenericType)
+            {
+                var typeInfo = type.GetTypeInfo();
+                bool implementsGenericIEnumerableOrIsGenericIEnumerable =
+                    typeInfo.ImplementedInterfaces.Any(ti => ti.IsGenericType && ti.GetGenericTypeDefinition() == typeof(IEnumerable<>)) ||
+                    typeInfo.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+
+                if (implementsGenericIEnumerableOrIsGenericIEnumerable)
+                {
+                    type = type.GetGenericArguments()[0];
+                }
+            }
+
+            var name = GetTableName(type);
+            var adapter = GetFormatter(connection);
+            var sb = new StringBuilder();
+            sb.AppendFormat("delete from {0} where ", name);
+            adapter.AppendColumnNameEqualsValue(sb, "id"); 
+            var deleted = await connection.ExecuteAsync(sb.ToString(), id, transaction, commandTimeout);
+            return deleted > 0;
+        }
          private static ISqlAdapter GetFormatter(IDbConnection connection)
          {
              var name = GetDatabaseType?.Invoke(connection).ToLower()
@@ -101,40 +134,5 @@ namespace SImpl.Storage.Dapper.Helpers
              return name;
          }
 
-         public static void BulkInsert<T>(this IDbConnection connection, List<T> list,
-             IDbTransaction transaction = null, int? commandTimeout = null)
-         {
-             throw new NotImplementedException();
-         }
-         public static System.Data.DataTable ConvertToDataTable<T>(IList<T> data)
-
-         {
-             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
-
-             System.Data.DataTable table = new System.Data.DataTable();
-
-             foreach (PropertyDescriptor prop in properties)
-             {
-                 table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-             }
-
-             foreach (T item in data)
-
-             {
-
-                 DataRow row = table.NewRow();
-
-                 foreach (PropertyDescriptor prop in properties)
-                 {
-                     row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;             
-
-                 }
-
-                 table.Rows.Add(row);
-             }
-
-             return table;
-
-         }
     }
 }

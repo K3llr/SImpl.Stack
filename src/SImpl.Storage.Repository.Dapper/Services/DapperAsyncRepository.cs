@@ -1,70 +1,72 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
 using SImpl.Common;
 using SImpl.Storage.Dapper.Helpers;
-using SImpl.Storage.Repository.Dapper;
 using SImpl.Storage.Repository.Module;
 
-namespace SImpl.Storage.Dapper
+namespace SImpl.Storage.Repository.Dapper.Services
 {
-    public class DapperRepository<TEntity, TId> : IDapperRepository<TEntity, TId>
+    public class DapperAsyncRepository<TEntity, TId>: IAsyncDapperRepository<TEntity, TId>
         where TEntity : class, IEntity<TId>
     {
         private readonly IDbConnectionFactory _connection;
 
 
-        public DapperRepository(IDbConnectionFactory connection)
+        public DapperAsyncRepository(IDbConnectionFactory connection)
         {
             _connection = connection;
         }
 
-        public IEnumerable<TEntity> GetAll()
+     
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             using (IDbConnection dbConnection = _connection.CreateConnection())
             {
-                return dbConnection.GetAll<TEntity>();
+                return await  dbConnection.GetAllAsync<TEntity>();
+
             }
         }
 
-        public void Delete<TEntity>(TId id)
+        public async Task DeleteAsync<TEntity>(TId id) 
         {
             using (IDbConnection dbConnection = _connection.CreateConnection())
             {
-                dbConnection.DeleteById<TEntity>(id);
+                await dbConnection.DeleteByIdAsync<TEntity>(id);
             }
         }
 
-        public TEntity Get(TId id)
+        public async Task<TEntity> GetAsync(TId id)
         {
             using (IDbConnection dbConnection = _connection.CreateConnection())
             {
-                return dbConnection.Get<TEntity>(id);
+                return await dbConnection.GetAsync<TEntity>(id);
             }
         }
 
-        public void SaveRange(IEnumerable<TEntity> list)
+        public async Task SaveRangeAsync(IEnumerable<TEntity> list)
         {
             using (IDbConnection dbConnection = _connection.CreateConnection())
             {
-                dbConnection.Insert(list.ToArray());
+                await dbConnection.InsertAsync(list.ToArray());
             }
         }
 
-        public void Update(TEntity entity)
+        public async Task UpdateAsync(TEntity entity)
         {
             using (IDbConnection dbConnection = _connection.CreateConnection())
             {
-                dbConnection.Update<TEntity>(entity);
+                await dbConnection.UpdateAsync<TEntity>(entity);
             }
         }
 
-        public void Insert(TEntity entity)
+        public async Task InsertAsync(TEntity entity)
         {
             using (IDbConnection dbConnection = _connection.CreateConnection())
             {
-                dbConnection.Insert<TEntity>(entity);
+                await dbConnection.InsertAsync<TEntity>(entity);
             }
         }
     }

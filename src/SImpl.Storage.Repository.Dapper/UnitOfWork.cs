@@ -7,19 +7,19 @@ namespace SImpl.Storage.Dapper
 {
     public class UnitOfWork : IUnitOfWork
     {
+        private readonly IDbConnection _dbConnection;
         private IDbTransaction _transaction;
-        private DapperStorage _dapperStorage;
 
-        public UnitOfWork(DapperStorage dapperStorage)
+        public UnitOfWork(IDbConnection dbConnection)
         {
-            _dapperStorage = dapperStorage;
+            _dbConnection = dbConnection;
         }
 
         public void BeginTransaction()
         {
             if (_transaction != null)
                 throw new ApplicationException("Transaction in progress");
-            _transaction = _dapperStorage.Connection.BeginTransaction();
+            _transaction = _dbConnection.BeginTransaction();
         }
 
         public void CommitTransaction()
