@@ -4,12 +4,12 @@ using SImpl.Storage.Repository.Module;
 
 namespace SImpl.Storage.Dapper
 {
-    public class DapperyRepository<TEntity, TId> : IDapperyRepository<TEntity, TId>
+    public class DapperRepository<TEntity, TId> : IDapperRepository<TEntity, TId>
         where TEntity : class, IEntity<TId>
     {
         private readonly DapperStorage _storage;
 
-        public DapperyRepository(DapperStorage storage)
+        public DapperRepository(DapperStorage storage)
         {
             _storage = storage;
         }
@@ -19,7 +19,7 @@ namespace SImpl.Storage.Dapper
             return _storage.GetAll<TEntity>();
         }
 
-        public void Delete<TEntity>(TId id)
+        public void Delete<TEntity>(TId id) 
         {
             _storage.Delete<TEntity>(id);
         }

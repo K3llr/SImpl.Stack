@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Dommel;
+using Dapper.Contrib.Extensions;
 using SImpl.Common;
-using SImpl.Storage.Dapper.Helper;
-
+using SImpl.Storage.Dapper.Helpers;
 namespace SImpl.Storage.Repository.Module
 {
     public class DapperStorage : IDisposable
@@ -31,14 +30,13 @@ namespace SImpl.Storage.Repository.Module
 
         public void Delete<TEntity>(object id)  
         {
-            //to need to make helper to remove by id
-            Connection.Delete<TEntity>(id);
+            Connection.DeleteById<TEntity>(id);
         }
 
         public void SaveRange<TEntity>(IEnumerable<TEntity> list) where TEntity : class
         {
-            //why we need int there ?!
-            Connection.InsertAll(list);
+          throw  new NotImplementedException();
+            //  Connection.Insert<TEntity>(list);
         }
 
         public void Insert<TEntity>(TEntity entity) where TEntity : class
