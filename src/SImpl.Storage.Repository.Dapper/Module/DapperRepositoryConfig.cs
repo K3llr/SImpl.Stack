@@ -11,6 +11,11 @@ namespace SImpl.Storage.Repository.Module
             get;
             set;
         } = new MssqlConnectionFactory();
+
+        public string ConnectionStringName;
+
+
+
     }
     
 }

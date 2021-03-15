@@ -25,6 +25,7 @@ namespace SImpl.Storage.Dapper
             using (IDbConnection dbConnection = _connection.CreateConnection())
             {
                 return dbConnection.GetAll<TEntity>();
+                
             }
         }
 

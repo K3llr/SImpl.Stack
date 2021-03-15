@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SImpl.Storage.Repository\SImpl.Storage.Repository.csproj" />
+      <ProjectReference Include="..\SImpl\SImpl.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NPoco" Version="5.1.2" />
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    </ItemGroup>
+
+</Project>

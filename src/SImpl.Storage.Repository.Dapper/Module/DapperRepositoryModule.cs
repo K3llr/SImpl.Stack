@@ -26,7 +26,13 @@ namespace SImpl.Storage.Repository.Module
             services.AddSingleton(typeof(IDapperRepository<,>), typeof(DapperRepository<,>));
             services.AddSingleton(typeof(IAsyncRepository<,>), typeof(DapperAsyncRepository<,>));
             services.AddSingleton(typeof(IAsyncDapperRepository<,>), typeof(DapperAsyncRepository<,>));
-            services.AddSingleton(typeof(IDbConnectionFactory), _dapperRepoConfig.DbConnectionFactory);
+            var factory = _dapperRepoConfig.DbConnectionFactory;
+            if (!string.IsNullOrWhiteSpace(_dapperRepoConfig.ConnectionStringName))
+            {
+                factory.SetConnectionString(_dapperRepoConfig.ConnectionStringName);
+            }
+            
+            services.AddSingleton(typeof(IDbConnectionFactory), factory);
         }
     }
 }

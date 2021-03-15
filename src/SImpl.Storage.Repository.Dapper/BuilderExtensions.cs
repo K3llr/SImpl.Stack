@@ -6,10 +6,13 @@ namespace SImpl.Storage.Repository
 {
     public static class BuilderExtensions
     {
-        public static ISImplHostBuilder UseDapperRepositoryStorage(this ISImplHostBuilder host, Action<DapperRepositoryConfig> dapperRepoConfig)
+        public static ISImplHostBuilder UseDapperRepositoryStorage(this ISImplHostBuilder host, Action<DapperRepositoryConfig> dapperRepoConfig = null)
         {
             var config = new DapperRepositoryConfig();
-            dapperRepoConfig.Invoke(config);
+            if (dapperRepoConfig != null)
+            {
+                dapperRepoConfig.Invoke(config);
+            }
             host.AttachNewOrGetConfiguredModule(() => new DapperRepositoryModule(config));
             return host;
         }
