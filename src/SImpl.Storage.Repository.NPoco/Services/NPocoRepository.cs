@@ -20,13 +20,12 @@ namespace SImpl.Storage.Repository.NPoco.Services
             using (IDatabase dbConnection = _connection.CreateConnection())
             {
                 return dbConnection.Fetch<TEntity>();
-                
             }
         }
 
         public void Delete<TEntity>(TId id)
         {
-           using (IDatabase dbConnection = _connection.CreateConnection())
+            using (IDatabase dbConnection = _connection.CreateConnection())
             {
                 dbConnection.Delete<TEntity>(id);
             }
@@ -34,7 +33,7 @@ namespace SImpl.Storage.Repository.NPoco.Services
 
         public TEntity Get(TId id)
         {
-           using (IDatabase dbConnection = _connection.CreateConnection())
+            using (IDatabase dbConnection = _connection.CreateConnection())
             {
                 return dbConnection.SingleById<TEntity>(id);
             }
@@ -42,7 +41,7 @@ namespace SImpl.Storage.Repository.NPoco.Services
 
         public void SaveRange(IEnumerable<TEntity> list)
         {
-           using (IDatabase dbConnection = _connection.CreateConnection())
+            using (IDatabase dbConnection = _connection.CreateConnection())
             {
                 dbConnection.Insert(list);
             }
@@ -50,7 +49,7 @@ namespace SImpl.Storage.Repository.NPoco.Services
 
         public void Update(TEntity entity)
         {
-           using (IDatabase dbConnection = _connection.CreateConnection())
+            using (IDatabase dbConnection = _connection.CreateConnection())
             {
                 dbConnection.Update(entity);
             }
@@ -58,9 +57,16 @@ namespace SImpl.Storage.Repository.NPoco.Services
 
         public void Insert(TEntity entity)
         {
-           using (IDatabase dbConnection = _connection.CreateConnection())
+            using (IDatabase dbConnection = _connection.CreateConnection())
             {
-                dbConnection.Insert(entity);
+                if (dbConnection.IsNew(entity))
+                {
+                    dbConnection.Insert(entity);
+                }
+                else
+                {
+                    dbConnection.Update(entity);
+                }
             }
         }
     }

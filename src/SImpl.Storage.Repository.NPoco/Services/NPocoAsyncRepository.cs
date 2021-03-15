@@ -60,7 +60,14 @@ namespace SImpl.Storage.Repository.NPoco.Services
         {
             using (IDatabase dbConnection = _connection.CreateConnection())
             {
-                await dbConnection.InsertAsync(entity);
+                if (await dbConnection.IsNewAsync(entity))
+                {
+                    await    dbConnection.InsertAsync(entity);
+                }
+                else
+                {
+                    await    dbConnection.UpdateAsync(entity);
+                }
             }
         }
     }
