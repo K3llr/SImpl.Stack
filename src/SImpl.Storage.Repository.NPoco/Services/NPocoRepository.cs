@@ -54,7 +54,7 @@ namespace SImpl.Storage.Repository.NPoco.Services
                 dbConnection.Update(entity);
             }
         }
-
+        
         public void Insert(TEntity entity)
         {
             using (IDatabase dbConnection = _connection.CreateConnection())

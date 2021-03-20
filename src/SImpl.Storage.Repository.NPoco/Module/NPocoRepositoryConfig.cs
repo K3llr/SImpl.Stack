@@ -1,12 +1,14 @@
+using System;
+
 namespace SImpl.Storage.Repository.NPoco.Module
 {
     public class NPocoRepositoryConfig
     {
-        public IDatabaseNpocoFactory DbConnectionFactory
+        public Type DbConnectionFactory
         {
             get;
             set;
-        } = new MssqlDatabaseFactory();
+        } = typeof(MssqlDatabaseFactory);
 
         public string ConnectionStringName;
 

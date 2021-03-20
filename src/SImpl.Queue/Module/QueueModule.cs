@@ -29,7 +29,7 @@ namespace SImpl.Queue.Module
             
             foreach (var queryHandlerType in Config.RegisteredQueues)
             {
-                // TODO:
+                // TODO: add queue registration by type
             }
         }
 

@@ -6,16 +6,12 @@ namespace SImpl.Storage.Repository.Module
 {
     public class DapperRepositoryConfig
     {
-        public IDbConnectionFactory DbConnectionFactory
+        public Type DbConnectionFactory
         {
             get;
             set;
-        } = new MssqlConnectionFactory();
-
+        } = typeof(MssqlConnectionFactory);
         public string ConnectionStringName;
-
-
-
     }
     
 }

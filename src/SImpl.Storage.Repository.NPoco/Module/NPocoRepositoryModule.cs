@@ -21,13 +21,9 @@ namespace SImpl.Storage.Repository.NPoco.Module
             services.AddSingleton(typeof(INPocoRepository<,>), typeof(NPocoRepository<,>));
             services.AddSingleton(typeof(IAsyncRepository<,>), typeof(NPocoAsyncRepository<,>));
             services.AddSingleton(typeof(IAsyncNPocoRepository<,>), typeof(NPocoAsyncRepository<,>));
-            var factory = _nPocoRepoConfig.DbConnectionFactory;
-            if (!string.IsNullOrWhiteSpace(_nPocoRepoConfig.ConnectionStringName))
-            {
-                factory.SetConnectionString(_nPocoRepoConfig.ConnectionStringName);
-            }
-            
-            services.AddSingleton(typeof(IDatabaseNpocoFactory), factory);
+         
+                services.AddSingleton(typeof(IDatabaseNpocoFactory), _nPocoRepoConfig.DbConnectionFactory);
+          
         }
     }
 }
