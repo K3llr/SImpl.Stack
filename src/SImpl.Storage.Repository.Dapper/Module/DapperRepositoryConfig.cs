@@ -11,7 +11,7 @@ namespace SImpl.Storage.Repository.Module
             get;
             set;
         } = typeof(MssqlConnectionFactory);
-        public string ConnectionStringName;
+        public string ConnectionStringName = "Simpl.Repository.Db";
     }
     
 }

@@ -10,7 +10,7 @@ namespace SImpl.Storage.Repository.NPoco.Module
             set;
         } = typeof(MssqlDatabaseFactory);
 
-        public string ConnectionStringName;
+        public string ConnectionStringName= "Simpl.Repository.Db";
 
 
 
