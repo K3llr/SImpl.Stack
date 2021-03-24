@@ -21,9 +21,11 @@ namespace SImpl.Hosts.WebHost.AspNetCore
         {
             return builder =>
             {
-                _bootSequenceFactory.New().ForEach<IAspNetConfigureModule>(module => module.Configure(builder, builder.ApplicationServices.GetService<IWebHostEnvironment>()));
+                _bootSequenceFactory.New().ForEach<IAspNetPreConfigureModule>(module => module.Configure(builder, builder.ApplicationServices.GetService<IWebHostEnvironment>()));
                 
                 next(builder);
+                
+                _bootSequenceFactory.New().ForEach<IAspNetPostConfigureModule>(module => module.Configure(builder, builder.ApplicationServices.GetService<IWebHostEnvironment>()));
             };
         }
     }

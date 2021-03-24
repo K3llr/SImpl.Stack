@@ -2,7 +2,7 @@ using SImpl.Modules;
 
 namespace SImpl.Hosts.WebHost.Modules
 {
-    public interface IAspNetPreModule : IAspNetPreConfigureModule, IAspNetPostConfigureModule, IServicesCollectionConfigureModule
+    public interface IAspNetPostModule : IAspNetPostConfigureModule, IServicesCollectionConfigureModule
     {
         
     }

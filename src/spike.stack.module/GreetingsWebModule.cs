@@ -11,7 +11,7 @@ using spike.stack.application.Domain;
 
 namespace spike.stack.module
 {
-    public class GreetingsWebModule : IAspNetConfigureModule, IServicesCollectionConfigureModule, IWebHostApplicationModule
+    public class GreetingsWebModule : IAspNetPreConfigureModule, IServicesCollectionConfigureModule, IWebHostApplicationModule
     {
         private IGreetingAppService _greetingAppService;
         

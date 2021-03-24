@@ -4,7 +4,7 @@ using SImpl.Modules;
 
 namespace SImpl.Hosts.WebHost.Modules
 {
-    public interface IAspNetConfigureModule : ISImplModule
+    public interface IAspNetPreConfigureModule : IWebHostModule
     {
         void Configure(IApplicationBuilder app, IWebHostEnvironment env);
     }
