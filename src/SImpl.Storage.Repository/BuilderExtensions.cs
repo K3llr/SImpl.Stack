@@ -8,7 +8,6 @@ namespace SImpl.Storage.Repository
         public static ISImplHostBuilder UseInMemoryRepositoryStorage(this ISImplHostBuilder host)
         {
             host.AttachNewOrGetConfiguredModule(() => new RepositoryModule());
-            
             return host;
         }
     }

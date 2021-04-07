@@ -16,7 +16,7 @@ namespace SImpl.Storage.Repository.Services
             return Task.FromResult(_storage.Values.AsEnumerable());
         }
 
-        public Task DeleteAsync(TId id)
+        public Task DeleteAsync<TEntity>(TId id)
         {
             if (_storage.ContainsKey(id))
             {
@@ -33,7 +33,7 @@ namespace SImpl.Storage.Repository.Services
                 : null;
         }
 
-        public Task<int> SaveRangeAsync(IEnumerable<TEntity> list)
+        public Task SaveRangeAsync(IEnumerable<TEntity> list)
         {
             var i = 0;
             foreach (var entity in list)
