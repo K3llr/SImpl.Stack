@@ -11,18 +11,18 @@ using spike.stack.application.Domain;
 
 namespace spike.stack.module
 {
-    public class GreetingsWebModule : IAspNetApplicationModule, IServicesCollectionConfigureModule
+    public class GreetingsWebModule : IAspNetPreConfigureModule, IServicesCollectionConfigureModule, IWebHostApplicationModule
     {
         private IGreetingAppService _greetingAppService;
+        
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            _greetingAppService = app.ApplicationServices.GetService<IGreetingAppService>();
+        }
 
         public void Configure(IWebHostApplicationBuilder builder)
         {
             
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            _greetingAppService = app.ApplicationServices.GetService<IGreetingAppService>();
         }
 
         public string Name => nameof(GreetingsWebModule);

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SImpl.Host.Builders;
 using SImpl.Hosts.WebHost.Application.Builders;
 using SImpl.Hosts.WebHost.Host.Builders;
@@ -10,11 +11,14 @@ namespace SImpl.Hosts.WebHost
 {
     public static class SImplHostBuilderExtensions
     {
-        public static void ConfigureWebHostStackApp(this ISImplHostBuilder hostBuilder, Action<IWebHostBuilder> configureDelegate)
+        public static ISImplHostBuilder ConfigureWebHostStackApp(this ISImplHostBuilder hostBuilder, Action<IWebHostBuilder> configureDelegate = null)
         {
             // Configure Generic host
             var startupConfiguration = new WebHostStartupConfiguration();
-            var applicationHostBuilder = new WebHostBuilder(startupConfiguration);
+            var applicationHostBuilder = RuntimeServices.Current.BootContainer.New<WebHostBuilder>(new Dictionary<Type, object>
+            {
+                [typeof(WebHostStartupConfiguration)] = startupConfiguration
+            });
             configureDelegate?.Invoke(applicationHostBuilder);
             
             // Get startup and application builder 
@@ -23,6 +27,8 @@ namespace SImpl.Hosts.WebHost
             
             // attach application
             hostBuilder.AttachNewOrGetConfiguredModule(() => new WebHostStackApplicationModule(stackApplicationBuilder, startup.ConfigureStackApplication, startup.ConfigureServices));
+
+            return hostBuilder;
         }
     }
 }

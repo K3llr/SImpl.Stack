@@ -2,7 +2,7 @@ using SImpl.Application.Builders;
 
 namespace SImpl.Modules
 {
-    public interface IWebHostApplicationModule : IApplicationModule<IWebHostApplicationBuilder>
+    public interface IWebHostApplicationModule : IWebHostModule, IApplicationModule<IWebHostApplicationBuilder>
     {
         
     }
