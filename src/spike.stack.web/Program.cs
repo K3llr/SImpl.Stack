@@ -18,13 +18,13 @@ namespace spike.stack.web
                 })
                 .SImplify(args, simpl =>
                 {
+                    simpl.Use<GreetingsWebModule>();
                     simpl.Use<RootModule>();
                     simpl.ConfigureWebHostStackApp(webHost =>
                     {
                         webHost.UseStartup<Startup>();
                         webHost.ConfigureApplication(app =>
                         {
-                            app.UseWebHostAppModule<GreetingsWebModule>();
                             app.UseAppModule<ApplicationTestModule>();
                         });
                     });
