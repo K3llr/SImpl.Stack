@@ -1,8 +1,8 @@
 using System;
+using Simpl.DependencyInjection.Module;
 using SImpl.Host.Builders;
-using SImpl.Queue.Module;
 
-namespace SImpl.Queue
+namespace Simpl.DependencyInjection
 {
     public static class BuilderExtensions
     {

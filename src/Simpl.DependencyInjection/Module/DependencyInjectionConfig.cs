@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-
-namespace SImpl.Queue.Module
+namespace Simpl.DependencyInjection.Module
 {
     public class DependencyInjectionConfig
     {

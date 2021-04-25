@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Simpl.DependencyInjection;
 using SImpl.Modules;
 
-namespace SImpl.Queue.Module
+namespace Simpl.DependencyInjection.Module
 {
     public class DependencyInjectionModule : IServicesCollectionConfigureModule
     {
