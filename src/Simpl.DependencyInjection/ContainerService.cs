@@ -46,5 +46,10 @@ namespace Simpl.DependencyInjection
         {
             return ServiceProvider.GetService(t) != null;
         }
+
+        public IServiceScope BeginScope()
+        {
+            return ServiceProvider.CreateScope();
+        }
     }
 }

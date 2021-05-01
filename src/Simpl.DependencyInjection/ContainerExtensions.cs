@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Simpl.DependencyInjection
 {
@@ -14,6 +15,11 @@ namespace Simpl.DependencyInjection
             where T : class
         {
             return ContainerService.Current?.Resolve<T>(type);
+        }
+        
+        public static IServiceScope BeginScope(this IContainerAware me)
+        {
+            return ContainerService.Current.BeginScope();
         }
     }
 }

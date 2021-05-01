@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Formats.Asn1;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Simpl.DependencyInjection
 {
@@ -19,6 +20,6 @@ namespace Simpl.DependencyInjection
 
         bool IsRegistered(Type t);
 
-
+        IServiceScope BeginScope();
     }
 }
