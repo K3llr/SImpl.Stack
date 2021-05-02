@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Simpl.Oauth.Web</RootNamespace>
+        <AssemblyName>Simpl.Oauth.Web</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Simpl.DependencyInjection\Simpl.DependencyInjection.csproj" />
+      <ProjectReference Include="..\Simpl.Oauth\Simpl.Oauth.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+      <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    </ItemGroup>
+
+</Project>

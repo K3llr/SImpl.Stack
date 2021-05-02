@@ -26,11 +26,18 @@ namespace SImpl.Queue.Module
                     .AddClasses(c => c.AssignableTo(typeof(IDequeueAction<>)))
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
-            
-            foreach (var queryHandlerType in Config.RegisteredQueues)
+            var genericInterface = typeof(IQueue<>);
+            var genericImpl = typeof(IDequeueAction<>);
+            foreach (var queue in Config.RegisteredQueues)
             {
-                // TODO: add queue registration by type
+                services.AddSingleton(genericInterface.MakeGenericType(queue));
+                
             }
+            foreach (var dequeueAction in Config.RegisteredDequeueActions)
+            {
+                services.AddSingleton(genericImpl.MakeGenericType(dequeueAction));
+            }
+            
         }
 
         public QueueModuleConfig Config { get; }
