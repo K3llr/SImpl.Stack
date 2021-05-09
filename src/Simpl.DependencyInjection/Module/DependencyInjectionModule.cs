@@ -9,6 +9,7 @@ namespace Simpl.DependencyInjection.Module
         public void ConfigureServices(IServiceCollection services)
         {  
             services.AddSingleton<IContainerService, ContainerService>();
+            new ContainerRegisterService(services);
         }
         
         public DependencyInjectionModule(DependencyInjectionConfig config)

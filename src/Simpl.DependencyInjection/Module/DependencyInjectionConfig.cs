@@ -1,6 +1,6 @@
 namespace Simpl.DependencyInjection.Module
 {
-    public class DependencyInjectionConfig
+    public  class DependencyInjectionConfig
     {
         
     }

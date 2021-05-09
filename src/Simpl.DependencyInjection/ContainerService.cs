@@ -51,5 +51,6 @@ namespace Simpl.DependencyInjection
         {
             return ServiceProvider.CreateScope();
         }
+
     }
 }

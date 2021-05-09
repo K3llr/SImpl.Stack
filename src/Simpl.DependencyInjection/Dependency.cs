@@ -56,7 +56,7 @@ namespace Simpl.DependencyInjection
 
     public enum Lifestyle
     {
-        Scope,
+        Scoped,
         Singleton,
         Transient
     }
