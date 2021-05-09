@@ -78,7 +78,13 @@ namespace SImpl.Runtime.Diagnostics
         }
 
         public IDictionary<object, object> Properties => _hostBuilder.Properties;
-        
+
+        public ISImplHostBuilder Use(ISImplModule module)
+        {
+            _hostBuilder.Use(module);
+            return this;
+        }
+
         public ISImplHostBuilder Use<TModule>(Func<TModule> factory) 
             where TModule : ISImplModule
         {
@@ -90,6 +96,12 @@ namespace SImpl.Runtime.Diagnostics
             where TModule : ISImplModule
         {
             return _hostBuilder.GetConfiguredModule<TModule>();
+        }
+
+        public TModule GetConfiguredModule<TModule>(Type moduleType) 
+            where TModule : ISImplModule
+        {
+            return _hostBuilder.GetConfiguredModule<TModule>(moduleType);
         }
 
         public TModule AttachNewOrGetConfiguredModule<TModule>(Func<TModule> factory) 

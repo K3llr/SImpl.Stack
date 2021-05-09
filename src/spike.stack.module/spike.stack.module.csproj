@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SImpl.AutoRun\SImpl.AutoRun.csproj" />
     <ProjectReference Include="..\SImpl.Hosts.GenericHost\SImpl.Hosts.GenericHost.csproj" />
     <ProjectReference Include="..\SImpl.Hosts.WebHost\SImpl.Hosts.WebHost.csproj" />
     <ProjectReference Include="..\SImpl.Runtime\SImpl.Runtime.csproj" />

@@ -22,6 +22,12 @@ namespace SImpl.Runtime.Host.Builders
             _bootManager = bootManager;
         }
 
+        public ISImplHostBuilder Use(ISImplModule module)
+        {
+            _moduleManager.AttachModule(module);
+            return this;
+        }
+
         public ISImplHostBuilder Use<TModule>(Func<TModule> factory)
             where TModule : ISImplModule
         {
@@ -29,9 +35,16 @@ namespace SImpl.Runtime.Host.Builders
             return this;
         }
 
-        public TModule GetConfiguredModule<TModule>() where TModule : ISImplModule
+        public TModule GetConfiguredModule<TModule>() 
+            where TModule : ISImplModule
         {
             return _moduleManager.GetConfiguredModule<TModule>();
+        }
+
+        public TModule GetConfiguredModule<TModule>(Type moduleType) 
+            where TModule : ISImplModule
+        {
+            return _moduleManager.GetConfiguredModule<TModule>(moduleType);
         }
 
         public TModule AttachNewOrGetConfiguredModule<TModule>(Func<TModule> factory)

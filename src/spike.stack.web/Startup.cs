@@ -44,7 +44,7 @@ namespace spike.stack.web
 
         public void ConfigureStackApplication(IWebHostApplicationBuilder app)
         {
-            app.UseWebHostAppModule<GreetingsWebModule>();
+            // app.UseWebHostAppModule<GreetingsWebModule>();
             
             app.UseAppModule<TestStackedApplicationModule>();
                     

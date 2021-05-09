@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using SImpl.AutoRun;
 using SImpl.Hosts.WebHost;
 using SImpl.Runtime;
 using spike.stack.module;
@@ -20,6 +21,7 @@ namespace spike.stack.web
                 {
                     simpl.Use<GreetingsWebModule>();
                     simpl.Use<RootModule>();
+                    simpl.UseAutoRunModules();
                     simpl.ConfigureWebHostStackApp(webHost =>
                     {
                         webHost.UseStartup<Startup>();
