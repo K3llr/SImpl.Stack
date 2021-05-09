@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SImpl.Reflector\SImpl.Reflector.csproj" />
+    <ProjectReference Include="..\SImpl\SImpl.csproj" />
+  </ItemGroup>
+
+</Project>

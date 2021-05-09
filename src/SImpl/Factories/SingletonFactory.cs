@@ -1,4 +1,4 @@
-﻿namespace SImpl.Factories
+namespace SImpl.Factories
 {
     public class SingletonFactory<T> : IFactory<T>
     {

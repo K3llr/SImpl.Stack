@@ -13,7 +13,7 @@ namespace SImpl.Runtime.Core
         public void AttachModule<TModule>(TModule module)
             where TModule : ISImplModule
         {
-            var configuredModule = GetConfiguredModule<TModule>();
+            var configuredModule = GetConfiguredModule<TModule>(module.GetType());
             if (configuredModule is null)
             {
                 var moduleContext = new ModuleRuntimeInfo(module);

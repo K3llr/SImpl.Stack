@@ -120,9 +120,6 @@ namespace SImpl.Runtime.Diagnostics
                 section.Value.AppendLine($"   - {module.Name}");
             }
             
-            section.Value.AppendLine("- Autorun modules");
-            // TODO:
-
             section.Value.AppendLine("- Boot sequence");
             foreach (var module in _bootSequenceFactory.New())
             {

@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using SImpl.Host.Builders;
 using SImpl.Hosts.WebHost.Application.Builders;
 using SImpl.Hosts.WebHost.Host.Builders;
-using SImpl.Hosts.WebHost.Startup;
 using SImpl.Runtime.Core;
-using SImpl.Runtime.Host.Builders;
 
 namespace SImpl.Hosts.WebHost
 {
