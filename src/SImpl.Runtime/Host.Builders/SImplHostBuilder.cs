@@ -61,13 +61,13 @@ namespace SImpl.Runtime.Host.Builders
             // Initialize all stack host modules
             // If host app is configures, PreInit will attach application modules
             _bootManager.PreInit();
+
+            // Modules configure the host builder
+            _bootManager.ConfigureHostBuilder(hostBuilder);
             
             // All modules (host and application) has been attached
             // Modules register services
             _bootManager.ConfigureServices(hostBuilder);
-            
-            // Modules configure the host builder
-            _bootManager.ConfigureHostBuilder(hostBuilder);
         }
 
         public IHost Build()
