@@ -4,6 +4,7 @@
         <TargetFramework>net5.0</TargetFramework>
         <RootNamespace>Simpl.Oauth.Web</RootNamespace>
         <AssemblyName>Simpl.Oauth.Web</AssemblyName>
+        <IsPackable>true</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
