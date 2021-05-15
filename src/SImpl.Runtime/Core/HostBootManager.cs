@@ -42,6 +42,7 @@ namespace SImpl.Runtime.Core
         {
             hostBuilder.ConfigureServices((hostBuilderContext, services) =>
             {
+               
                 BootSequence.ForEach<IServicesCollectionConfigureModule>(module => module.ConfigureServices(services));
             });
         }
@@ -52,6 +53,7 @@ namespace SImpl.Runtime.Core
             {
                 module.ConfigureHostBuilder(hostBuilder);
             });
+            _bootSequence1 = _bootSequenceFactory.New();
         }
 
         public void ConfigureHost(IHost host)
