@@ -12,7 +12,7 @@ using Simpl.Oauth.WebApi.ResponseModels;
 namespace Simpl.Oauth.WebApi
 {
     [ApiController]
-    [System.Web.Http.Route("TaggingService/[controller]")]
+    [Route("TaggingService/[controller]")]
     public class OAuthRevokeTokenController : ControllerBase
     {
         private readonly IOAuthRefreshTokenStorage _oAuthRefreshTokenStorage;
@@ -26,9 +26,9 @@ namespace Simpl.Oauth.WebApi
             _oAuthClientStorage = oAuthClientStorage;
         }
 
-        [System.Web.Http.Route("oauth/revoke")]
-        [System.Web.Http.HttpPost]
-        public HttpResponseMessage Revoke([System.Web.Http.FromBody] OAuthRevokeTokenRequest revokeRequest)
+        [Route("oauth/revoke")]
+        [HttpPost]
+        public HttpResponseMessage Revoke([FromBody] OAuthRevokeTokenRequest revokeRequest)
         {
             if (string.IsNullOrWhiteSpace(revokeRequest.ClientId)
                 || string.IsNullOrWhiteSpace(revokeRequest.ClientSecret)

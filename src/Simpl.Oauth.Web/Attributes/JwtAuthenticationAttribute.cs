@@ -3,7 +3,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http.Filters;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Simpl.DependencyInjection;
 using Simpl.Oauth.ActionResults;
@@ -25,10 +24,17 @@ namespace Simpl.Oauth.Attributes
 
         public bool AllowMultiple { get; } = true;
 
-        public Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
+
+        public void OnAuthorization(AuthorizationFilterContext context)
         {
-            // Make sure we have the proper header
-            var authorization = context.Request.Headers.Authorization;
+            throw new NotImplementedException();
+        }
+
+        public Task OnAuthorizationAsync(AuthorizationFilterContext context)
+        {
+            throw new NotImplementedException();
+             // Make sure we have the proper header
+            /*var authorization = context.Request.Headers.Authorization;
             if (authorization == null
                 || authorization.Scheme != "Bearer")
             {
@@ -80,22 +86,7 @@ namespace Simpl.Oauth.Attributes
             var identity = new ClaimsIdentity(claims, "ExternalBearer");
             context.Principal = new ClaimsPrincipal(identity);
 
-            return Task.FromResult(0);
-        }
-
-        public Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(0);
-        }
-
-        public void OnAuthorization(AuthorizationFilterContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task OnAuthorizationAsync(AuthorizationFilterContext context)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(0);*/
         }
     }
 }

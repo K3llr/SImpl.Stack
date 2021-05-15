@@ -1,35 +1,23 @@
+using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Simpl.DependencyInjection
 {
     internal class ContainerRegisterService : IContainerRegisterService
     {
-        private readonly IServiceCollection _serviceCollection;
+        public readonly List<IDependency> Dependencies = new List<IDependency>();
 
-        internal ContainerRegisterService(IServiceCollection  serviceCollection)
+        internal ContainerRegisterService()
         {
-            _serviceCollection = serviceCollection;
-
-            Current = this;
+            CurrentInstance = this;
         }
         public void Register<TAbstraction, TImplementation>(Dependency<TAbstraction, TImplementation> dependency) where TAbstraction : class where TImplementation : class, TAbstraction
         {
-            switch (dependency.Lifestyle)
-            {
-                case Lifestyle.Scoped:
-                    
-                    _serviceCollection.AddScoped(dependency.Abstraction, dependency.Implementation);
-                    break;
-                case Lifestyle.Singleton:
-                    _serviceCollection.AddSingleton(dependency.Abstraction, dependency.Implementation);
-                    break;
-                case Lifestyle.Transient:
-                    _serviceCollection.AddTransient(dependency.Abstraction, dependency.Implementation);
-                    break;
-            }
+           Dependencies.Add(dependency);
         }
 
-        public static ContainerRegisterService Current;
+        private static ContainerRegisterService CurrentInstance;
+        internal static ContainerRegisterService Current =CurrentInstance ?? new ContainerRegisterService();
 
     }
 }

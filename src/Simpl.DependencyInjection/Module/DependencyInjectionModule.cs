@@ -9,7 +9,23 @@ namespace Simpl.DependencyInjection.Module
         public void ConfigureServices(IServiceCollection services)
         {  
             services.AddSingleton<IContainerService, ContainerService>();
-            new ContainerRegisterService(services);
+            foreach (var dependency in ContainerRegisterService.Current.Dependencies)
+            {
+                switch (dependency.Lifestyle)
+                {
+                    case Lifestyle.Scoped:
+                    
+                        services.AddScoped(dependency.Abstraction, dependency.Implementation);
+                        break;
+                    case Lifestyle.Singleton:
+                        services.AddSingleton(dependency.Abstraction, dependency.Implementation);
+                        break;
+                    case Lifestyle.Transient:
+                        services.AddTransient(dependency.Abstraction, dependency.Implementation);
+                        break;
+                }  
+            }
+         
         }
         
         public DependencyInjectionModule(DependencyInjectionConfig config)

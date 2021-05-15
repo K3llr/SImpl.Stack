@@ -3,12 +3,12 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Simpl.Oauth.ActionResults
 {
-    public class AuthenticationFailureResult : IHttpActionResult
+    public class AuthenticationFailureResult : ActionResult
     {
         public HttpRequestMessage RequestMessage { get; }
         public string ErrorMessage { get; }
