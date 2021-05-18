@@ -21,10 +21,10 @@ namespace SImpl.Storage.Repository.Dapper.Module
             services.AddSingleton(typeof(IConnectionFactory), _repositoryConfig.ConnectionFactory.ImplType);
             
             services.AddScoped(typeof(IDapperRepository<,>), typeof(DapperRepository<,>));
-            services.AddScoped(typeof(IRepository<,>), s => s.GetRequiredService(typeof(IDapperRepository<,>)));
+            services.AddScoped(typeof(IRepository<,>), typeof(DapperRepository<,>));
             
             services.AddScoped(typeof(IAsyncDapperRepository<,>), typeof(DapperAsyncRepository<,>));
-            services.AddScoped(typeof(IAsyncRepository<,>), s => s.GetRequiredService(typeof(IAsyncDapperRepository<,>)));
+            services.AddScoped(typeof(IAsyncRepository<,>), typeof(DapperAsyncRepository<,>));
             
             services.AddScoped<IDapperUnitOfWork, DapperUnitOfWork>();
             services.AddScoped(typeof(IUnitOfWork), s => s.GetRequiredService<IDapperUnitOfWork>());

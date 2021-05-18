@@ -21,10 +21,10 @@ namespace SImpl.Storage.Repository.NPoco.Module
             services.AddSingleton(typeof(IDatabaseFactory), _repositoryConfig.DatabaseFactory.ImplType);
             
             services.AddSingleton(typeof(INPocoRepository<,>), typeof(NPocoRepository<,>));
-            services.AddSingleton(typeof(IRepository<,>), s => s.GetRequiredService(typeof(INPocoRepository<,>)));
+            services.AddSingleton(typeof(IRepository<,>), typeof(NPocoRepository<,>));
 
             services.AddSingleton(typeof(IAsyncNPocoRepository<,>), typeof(NPocoAsyncRepository<,>));
-            services.AddSingleton(typeof(IAsyncRepository<,>), s => s.GetRequiredService(typeof(IAsyncNPocoRepository<,>)));
+            services.AddSingleton(typeof(IAsyncRepository<,>), typeof(NPocoAsyncRepository<,>));
          
             services.AddScoped<INPocoUnitOfWork, NPocoUnitOfWork>();
             services.AddScoped(typeof(IUnitOfWork), s => s.GetRequiredService<INPocoUnitOfWork>());

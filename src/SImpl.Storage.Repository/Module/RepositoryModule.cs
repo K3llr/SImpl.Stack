@@ -11,10 +11,10 @@ namespace SImpl.Storage.Repository.Module
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(typeof(IInMemoryRepository<,>), typeof(InMemoryRepository<,>));
-            services.AddSingleton(typeof(IRepository<,>), s => s.GetRequiredService(typeof(IInMemoryRepository<,>)));
+            services.AddSingleton(typeof(IRepository<,>), typeof(InMemoryRepository<,>));
             
             services.AddSingleton(typeof(IInMemoryAsyncRepository<,>), typeof(InMemoryAsyncRepository<,>));
-            services.AddSingleton(typeof(IAsyncRepository<,>), s => s.GetRequiredService(typeof(IInMemoryAsyncRepository<,>)));
+            services.AddSingleton(typeof(IAsyncRepository<,>), typeof(InMemoryAsyncRepository<,>));
         }
     }
 }
