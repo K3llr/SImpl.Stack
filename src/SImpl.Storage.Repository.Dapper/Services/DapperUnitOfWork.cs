@@ -1,24 +1,23 @@
 using System;
 using System.Data;
-using SImpl.Storage.Repository;
-using SImpl.Storage.Repository.Module;
 
-namespace SImpl.Storage.Dapper
+namespace SImpl.Storage.Repository.Dapper.Services
 {
-    public class UnitOfWork : IUnitOfWork
+    public class DapperUnitOfWork : IDapperUnitOfWork, IDisposable
     {
         private readonly IDbConnection _dbConnection;
         private IDbTransaction _transaction;
 
-        public UnitOfWork(IDbConnection dbConnection)
+        public DapperUnitOfWork(IConnectionFactory connectionFactory)
         {
-            _dbConnection = dbConnection;
+            _dbConnection = connectionFactory.CreateConnection();
         }
 
         public void BeginTransaction()
         {
             if (_transaction != null)
                 throw new ApplicationException("Transaction in progress");
+            
             _transaction = _dbConnection.BeginTransaction();
         }
 
@@ -30,6 +29,17 @@ namespace SImpl.Storage.Dapper
         public void AbortTransaction()
         {
             _transaction.Dispose();
+        }
+
+        public IDbConnection GetConnection()
+        {
+            return _dbConnection;
+        }
+
+        public void Dispose()
+        {
+            _dbConnection?.Dispose();
+            _transaction?.Dispose();
         }
     }
 }

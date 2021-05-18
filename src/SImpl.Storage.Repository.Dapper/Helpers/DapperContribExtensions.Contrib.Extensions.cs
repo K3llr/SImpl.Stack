@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Dapper.Contrib.Extensions;
-namespace SImpl.Storage.Dapper.Helpers
+
+namespace SImpl.Storage.Repository.Dapper.Helpers
 {
     public static class DapperContribExtensions
     {

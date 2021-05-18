@@ -1,72 +1,49 @@
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using Dapper.Contrib.Extensions;
 using SImpl.Common;
-using SImpl.Storage.Dapper.Helpers;
-using SImpl.Storage.Repository.Dapper;
-using SImpl.Storage.Repository.Module;
+using SImpl.Storage.Repository.Dapper.Helpers;
 
-namespace SImpl.Storage.Dapper
+namespace SImpl.Storage.Repository.Dapper.Services
 {
     public class DapperRepository<TEntity, TId> : IDapperRepository<TEntity, TId>
         where TEntity : class, IEntity<TId>
     {
-        private readonly IDbConnectionFactory _connection;
+        private readonly IDapperUnitOfWork _unitOfWork;
 
-
-        public DapperRepository(IDbConnectionFactory connection)
+        public DapperRepository(IDapperUnitOfWork unitOfWork)
         {
-            _connection = connection;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                return dbConnection.GetAll<TEntity>();
-                
-            }
+            return _unitOfWork.GetConnection().GetAll<TEntity>();
         }
 
-        public void Delete<TEntity>(TId id)
+        public void Delete(TId id)
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                dbConnection.DeleteById<TEntity>(id);
-            }
+            _unitOfWork.GetConnection().DeleteById<TEntity>(id);
         }
 
         public TEntity Get(TId id)
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                return dbConnection.Get<TEntity>(id);
-            }
+            return _unitOfWork.GetConnection().Get<TEntity>(id);
         }
 
         public void SaveRange(IEnumerable<TEntity> list)
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                dbConnection.Insert(list.ToArray());
-            }
+            _unitOfWork.GetConnection().Insert(list.ToArray());
         }
 
         public void Update(TEntity entity)
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                dbConnection.Update<TEntity>(entity);
-            }
+            _unitOfWork.GetConnection().Update<TEntity>(entity);
         }
 
         public void Insert(TEntity entity)
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                dbConnection.Insert<TEntity>(entity);
-            }
+            _unitOfWork.GetConnection().Insert<TEntity>(entity);
         }
     }
 }

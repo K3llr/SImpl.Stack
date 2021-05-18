@@ -1,73 +1,51 @@
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
 using SImpl.Common;
-using SImpl.Storage.Dapper.Helpers;
-using SImpl.Storage.Repository.Module;
+using SImpl.Storage.Repository.Dapper.Helpers;
 
 namespace SImpl.Storage.Repository.Dapper.Services
 {
     public class DapperAsyncRepository<TEntity, TId>: IAsyncDapperRepository<TEntity, TId>
         where TEntity : class, IEntity<TId>
     {
-        private readonly IDbConnectionFactory _connection;
+        private readonly IDapperUnitOfWork _unitOfWork;
 
 
-        public DapperAsyncRepository(IDbConnectionFactory connection)
+        public DapperAsyncRepository(IDapperUnitOfWork unitOfWork)
         {
-            _connection = connection;
+            _unitOfWork = unitOfWork;
         }
-
      
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                return await  dbConnection.GetAllAsync<TEntity>();
-
-            }
+            return await _unitOfWork.GetConnection().GetAllAsync<TEntity>();
         }
 
-        public async Task DeleteAsync<TEntity>(TId id) 
+        public async Task DeleteAsync(TId id) 
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                await dbConnection.DeleteByIdAsync<TEntity>(id);
-            }
+            await _unitOfWork.GetConnection().DeleteByIdAsync<TEntity>(id);
         }
 
         public async Task<TEntity> GetAsync(TId id)
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                return await dbConnection.GetAsync<TEntity>(id);
-            }
+            return await _unitOfWork.GetConnection().GetAsync<TEntity>(id);
         }
 
         public async Task SaveRangeAsync(IEnumerable<TEntity> list)
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                await dbConnection.InsertAsync(list.ToArray());
-            }
+            await _unitOfWork.GetConnection().InsertAsync(list.ToArray());
         }
 
         public async Task UpdateAsync(TEntity entity)
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                await dbConnection.UpdateAsync<TEntity>(entity);
-            }
+            await _unitOfWork.GetConnection().UpdateAsync(entity);
         }
 
         public async Task InsertAsync(TEntity entity)
         {
-            using (IDbConnection dbConnection = _connection.CreateConnection())
-            {
-                await dbConnection.InsertAsync<TEntity>(entity);
-            }
+            await _unitOfWork.GetConnection().InsertAsync(entity);
         }
     }
 }

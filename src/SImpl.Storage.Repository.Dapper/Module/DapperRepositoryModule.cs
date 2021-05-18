@@ -1,34 +1,33 @@
-using System;
-using System.Data;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.Modules;
-using SImpl.Storage.Dapper;
-using SImpl.Storage.Repository.Dapper;
-using SImpl.Storage.Repository.Dapper.Factories;
 using SImpl.Storage.Repository.Dapper.Services;
-using SImpl.Storage.Repository.Services;
 
-namespace SImpl.Storage.Repository.Module
+namespace SImpl.Storage.Repository.Dapper.Module
 {
     public class DapperRepositoryModule : IServicesCollectionConfigureModule
     {
-        private readonly DapperRepositoryConfig _dapperRepoConfig;
-
-        public DapperRepositoryModule(DapperRepositoryConfig dapperRepoConfig)
-        {
-            _dapperRepoConfig = dapperRepoConfig;
-        }
-
         public string Name { get; } = nameof(DapperRepositoryModule);
+        
+        private readonly DapperRepositoryConfig _repositoryConfig;
+
+        public DapperRepositoryModule(DapperRepositoryConfig repositoryConfig)
+        {
+            _repositoryConfig = repositoryConfig;
+        }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(typeof(IRepository<,>), typeof(DapperRepository<,>));
-            services.AddSingleton(typeof(IDapperRepository<,>), typeof(DapperRepository<,>));
-            services.AddSingleton(typeof(IAsyncRepository<,>), typeof(DapperAsyncRepository<,>));
-            services.AddSingleton(typeof(IAsyncDapperRepository<,>), typeof(DapperAsyncRepository<,>));
-            services.AddSingleton(typeof(DapperRepositoryConfig));
-            services.AddSingleton(typeof(IDbConnectionFactory), _dapperRepoConfig.DbConnectionFactory);
+            services.AddSingleton(typeof(DapperRepositoryConfig), _repositoryConfig);
+            services.AddSingleton(typeof(IConnectionFactory), _repositoryConfig.ConnectionFactory.ImplType);
+            
+            services.AddScoped(typeof(IDapperRepository<,>), typeof(DapperRepository<,>));
+            services.AddScoped(typeof(IRepository<,>), s => s.GetRequiredService(typeof(IDapperRepository<,>)));
+            
+            services.AddScoped(typeof(IAsyncDapperRepository<,>), typeof(DapperAsyncRepository<,>));
+            services.AddScoped(typeof(IAsyncRepository<,>), s => s.GetRequiredService(typeof(IAsyncDapperRepository<,>)));
+            
+            services.AddScoped<IDapperUnitOfWork, DapperUnitOfWork>();
+            services.AddScoped(typeof(IUnitOfWork), s => s.GetRequiredService<IDapperUnitOfWork>());
         }
     }
 }
