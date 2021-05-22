@@ -53,6 +53,8 @@ namespace SImpl.Runtime.Core
             {
                 module.ConfigureHostBuilder(hostBuilder);
             });
+            
+            //we need recalc
             _bootSequence1 = _bootSequenceFactory.New();
         }
 

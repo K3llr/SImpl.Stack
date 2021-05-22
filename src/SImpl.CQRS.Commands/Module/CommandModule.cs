@@ -32,7 +32,7 @@ namespace SImpl.CQRS.Commands.Module
             var genericImpl = typeof(ICommandHandler<>);
             foreach (var queryHandlerType in Config.RegisteredQueryHandlers)
             {
-                services.AddSingleton(genericInterface.MakeGenericType(queryHandlerType), genericImpl.MakeGenericType(queryHandlerType));
+                services.AddTransient(genericInterface.MakeGenericType(queryHandlerType), genericImpl.MakeGenericType(queryHandlerType));
             }
         }
     }

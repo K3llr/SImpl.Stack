@@ -34,7 +34,7 @@ namespace SImpl.CQRS.Queries.Module
             var genericImpl = typeof(IQueryHandler<,>);
             foreach (var queryHandlerType in Config.RegisteredQueryHandlers)
             {
-                services.AddSingleton(genericInterface.MakeGenericType(queryHandlerType), genericImpl.MakeGenericType(queryHandlerType));
+                services.AddTransient(genericInterface.MakeGenericType(queryHandlerType), genericImpl.MakeGenericType(queryHandlerType));
             }
         }
     }

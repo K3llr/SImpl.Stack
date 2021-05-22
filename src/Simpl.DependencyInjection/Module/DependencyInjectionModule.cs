@@ -7,8 +7,9 @@ namespace Simpl.DependencyInjection.Module
     {
         public string Name { get; } = nameof(DependencyInjectionModule);
         public void ConfigureServices(IServiceCollection services)
-        {  
-            services.AddSingleton<IContainerService, ContainerService>();
+        {
+           
+            services.AddSingleton<IContainerService, ContainerService>(provider => new ContainerService(provider));
             foreach (var dependency in ContainerRegisterService.Current.Dependencies)
             {
                 switch (dependency.Lifestyle)
