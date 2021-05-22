@@ -16,7 +16,7 @@ namespace SImpl.Storage.Repository.Services
             return Task.FromResult(_storage.Values.AsEnumerable());
         }
 
-        public Task DeleteAsync<TEntity>(TId id)
+        public Task DeleteAsync(TId id)
         {
             if (_storage.ContainsKey(id))
             {

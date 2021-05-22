@@ -2,7 +2,7 @@ using NPoco;
 
 namespace SImpl.Storage.Repository.NPoco
 {
-    public interface IDatabaseNpocoFactory
+    public interface IDatabaseFactory
     {
         IDatabase CreateConnection();
     }

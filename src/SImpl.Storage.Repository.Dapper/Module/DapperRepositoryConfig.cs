@@ -1,17 +1,24 @@
 using System;
-using SImpl.Storage.Repository.Dapper;
+using SImpl.Common;
 using SImpl.Storage.Repository.Dapper.Factories;
 
-namespace SImpl.Storage.Repository.Module
+namespace SImpl.Storage.Repository.Dapper.Module
 {
     public class DapperRepositoryConfig
     {
-        public Type DbConnectionFactory
+        public TypeOf<IConnectionFactory> ConnectionFactory { get; private set; } = TypeOf.New<IConnectionFactory, MssqlConnectionFactory>();
+        public string ConnectionStringName { get; private set; }  = "Simpl.Repository.Db";
+
+        public DapperRepositoryConfig SetConnectionFactory(TypeOf<IConnectionFactory> connectionFactory)
         {
-            get;
-            set;
-        } = typeof(MssqlConnectionFactory);
-        public string ConnectionStringName = "Simpl.Repository.Db";
+            ConnectionFactory = connectionFactory;
+            return this;
+        }
+        
+        public DapperRepositoryConfig SetConnectionStringName(string connectionStringName)
+        {
+            ConnectionStringName = connectionStringName;
+            return this;
+        }
     }
-    
 }

@@ -8,66 +8,47 @@ namespace SImpl.Storage.Repository.NPoco.Services
     public class NPocoAsyncRepository<TEntity, TId> : IAsyncNPocoRepository<TEntity, TId>
         where TEntity : class, IEntity<TId>
     {
-        private readonly IDatabaseNpocoFactory _connection;
+        private readonly INPocoUnitOfWork _unitOfWork;
 
-
-        public NPocoAsyncRepository(IDatabaseNpocoFactory connection)
+        public NPocoAsyncRepository(INPocoUnitOfWork unitOfWork)
         {
-            _connection = connection;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            using (IDatabase dbConnection = _connection.CreateConnection())
-            {
-                return await dbConnection.FetchAsync<TEntity>();
-            }
+            return await _unitOfWork.GetConnection().FetchAsync<TEntity>();
         }
 
-        public async Task DeleteAsync<TEntity>(TId id)
+        public async Task DeleteAsync(TId id)
         {
-            using (IDatabase dbConnection = _connection.CreateConnection())
-            {
-                await dbConnection.DeleteAsync(id);
-            }
+            await _unitOfWork.GetConnection().DeleteAsync(id);
         }
 
         public async Task<TEntity> GetAsync(TId id)
         {
-            using (IDatabase dbConnection = _connection.CreateConnection())
-            {
-                return await dbConnection.SingleByIdAsync<TEntity>(id);
-            }
+            return await _unitOfWork.GetConnection().SingleByIdAsync<TEntity>(id);
         }
 
         public async Task SaveRangeAsync(IEnumerable<TEntity> list)
         {
-            using (IDatabase dbConnection = _connection.CreateConnection())
-            {
-                dbConnection.InsertAsync(list);
-            }
+            await _unitOfWork.GetConnection().InsertAsync(list);
         }
 
         public async Task UpdateAsync(TEntity entity)
         {
-            using (IDatabase dbConnection = _connection.CreateConnection())
-            {
-                await dbConnection.UpdateAsync(entity);
-            }
+            await _unitOfWork.GetConnection().UpdateAsync(entity);
         }
 
         public async Task InsertAsync(TEntity entity)
         {
-            using (IDatabase dbConnection = _connection.CreateConnection())
+            if (await _unitOfWork.GetConnection().IsNewAsync(entity))
             {
-                if (await dbConnection.IsNewAsync(entity))
-                {
-                    await    dbConnection.InsertAsync(entity);
-                }
-                else
-                {
-                    await    dbConnection.UpdateAsync(entity);
-                }
+                await _unitOfWork.GetConnection().InsertAsync(entity);
+            }
+            else
+            {
+                await _unitOfWork.GetConnection().UpdateAsync(entity);
             }
         }
     }
