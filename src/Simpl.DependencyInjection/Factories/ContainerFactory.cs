@@ -27,6 +27,7 @@ namespace Novicell.App.Headless.Core.Factories
         {
             return new ContainerFactory<TImplementation>();
         }
+        
     }
 
     public class ContainerFactory<TImplementation> : ContainerFactory<TImplementation, TImplementation>
@@ -37,7 +38,7 @@ namespace Novicell.App.Headless.Core.Factories
         }
     }
 
-    public class ContainerFactory<TAbstraction, TImplementation> : IFactory<TAbstraction>, IContainerAware
+    public class ContainerFactory<TAbstraction, TImplementation> : IContainerFactory<TAbstraction>, IContainerAware
         where TImplementation : class, TAbstraction
         where TAbstraction : class
     {
@@ -56,6 +57,11 @@ namespace Novicell.App.Headless.Core.Factories
         public TAbstraction New()
         {
             return this.Resolve<TAbstraction>();
+        }
+
+        public TAbstraction New(IServiceScope scope)
+        {
+            return this.Resolve<TAbstraction>(scope);
         }
     }
 }

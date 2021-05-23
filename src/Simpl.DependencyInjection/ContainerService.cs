@@ -27,6 +27,14 @@ namespace Simpl.DependencyInjection
             return ServiceProvider.GetService(t) as T;
         }
 
+        public T Resolve<T>(IServiceScope scope) where T : class
+        {
+           return scope.ServiceProvider.GetService<T>();
+        }
+        public T Resolve<T>(IServiceScope scope, Type t) where T : class
+        {
+            return scope.ServiceProvider.GetService(t) as T;
+        }
         public IList<T> ResolveCollection<T>() where T : class
         {
             return ResolveCollection<T>(typeof(T));
