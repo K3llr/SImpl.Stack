@@ -18,7 +18,7 @@ namespace SImpl.Storage.Redis.Module
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(typeof(RedisConnectionConfig));
+            services.AddSingleton(typeof(RedisConnectionConfig), Config.RedisConnectionConfig);
             services.AddSingleton<IRedisConnectionProvider, RedisConnectionProvider>();
             services.AddSingleton<IRedisDataGateway, RedisDefaultDataGateway>();
         }

@@ -4,7 +4,7 @@ namespace SImpl.Storage.Redis.Module
 {
     public class RedisConfig
     {
-        private RedisConnectionConfig RedisConnectionConfig { get; set; }
+        public RedisConnectionConfig RedisConnectionConfig { get; set; }
 
         public RedisConfig SetConnection(Action<RedisConnectionConfig> configure)
         {
