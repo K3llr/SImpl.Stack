@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Examine;
 using Lucene.Net.Analysis;
 
-namespace Novicell.App.Examine
+namespace Simpl.Storage.Examine
 {
     public interface IExamineIndexRepository
     {

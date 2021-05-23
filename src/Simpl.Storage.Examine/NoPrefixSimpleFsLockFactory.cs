@@ -1,7 +1,7 @@
 using System.IO;
 using Lucene.Net.Store;
 
-namespace Novicell.App.Examine
+namespace Simpl.Storage.Examine
 {
     public class NoPrefixSimpleFsLockFactory : SimpleFSLockFactory
     {

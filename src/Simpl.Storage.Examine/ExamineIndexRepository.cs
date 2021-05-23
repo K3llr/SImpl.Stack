@@ -1,24 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using Examine;
 using Examine.LuceneEngine.Directories;
-using Examine.LuceneEngine.Providers;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Core;
 using Lucene.Net.Index;
 using Lucene.Net.Store;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting.Internal;
-using Microsoft.IdentityModel.Protocols;
-using Novicell.App.Examine.Configuration;
 using Simpl.DependencyInjection;
-using Simpl.Storage.Examine;
+using Simpl.Storage.Examine.Configuration;
 using Directory = Lucene.Net.Store.Directory;
 
-namespace Novicell.App.Examine
+namespace Simpl.Storage.Examine
 {
     public class ExamineIndexRepository : IExamineIndexRepository, IContainerAware
     {

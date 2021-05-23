@@ -1,25 +1,25 @@
 using System;
 using SImpl.Host.Builders;
 
-namespace Novicell.App.Examine.Configuration
+namespace Simpl.Storage.Examine.Configuration
 { 
     public static class ExamineConfigurationExtension
     {
-        public static void UseExamine(this ISImplHostBuilder novicellAppBuilder, Action<ExamineConfig> configurer)
+        public static void UseExamine(this ISImplHostBuilder simplHostBuilder, Action<ExamineConfig> configurer)
         {
             
-            var existingExamineModule = novicellAppBuilder.GetConfiguredModule<ExamineModule>();
+            var existingExamineModule = simplHostBuilder.GetConfiguredModule<ExamineModule>();
             var examineConfig = existingExamineModule != null
                 ? existingExamineModule.Config
-                : AttachModule(novicellAppBuilder);
+                : AttachModule(simplHostBuilder);
             configurer?.Invoke(examineConfig);
         }
-        private static ExamineConfig AttachModule(ISImplHostBuilder novicellAppBuilder)
+        private static ExamineConfig AttachModule(ISImplHostBuilder simplHostBuilder)
         {
             var config = new ExamineConfig();
             var module = new ExamineModule(config);
 
-            novicellAppBuilder.AttachNewOrGetConfiguredModule<ExamineModule>(()=>module);
+            simplHostBuilder.AttachNewOrGetConfiguredModule<ExamineModule>(()=>module);
 
             return config;
         }

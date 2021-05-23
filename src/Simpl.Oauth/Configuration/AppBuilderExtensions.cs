@@ -5,24 +5,24 @@ namespace Simpl.Oauth.Configuration
 {
     public static class AppBuilderExtensions
     {
-        public static void UseOAuth(this ISImplHostBuilder novicellAppBuilder, Action<OAuthConfig> configure = null)
+        public static void UseOAuth(this ISImplHostBuilder simplHostBuilder, Action<OAuthConfig> configure = null)
         {
-            var existingModule = novicellAppBuilder.GetConfiguredModule<OAuthModule>();
+            var existingModule = simplHostBuilder.GetConfiguredModule<OAuthModule>();
 
             var config = existingModule != null
                 ? existingModule.Config
-                : AttachOAuth(novicellAppBuilder);
+                : AttachOAuth(simplHostBuilder);
 
             // Apply user configuration to module
             configure?.Invoke(config);
         }
 
-        private static OAuthConfig AttachOAuth(ISImplHostBuilder novicellAppBuilder)
+        private static OAuthConfig AttachOAuth(ISImplHostBuilder simplHostBuilder)
         {
-            var config = new OAuthConfig(novicellAppBuilder);
+            var config = new OAuthConfig(simplHostBuilder);
             var oauthModule = new OAuthModule(config);
 
-            novicellAppBuilder.AttachNewOrGetConfiguredModule(()=>oauthModule);
+            simplHostBuilder.AttachNewOrGetConfiguredModule(()=>oauthModule);
 
             return config;
         }

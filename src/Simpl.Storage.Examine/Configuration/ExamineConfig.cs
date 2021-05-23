@@ -1,4 +1,4 @@
-namespace Novicell.App.Examine.Configuration
+namespace Simpl.Storage.Examine.Configuration
 {
     public class ExamineConfig
     {

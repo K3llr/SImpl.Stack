@@ -6,12 +6,12 @@ namespace Simpl.Oauth.Configuration
     public class OAuthWebConfig
     {
         internal bool IsServerEnabled { get; private set; }
-        public ISImplHostBuilder NovicellAppBuilder { get; }
+        public ISImplHostBuilder simplHostBuilder { get; }
         internal OAuthServerConfig ServerConfig { get; private set; }
 
         public OAuthWebConfig(ISImplHostBuilder appBuilder)
         {
-            NovicellAppBuilder = appBuilder;
+            simplHostBuilder = appBuilder;
             ServerConfig = new OAuthServerConfig();
           
         }

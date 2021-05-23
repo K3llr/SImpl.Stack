@@ -1,9 +1,9 @@
 using Examine;
 using Microsoft.Extensions.DependencyInjection;
-using Novicell.App.Examine.Configuration;
 using SImpl.Modules;
+using Simpl.Storage.Examine.Configuration;
 
-namespace Novicell.App.Examine
+namespace Simpl.Storage.Examine
 {
     public class ExamineModule : IServicesCollectionConfigureModule
     {

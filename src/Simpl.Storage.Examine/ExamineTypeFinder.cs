@@ -2,7 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Linq;
 
-namespace Novicell.App.Examine
+namespace Simpl.Storage.Examine
 {
     public static class ExamineTypeFinder
     {

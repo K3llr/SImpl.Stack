@@ -6,11 +6,11 @@ namespace Simpl.Oauth.Configuration
 {
     public class OAuthConfig
     {
-        public ISImplHostBuilder NovicellAppBuilder { get; }
+        public ISImplHostBuilder simplHostBuilder { get; }
 
-        public OAuthConfig(ISImplHostBuilder novicellAppBuilder)
+        public OAuthConfig(ISImplHostBuilder simplHostBuilder)
         {
-            NovicellAppBuilder = novicellAppBuilder;
+            simplHostBuilder = simplHostBuilder;
           
         }
 

@@ -17,12 +17,12 @@ namespace Simpl.Oauth.Configuration
             configure?.Invoke(config);
         }
 
-        private static OAuthWebConfig Attach(ISImplHostBuilder novicellAppBuilder)
+        private static OAuthWebConfig Attach(ISImplHostBuilder simplHostBuilder)
         {
-            var config = new OAuthWebConfig(novicellAppBuilder);
+            var config = new OAuthWebConfig(simplHostBuilder);
             var oauthModule = new OAuthWebModule(config);
 
-            novicellAppBuilder.AttachNewOrGetConfiguredModule(()=>oauthModule);
+            simplHostBuilder.AttachNewOrGetConfiguredModule(()=>oauthModule);
 
             return config;
         }
