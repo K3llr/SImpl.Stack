@@ -28,7 +28,7 @@ namespace SImpl.CQRS.Commands.Module
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
             
-            foreach (var commandHandlerType in Config.RegisteredQueryHandlers)
+            foreach (var commandHandlerType in Config.RegisteredCommandHandlers)
             {
                 // TODO:
             }

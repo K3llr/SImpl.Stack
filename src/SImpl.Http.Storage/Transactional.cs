@@ -8,7 +8,7 @@ namespace SImpl.Http.Storage
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public Transactional(IUnitOfWork unitOfWork)
+        public Transactional(IUnitOfWork unitOfWork) // TODO: param is required when used as an attribute. Needs to be removed and handled differently.
         {
             _unitOfWork = unitOfWork;
         }

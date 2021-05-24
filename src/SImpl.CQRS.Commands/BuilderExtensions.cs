@@ -13,7 +13,7 @@ namespace SImpl.CQRS.Commands
             return host;
         }
 
-        public static ISImplHostBuilder UseCqrsCommands(this ISImplHostBuilder host, Action<CommandModuleConfig> configureDelegate)
+        public static ISImplHostBuilder UseCqrsCommands(this ISImplHostBuilder host, Action<CommandModuleConfig> configureDelegate = null)
         {
             var module = host.AttachNewOrGetConfiguredModule(() => new CommandModule(new CommandModuleConfig()));
             configureDelegate?.Invoke(module.Config);

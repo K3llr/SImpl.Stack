@@ -7,11 +7,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SImpl.CQRS.Commands\SImpl.CQRS.Commands.csproj" />
+    <ProjectReference Include="..\SImpl.CQRS.Events\SImpl.CQRS.Events.csproj" />
+    <ProjectReference Include="..\SImpl.Hosts.WebHost\SImpl.Hosts.WebHost.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Polly" Version="7.2.2" />
     <PackageReference Include="Rebus" Version="6.4.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Rebus.ServiceProvider" Version="6.3.1" />
   </ItemGroup>
 
 </Project>

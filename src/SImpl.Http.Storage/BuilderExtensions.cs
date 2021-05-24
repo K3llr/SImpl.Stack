@@ -6,7 +6,7 @@ namespace SImpl.Http.Storage
 {
     public static class BuilderExtensions
     {
-        public static ISImplHostBuilder UseTransactionalRequests(this ISImplHostBuilder host, Action<HttpStorageModuleConfig> configureDelegate)
+        public static ISImplHostBuilder UseTransactionalRequests(this ISImplHostBuilder host, Action<HttpStorageModuleConfig> configureDelegate = null)
         {
             var module = host.AttachNewOrGetConfiguredModule(() => new HttpStorageModule(new HttpStorageModuleConfig()));
             configureDelegate?.Invoke(module.Config);
