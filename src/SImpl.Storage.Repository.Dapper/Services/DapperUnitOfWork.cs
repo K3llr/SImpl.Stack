@@ -13,14 +13,14 @@ namespace SImpl.Storage.Repository.Dapper.Services
             _dbConnection = connectionFactory.CreateConnection();
         }
 
-        public void BeginTransaction()
+        public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             if (_transaction != null)
                 throw new ApplicationException("Transaction in progress");
 
             if (_dbConnection.State == ConnectionState.Closed) _dbConnection.Open();
 
-            _transaction = _dbConnection.BeginTransaction();
+            _transaction = _dbConnection.BeginTransaction(isolationLevel);
         }
 
         public void CommitTransaction()
