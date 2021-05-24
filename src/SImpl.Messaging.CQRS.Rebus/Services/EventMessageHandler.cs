@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Rebus.Handlers;
 using SImpl.CQRS.Events;
 
-namespace SImpl.Messaging.CQRS.Services
+namespace SImpl.Messaging.CQRS.Rebus.Services
 {
     public class EventMessageHandler<TEvent> : IHandleMessages<TEvent>
         where TEvent : class, IEvent

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Rebus.Bus;
 using SImpl.CQRS.Commands;
 
-namespace SImpl.Messaging.CQRS.Services
+namespace SImpl.Messaging.CQRS.Rebus.Services
 {
     public class RebusCommandDispatcher : IMessagingCommandDispatcher
     {

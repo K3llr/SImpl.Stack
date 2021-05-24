@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Rebus.Bus;
 
-namespace SImpl.Messaging.CQRS.Module
+namespace SImpl.Messaging.CQRS.Rebus.Module
 {
     public class MessagingCqrsModuleConfig
     {

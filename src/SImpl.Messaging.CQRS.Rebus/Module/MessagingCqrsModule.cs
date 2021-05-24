@@ -11,10 +11,10 @@ using Rebus.ServiceProvider;
 using SImpl.CQRS.Commands;
 using SImpl.CQRS.Events;
 using SImpl.Hosts.WebHost.Modules;
-using SImpl.Messaging.CQRS.Services;
+using SImpl.Messaging.CQRS.Rebus.Services;
 using SImpl.Modules;
 
-namespace SImpl.Messaging.CQRS.Module
+namespace SImpl.Messaging.CQRS.Rebus.Module
 {
     public class MessagingCqrsModule : IServicesCollectionConfigureModule, IAspNetPostModule
     {
@@ -27,7 +27,7 @@ namespace SImpl.Messaging.CQRS.Module
             {
                 // Retry policy for rebus connection
                 Policy
-                    .Handle<Rebus.Injection.ResolutionException>()
+                    .Handle<global::Rebus.Injection.ResolutionException>()
                     .WaitAndRetryForever(
                         retryAttempt => TimeSpan.FromSeconds(2 * retryAttempt),
                         (exception, timespan, context) =>

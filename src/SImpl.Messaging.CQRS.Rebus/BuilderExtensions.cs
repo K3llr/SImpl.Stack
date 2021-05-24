@@ -1,8 +1,8 @@
 using System;
 using SImpl.Host.Builders;
-using SImpl.Messaging.CQRS.Module;
+using SImpl.Messaging.CQRS.Rebus.Module;
 
-namespace SImpl.Messaging.CQRS
+namespace SImpl.Messaging.CQRS.Rebus
 {
     public static class BuilderExtensions
     {
