@@ -8,7 +8,7 @@ using SImpl.Storage.Repository.Dapper.Helpers;
 namespace SImpl.Storage.Repository.Dapper.Services
 {
     public class DapperAsyncRepository<TEntity, TId>: IAsyncDapperRepository<TEntity, TId>
-        where TEntity : class, IEntity<TId>
+        where TEntity : class, IEntity<TId>, new()
     {
         private readonly IDapperUnitOfWork _unitOfWork;
 
@@ -23,9 +23,9 @@ namespace SImpl.Storage.Repository.Dapper.Services
             return await _unitOfWork.GetConnection().GetAllAsync<TEntity>();
         }
 
-        public async Task DeleteAsync(TId id) 
+        public async Task DeleteAsync(TId[] ids) 
         {
-            await _unitOfWork.GetConnection().DeleteByIdAsync<TEntity>(id);
+            await _unitOfWork.GetConnection().DeleteByIdAsync<TEntity>(ids.Select(id => new TEntity() { Id = id}));
         }
 
         public async Task<TEntity> GetAsync(TId id)

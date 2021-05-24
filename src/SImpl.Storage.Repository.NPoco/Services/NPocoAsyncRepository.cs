@@ -20,9 +20,12 @@ namespace SImpl.Storage.Repository.NPoco.Services
             return await _unitOfWork.GetConnection().FetchAsync<TEntity>();
         }
 
-        public async Task DeleteAsync(TId id)
+        public async Task DeleteAsync(params TId[] ids)
         {
-            await _unitOfWork.GetConnection().DeleteAsync(id);
+            foreach (var id in ids)
+            {
+                await _unitOfWork.GetConnection().DeleteAsync(id);
+            }
         }
 
         public async Task<TEntity> GetAsync(TId id)
