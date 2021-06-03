@@ -15,14 +15,34 @@ namespace Simpl.DependencyInjection.Module
                 switch (dependency.Lifestyle)
                 {
                     case Lifestyle.Scoped:
-                    
-                        services.AddScoped(dependency.Abstraction, dependency.Implementation);
+                        if (dependency.Abstraction != dependency.Implementation)
+                        {
+                            services.AddScoped(dependency.Abstraction, dependency.Implementation);
+                        }
+                        else
+                        {
+                            services.AddScoped(dependency.Implementation);
+                        }
                         break;
                     case Lifestyle.Singleton:
-                        services.AddSingleton(dependency.Abstraction, dependency.Implementation);
+                        if (dependency.Abstraction != dependency.Implementation)
+                        {
+                            services.AddSingleton(dependency.Abstraction, dependency.Implementation);
+                        }
+                        else
+                        {
+                            services.AddSingleton(dependency.Implementation);
+                        }
                         break;
                     case Lifestyle.Transient:
-                        services.AddTransient(dependency.Abstraction, dependency.Implementation);
+                        if (dependency.Abstraction != dependency.Implementation)
+                        {
+                            services.AddTransient(dependency.Abstraction, dependency.Implementation);
+                        }
+                        else
+                        {
+                            services.AddTransient(dependency.Implementation);
+                        }
                         break;
                 }  
             }

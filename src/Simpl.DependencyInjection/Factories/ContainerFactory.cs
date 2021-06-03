@@ -4,51 +4,25 @@ using SImpl.Factories;
 
 namespace Novicell.App.Headless.Core.Factories
 {
-    public class ContainerFactory
-    {
-        internal static void RegisterDependency<TAbstraction, TImplementation>(Dependency<TAbstraction, TImplementation> dependency)
-            where TImplementation : class, TAbstraction
-            where TAbstraction : class
-
-        {
-            ContainerRegisterService.Current.Register(dependency);
-
-        }
-
-        public static ContainerFactory<TAbstraction, TImplementation> New<TAbstraction, TImplementation>()
-            where TImplementation : class, TAbstraction
-            where TAbstraction : class
-        {
-            return new ContainerFactory<TAbstraction, TImplementation>();
-        }
-
-        public static ContainerFactory<TImplementation> New<TImplementation>()
-            where TImplementation : class
-        {
-            return new ContainerFactory<TImplementation>();
-        }
-        
-    }
-
-    public class ContainerFactory<TImplementation> : ContainerFactory<TImplementation, TImplementation>
+    public class SingletonContainerFactory<TImplementation> : SingletonContainerFactory<TImplementation, TImplementation>
         where TImplementation : class
     {
-        internal ContainerFactory() : base()
+        internal SingletonContainerFactory() : base()
         {
         }
     }
 
-    public class ContainerFactory<TAbstraction, TImplementation> : IContainerFactory<TAbstraction>, IContainerAware
+    public class SingletonContainerFactory<TAbstraction, TImplementation> : IContainerFactory<TAbstraction>, IContainerAware
         where TImplementation : class, TAbstraction
         where TAbstraction : class
     {
-        internal ContainerFactory()
+        internal SingletonContainerFactory()
         {
             var dependency = new Dependency<TAbstraction, TImplementation>
             {
                 Abstraction = typeof(TAbstraction),
                 Implementation = typeof(TImplementation),
-                Lifestyle = Lifestyle.Scoped
+                Lifestyle = Lifestyle.Singleton
             };
 
             ContainerFactory.RegisterDependency(dependency);

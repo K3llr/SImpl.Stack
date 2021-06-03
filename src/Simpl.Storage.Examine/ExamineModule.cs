@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SImpl.Modules;
 using Simpl.Storage.Examine.Configuration;
 
-namespace Simpl.Storage.Examine
+namespace Simpl.Examine
 {
     public class ExamineModule : IServicesCollectionConfigureModule
     {
