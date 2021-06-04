@@ -7,7 +7,7 @@ using SImpl.Storage.Repository.Dapper.Helpers;
 namespace SImpl.Storage.Repository.Dapper.Services
 {
     public class DapperRepository<TEntity, TId> : IDapperRepository<TEntity, TId>
-        where TEntity : class, IEntity<TId>
+        where TEntity : class, IEntity<TId>, new()
     {
         private readonly IDapperUnitOfWork _unitOfWork;
 
@@ -21,9 +21,9 @@ namespace SImpl.Storage.Repository.Dapper.Services
             return _unitOfWork.GetConnection().GetAll<TEntity>();
         }
 
-        public void Delete(TId id)
+        public void Delete(params TId[] ids)
         {
-            _unitOfWork.GetConnection().DeleteById<TEntity>(id);
+            _unitOfWork.GetConnection().DeleteById<TEntity>(ids.Select(id => new TEntity() { Id = id}));
         }
 
         public TEntity Get(TId id)
@@ -38,12 +38,12 @@ namespace SImpl.Storage.Repository.Dapper.Services
 
         public void Update(TEntity entity)
         {
-            _unitOfWork.GetConnection().Update<TEntity>(entity);
+            _unitOfWork.GetConnection().Update(entity);
         }
 
         public void Insert(TEntity entity)
         {
-            _unitOfWork.GetConnection().Insert<TEntity>(entity);
+            _unitOfWork.GetConnection().Insert(entity);
         }
     }
 }

@@ -14,12 +14,12 @@ namespace SImpl.Storage.Repository.NPoco.Services
             _database = connectionFactory.CreateConnection();
         }
 
-        public void BeginTransaction()
+        public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             if (_transaction != null)
                 throw new ApplicationException("Transaction in progress");
            
-            _database.BeginTransaction();
+            _database.BeginTransaction(isolationLevel);
             _transaction = _database.Transaction;
         }
 

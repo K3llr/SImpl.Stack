@@ -18,9 +18,9 @@ namespace SImpl.Storage.Repository.Services
             return _repository.GetAllAsync().Result;
         }
 
-        public void Delete(TId id)
+        public void Delete(params TId[] ids)
         {
-            _repository.DeleteAsync(id);
+            _repository.DeleteAsync(ids);
         }
 
         public TEntity Get(TId id)

@@ -20,9 +20,12 @@ namespace SImpl.Storage.Repository.NPoco.Services
             return _unitOfWork.GetConnection().Fetch<TEntity>();
         }
 
-        public void Delete(TId id)
+        public void Delete(TId[] ids)
         {
-            _unitOfWork.GetConnection().Delete<TEntity>(id);
+            foreach (var id in ids)
+            {
+                _unitOfWork.GetConnection().Delete<TEntity>(id);    
+            }
         }
 
         public TEntity Get(TId id)

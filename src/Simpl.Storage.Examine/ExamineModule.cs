@@ -1,6 +1,7 @@
 using Examine;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.Modules;
+using Simpl.Storage.Examine;
 using Simpl.Storage.Examine.Configuration;
 
 namespace Simpl.Examine

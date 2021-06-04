@@ -16,11 +16,14 @@ namespace SImpl.Storage.Repository.Services
             return Task.FromResult(_storage.Values.AsEnumerable());
         }
 
-        public Task DeleteAsync(TId id)
+        public Task DeleteAsync(params TId[] ids)
         {
-            if (_storage.ContainsKey(id))
+            foreach (var id in ids)
             {
-                _storage.Remove(id);
+                if (_storage.ContainsKey(id))
+                {
+                    _storage.Remove(id);
+                }
             }
             
             return Task.CompletedTask;

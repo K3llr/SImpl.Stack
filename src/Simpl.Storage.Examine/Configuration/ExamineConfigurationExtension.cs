@@ -1,4 +1,5 @@
 using System;
+using Simpl.Examine;
 using SImpl.Host.Builders;
 
 namespace Simpl.Storage.Examine.Configuration

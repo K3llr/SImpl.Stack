@@ -7,11 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SImpl.CQRS.Commands\SImpl.CQRS.Commands.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Rebus" Version="6.4.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+    <ProjectReference Include="..\SImpl.CQRS.Events\SImpl.CQRS.Events.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 namespace SImpl.Common
 {
-    public interface IEntity<out T>
+    public interface IEntity<T>
     {
-        T Id { get; }
+        T Id { get; set; }
     }
 }
