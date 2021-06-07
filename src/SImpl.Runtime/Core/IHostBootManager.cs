@@ -15,8 +15,8 @@ namespace SImpl.Runtime.Core
 
         void ConfigureHost(IHost host);
 
-        Task StartAsync();
+        Task StartAsync(IHost host);
         
-        Task StopAsync();
+        Task StopAsync(IHost host);
     }
 }

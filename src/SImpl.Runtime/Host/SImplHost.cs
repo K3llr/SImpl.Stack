@@ -25,12 +25,12 @@ namespace SImpl.Runtime.Host
         public async Task StartAsync(CancellationToken cancellationToken = new CancellationToken())
         {  
             await _host.StartAsync(cancellationToken);
-            await _bootManager.StartAsync();
+            await _bootManager.StartAsync(_host);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            await _bootManager.StopAsync();
+            await _bootManager.StopAsync(_host);
             await _host.StopAsync(cancellationToken);
         }
 

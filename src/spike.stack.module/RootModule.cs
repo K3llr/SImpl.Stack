@@ -1,16 +1,17 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 using SImpl.Modules;
 
 namespace spike.stack.module
 {
     public abstract class BaseModule : IStartableModule
     {
-        public Task StartAsync()
+        public Task StartAsync(IHost host)
         {
             return Task.CompletedTask;
         }
 
-        public Task StopAsync()
+        public Task StopAsync(IHost host)
         {
             return Task.CompletedTask;
         }

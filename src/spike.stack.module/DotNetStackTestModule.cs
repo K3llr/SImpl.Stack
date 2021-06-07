@@ -14,14 +14,14 @@ namespace spike.stack.module
 
         public string Name => nameof(DotNetStackTestModule);
         
-        public Task StartAsync()
+        public Task StartAsync(IHost host)
         {
             // Console.WriteLine($"Start async: {Name}");
 
             return Task.CompletedTask;
         }
 
-        public Task StopAsync()
+        public Task StopAsync(IHost host)
         {
             // Console.WriteLine($"Stop async: {Name}");
             

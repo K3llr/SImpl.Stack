@@ -68,18 +68,20 @@ namespace SImpl.Runtime.Core
             _moduleManager.SetModuleState(ModuleState.Configured);
         }
 
-        public async Task StartAsync()
+        public async Task StartAsync(IHost host)
         {
-            await BootSequence.ForEachAsync<IStartableModule>(module => module.StartAsync());
+            await BootSequence.ForEachAsync<IStartableModule>(module => module.StartAsync(host));
 
             _moduleManager.SetModuleState(ModuleState.Started);
         }
 
-        public async Task StopAsync()
+        public async Task StopAsync(IHost host)
         {
-            await BootSequence.Reverse().ForEachAsync<IStartableModule>(module => module.StopAsync());
+            await BootSequence.Reverse().ForEachAsync<IStartableModule>(module => module.StopAsync(host));
             
             _moduleManager.SetModuleState(ModuleState.Stopped);
         }
+
+      
     }
 }

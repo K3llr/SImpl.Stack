@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SImpl.Application.Builders;
 using SImpl.Modules;
@@ -30,19 +31,19 @@ namespace SImpl.Runtime.Verbosity
             return processed;
         }
 
-        public async Task StartAsync<TApplicationModule>()
+        public async Task StartAsync<TApplicationModule>(IHost host)
             where TApplicationModule : IDotNetStackApplicationModule
         {
             _logger.LogDebug("ApplicationBootManager > StartAsync > started");
-            await _bootManager.StartAsync<TApplicationModule>();
+            await _bootManager.StartAsync<TApplicationModule>(host);
             _logger.LogDebug("ApplicationBootManager > StartAsync > ended");
         }
 
-        public async Task StopAsync<TApplicationModule>()
+        public async Task StopAsync<TApplicationModule>(IHost host)
             where TApplicationModule : IDotNetStackApplicationModule
         {
             _logger.LogDebug("ApplicationBootManager > StopAsync > started");
-            await _bootManager.StopAsync<TApplicationModule>();
+            await _bootManager.StopAsync<TApplicationModule>(host);
             _logger.LogDebug("ApplicationBootManager > StopAsync > ended");
         }
     }

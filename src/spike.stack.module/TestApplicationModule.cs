@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using SImpl.Application.Builders;
 using SImpl.Modules;
 using spike.stack.application;
@@ -28,12 +29,12 @@ namespace spike.stack.module
             services.AddHostedService<GreetingHostedService>();
         }
 
-        public Task StartAsync()
+        public Task StartAsync(IHost host)
         {
             return Task.CompletedTask;
         }
 
-        public Task StopAsync()
+        public Task StopAsync(IHost host)
         {
             return Task.CompletedTask;
         }

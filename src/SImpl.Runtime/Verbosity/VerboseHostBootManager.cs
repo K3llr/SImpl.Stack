@@ -63,17 +63,17 @@ namespace SImpl.Runtime.Verbosity
             _logger.LogDebug("HostBootManager > ConfigureHost > ended");
         }
 
-        public async Task StartAsync()
+        public async Task StartAsync(IHost host)
         {
             _logger.LogDebug("HostBootManager > StartAsync > started"); 
-            await _bootManager.StartAsync();
+            await _bootManager.StartAsync(host);
             _logger.LogDebug("HostBootManager > StartAsync > ended");
         }
 
-        public async Task StopAsync()
+        public async Task StopAsync(IHost host)
         {
             _logger.LogDebug("HostBootManager > StopAsync > started"); 
-            await _bootManager.StopAsync();
+            await _bootManager.StopAsync(host);
             _logger.LogDebug("HostBootManager > StopAsync > ended");
         }
     }

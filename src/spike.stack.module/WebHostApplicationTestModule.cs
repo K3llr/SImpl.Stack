@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using SImpl.Application.Builders;
 using SImpl.Modules;
 
@@ -17,12 +18,12 @@ namespace spike.stack.module
         {
         }
 
-        public Task StartAsync()
+        public Task StartAsync(IHost host)
         {
             return Task.CompletedTask;
         }
 
-        public Task StopAsync()
+        public Task StopAsync(IHost host)
         {
             return Task.CompletedTask;
         }

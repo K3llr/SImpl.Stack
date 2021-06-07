@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 using SImpl.Application.Builders;
 
 namespace SImpl.Modules
@@ -15,8 +16,8 @@ namespace SImpl.Modules
 
     public interface IDotNetStackApplicationModule : ISImplModule
     {
-        Task StartAsync();
+        Task StartAsync(IHost host);
         
-        Task StopAsync();
+        Task StopAsync(IHost host);
     }
 }
