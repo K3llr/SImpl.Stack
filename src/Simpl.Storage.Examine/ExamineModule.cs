@@ -25,6 +25,7 @@ namespace Simpl.Examine
             services.AddSingleton(Config);
             services.AddSingleton<IExamineManager, ExamineManager>();
             services.AddSingleton<IExamineIndexRepository, ExamineIndexRepository>();
+            services.AddExamineLuceneIndex<ExamineIndex>(Config.IndexType)
         }
     }
 }

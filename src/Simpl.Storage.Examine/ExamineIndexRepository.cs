@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Examine;
-using Examine.LuceneEngine.Directories;
+using Examine.Lucene.Directories;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Core;
 using Lucene.Net.Index;
@@ -40,7 +40,6 @@ namespace Simpl.Storage.Examine
             {
                // loggingService.Info("Forcing index {IndexerName} to be unlocked since it was left in a locked state", luceneIndexer.Name);
 
-                luceneIndexer.WaitForIndexQueueOnShutdown = false;
                 var dir = luceneIndexer.GetLuceneDirectory();
                 if (!string.IsNullOrEmpty(dir.GetLockID()))
                 {
@@ -57,14 +56,12 @@ namespace Simpl.Storage.Examine
         public void CreateIndex(string name, FieldDefinitionCollection fields, Analyzer analyzer = null)
         {
             if (analyzer == null) analyzer = new KeywordAnalyzer();
-            var examineIndex = new ExamineIndex(name,
-                CreateFileSystemLuceneDirectory(name),
-                fields, analyzer);
-            examineIndex.WaitForIndexQueueOnShutdown = false;
+       
+          //  examineIndex.WaitForIndexQueueOnShutdown = false;
             _examineManager.TryGetIndex(name, out var index);
             if (index == null)
             {
-                _examineManager.AddIndex(examineIndex);
+             
                 var dir = examineIndex.GetLuceneDirectory();
 
                 if (!string.IsNullOrEmpty(dir.GetLockID()))
@@ -92,10 +89,7 @@ namespace Simpl.Storage.Examine
         public void Save(string name, ValueSet document)
         {
             var index = GetIndex(name);
-            if (!index.IndexExists())
-            {
-                index.CreateIndex();
-            }
+           
 
             index.IndexItem(document);
         }
@@ -103,12 +97,9 @@ namespace Simpl.Storage.Examine
         public ISearchResults Get(string name, string key)
         {
             var index = GetIndex(name);
-            if (!index.IndexExists())
-            {
-                return EmptySearchResults.Instance;
-            }
+         
 
-            var searcher = index.GetSearcher();
+            var searcher = index.Searcher;
             var query = searcher.CreateQuery(_examineConfig.IndexType).Field(ExamineFieldNames.ItemIdFieldName, key);
             var result = query.Execute();
             return result;
@@ -122,7 +113,7 @@ namespace Simpl.Storage.Examine
                 return EmptySearchResults.Instance;
             }
 
-            var searcher = index.GetSearcher();
+            var searcher = index.Searcher;
             var query = searcher.CreateQuery(_examineConfig.IndexType)
                 .GroupedOr(new[] {ExamineFieldNames.ItemIdFieldName}, keys);
             var result = query.Execute();
@@ -137,7 +128,7 @@ namespace Simpl.Storage.Examine
                 return EmptySearchResults.Instance;
             }
 
-            var searcher = index.GetSearcher();
+            var searcher = index.Searcher;
             var query = searcher.CreateQuery(_examineConfig.IndexType)
                 .Field(ExamineFieldNames.ItemIdFieldName, key.MultipleCharacterWildcard());
             var result = query.Execute();
@@ -158,7 +149,7 @@ namespace Simpl.Storage.Examine
                 return null;
             }
 
-            return index.GetSearcher();
+            return index.Searcher;
         }
 
         public virtual Directory CreateFileSystemLuceneDirectory(string folderName)
@@ -182,7 +173,7 @@ namespace Simpl.Storage.Examine
                     throw new NullReferenceException("No directory type found for value: " +
                                                      configuredDirectoryFactory);
                 var directoryFactory = (IDirectoryFactory) this.Resolve<IDirectoryFactory>(factoryType);
-                return directoryFactory.CreateDirectory(dirInfo);
+                return directoryFactory.CreateDirectory(dirInfo, true);
             }
 
             //no dir factory, just create a normal fs directory

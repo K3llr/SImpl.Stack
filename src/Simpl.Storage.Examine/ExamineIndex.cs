@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Examine;
-using Examine.LuceneEngine;
-using Examine.LuceneEngine.Providers;
+using Examine.Lucene;
+using Examine.Lucene.Providers;
 using Lucene.Net.Analysis;
 using Lucene.Net.Store;
 

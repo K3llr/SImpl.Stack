@@ -8,7 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Examine.Core" Version="2.0.0-alpha.20200128.15" />
+        <PackageReference Include="Examine" Version="2.0.0-beta.150" />
+        <PackageReference Include="Examine.Core" Version="2.0.0-beta.150" />
+        <PackageReference Include="Examine.Lucene" Version="2.0.0-beta.150" />
         <PackageReference Include="Lucene.Net" Version="4.8.0-beta00014" />
         <PackageReference Include="Lucene.Net.Analysis.Common" Version="4.8.0-beta00014" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" NoWarn="NU1605" />
@@ -40,12 +42,6 @@
       <_ContentIncludedByDefault Remove="wwwroot\css\open-iconic\README.md" />
       <_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
       <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="Examine.Lucene, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\..\..\Examine\src\Examine.Lucene\bin\Debug\Examine.Lucene.dll</HintPath>
-      </Reference>
     </ItemGroup>
 
     <ItemGroup>

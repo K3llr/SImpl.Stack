@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Simpl.DependencyInjection;
 using Simpl.Oauth.ActionResults;
@@ -12,7 +14,7 @@ using IAuthorizationFilter = Microsoft.AspNetCore.Mvc.Filters.IAuthorizationFilt
 
 namespace Simpl.Oauth.Attributes
 {
-    public class JwtAuthenticationAttribute : Attribute, IAuthorizationFilter,IAsyncAuthorizationFilter , IContainerAware
+    public class JwtAuthenticationAttribute : Attribute, IAsyncAuthorizationFilter , IContainerAware
     {
         private ITokenService _tokenService;
 
@@ -24,47 +26,37 @@ namespace Simpl.Oauth.Attributes
 
         public bool AllowMultiple { get; } = true;
 
-
-        public void OnAuthorization(AuthorizationFilterContext context)
+        public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task OnAuthorizationAsync(AuthorizationFilterContext context)
-        {
-            throw new NotImplementedException();
              // Make sure we have the proper header
-            /*var authorization = context.Request.Headers.Authorization;
-            if (authorization == null
-                || authorization.Scheme != "Bearer")
+            var authorization = (string) context.HttpContext.Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authorization)
+                || authorization.ToString().StartsWith("Bearer"))
             {
                 // No header or different scheme
-                return Task.FromResult(0);
+                context.Result = new EmptyResult();
             }
-
-            if (string.IsNullOrWhiteSpace(authorization.Parameter))
+            string encodedUsernamePassword = authorization.Substring("Basic ".Length).Trim();
+            if (string.IsNullOrWhiteSpace(encodedUsernamePassword))
             {
-                // No token provided
-                context.ErrorResult = new AuthenticationFailureResult(context.Request, "Missing token");
-                return Task.FromResult(0);
+             
             }
 
             // Validate JWT token signature
-            var token = authorization.Parameter;
-            if (!TokenService.Validate(token))
+            if (!TokenService.Validate(encodedUsernamePassword))
             {
                 // Invalid token signature
-                context.ErrorResult = new AuthenticationFailureResult(context.Request, "Invalid token");
-                return Task.FromResult(0);
+                context.Result = new AuthenticationFailureResult(new HttpRequestMessage(),
+                    "Invalid token");
             }
 
             // Read JWT token contents
-            var securityToken = TokenService.ReadToken(token);
+            var securityToken = TokenService.ReadToken(encodedUsernamePassword);
             if (securityToken == null)
             {
                 // Invalid token format
-                context.ErrorResult = new AuthenticationFailureResult(context.Request, "Invalid token");
-                return Task.FromResult(0);
+                context.Result = new AuthenticationFailureResult(new HttpRequestMessage(),
+                    "Invalid token");
             }
 
             // Read user id
@@ -72,8 +64,8 @@ namespace Simpl.Oauth.Attributes
             if (string.IsNullOrWhiteSpace(userId))
             {
                 // Missing user id claim
-                context.ErrorResult = new AuthenticationFailureResult(context.Request, $"Missing claim '{OAuthClaimTypes.NameIdentifier}'");
-                return Task.FromResult(0);
+                context.Result = new AuthenticationFailureResult(new HttpRequestMessage(),
+                    $"Missing claim '{OAuthClaimTypes.NameIdentifier}'");
             }
 
             // Extract claims
@@ -84,9 +76,8 @@ namespace Simpl.Oauth.Attributes
 
             // Token and claim payload valid, generate principal
             var identity = new ClaimsIdentity(claims, "ExternalBearer");
-            context.Principal = new ClaimsPrincipal(identity);
+            context.HttpContext.User = new ClaimsPrincipal(identity);
 
-            return Task.FromResult(0);*/
         }
     }
 }
