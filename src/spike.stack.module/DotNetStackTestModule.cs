@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SImpl.Host.Builders;
 using SImpl.Modules;
 
 namespace spike.stack.module
@@ -33,7 +34,7 @@ namespace spike.stack.module
             // Console.WriteLine($"Configure host object: {host.GetType().Name}");
         }
 
-        public void ConfigureHostBuilder(IHostBuilder hostBuilder)
+        public void ConfigureHostBuilder(ISImplHostBuilder hostBuilder)
         {
             // Console.WriteLine($"Configure host builder: {hostBuilder.GetType().Name}");
         }

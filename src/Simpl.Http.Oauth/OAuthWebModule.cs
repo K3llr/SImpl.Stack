@@ -22,10 +22,9 @@ namespace Simpl.Oauth
      
 
         public string Name { get; }
-        public void ConfigureHostBuilder(IHostBuilder hostBuilder)
+        public void ConfigureHostBuilder(ISImplHostBuilder hostBuilder)
         {
-            var appBuilder = (ISImplHostBuilder) hostBuilder;
-            appBuilder.UseOAuth(oauthCfg => { oauthCfg.SetPublicSigningKey(WebConfig.PublicSigningKey); });
+            hostBuilder.UseOAuth(oauthCfg => { oauthCfg.SetPublicSigningKey(WebConfig.PublicSigningKey); });
         }
 
         public void ConfigureServices(IServiceCollection services)

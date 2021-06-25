@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using SImpl.Host.Builders;
 using SImpl.Modules;
 using SImpl.Runtime.Extensions;
 
@@ -51,7 +52,7 @@ namespace SImpl.Runtime.Core
         {
             BootSequence.ForEach<IHostBuilderConfigureModule>(module =>
             {
-                module.ConfigureHostBuilder(hostBuilder);
+                module.ConfigureHostBuilder(hostBuilder as ISImplHostBuilder);
             });
             
             //we need recalc
