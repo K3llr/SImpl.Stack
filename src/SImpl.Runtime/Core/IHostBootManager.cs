@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using SImpl.Host.Builders;
 using SImpl.Modules;
 
 namespace SImpl.Runtime.Core
@@ -9,9 +10,9 @@ namespace SImpl.Runtime.Core
     {
         IEnumerable<IPreInitModule> PreInit();
 
-        void ConfigureServices(IHostBuilder hostBuilder);
+        void ConfigureServices(ISImplHostBuilder hostBuilder);
 
-        void ConfigureHostBuilder(IHostBuilder hostBuilder);
+        void ConfigureHostBuilder(ISImplHostBuilder hostBuilder);
 
         void ConfigureHost(IHost host);
 

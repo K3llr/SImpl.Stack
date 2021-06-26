@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SImpl.Host.Builders;
 using SImpl.Modules;
 using SImpl.Runtime.Core;
 
@@ -42,14 +43,14 @@ namespace SImpl.Runtime.Verbosity
             return processed;
         }
 
-        public void ConfigureServices(IHostBuilder hostBuilder)
+        public void ConfigureServices(ISImplHostBuilder hostBuilder)
         {
             _logger.LogDebug("HostBootManager > ConfigureServices > started");
             _bootManager.ConfigureServices(hostBuilder);
             _logger.LogDebug("HostBootManager > ConfigureServices > ended");
         }
 
-        public void ConfigureHostBuilder(IHostBuilder hostBuilder)
+        public void ConfigureHostBuilder(ISImplHostBuilder hostBuilder)
         {
             _logger.LogDebug("HostBootManager > ConfigureHostBuilder > started");
             _bootManager.ConfigureHostBuilder(hostBuilder);

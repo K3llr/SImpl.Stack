@@ -39,7 +39,7 @@ namespace SImpl.Runtime.Core
             return preInitModules;
         }
 
-        public void ConfigureServices(IHostBuilder hostBuilder)
+        public void ConfigureServices(ISImplHostBuilder hostBuilder)
         {
             hostBuilder.ConfigureServices((hostBuilderContext, services) =>
             {
@@ -48,14 +48,14 @@ namespace SImpl.Runtime.Core
             });
         }
 
-        public void ConfigureHostBuilder(IHostBuilder hostBuilder)
+        public void ConfigureHostBuilder(ISImplHostBuilder hostBuilder)
         {
             BootSequence.ForEach<IHostBuilderConfigureModule>(module =>
             {
-                module.ConfigureHostBuilder(hostBuilder as ISImplHostBuilder);
+                module.ConfigureHostBuilder(hostBuilder);
             });
             
-            //we need recalc
+            // we need re-calc
             _bootSequence1 = _bootSequenceFactory.New();
         }
 
