@@ -5,7 +5,15 @@ namespace Simpl.DependencyInjection.Module
 {
     public class DependencyInjectionModule : IServicesCollectionConfigureModule
     {
+        public DependencyInjectionConfig Config { get; }
+
+        public DependencyInjectionModule(DependencyInjectionConfig config)
+        {
+            Config = config;
+        }
+        
         public string Name { get; } = nameof(DependencyInjectionModule);
+        
         public void ConfigureServices(IServiceCollection services)
         {
            
@@ -46,11 +54,6 @@ namespace Simpl.DependencyInjection.Module
                         break;
                 }  
             }
-         
-        }
-        
-        public DependencyInjectionModule(DependencyInjectionConfig config)
-        {
         }
     }
 }

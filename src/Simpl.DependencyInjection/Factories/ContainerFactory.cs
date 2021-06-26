@@ -1,28 +1,50 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Simpl.DependencyInjection;
-using SImpl.Factories;
 
-namespace Novicell.App.Headless.Core.Factories
+namespace Simpl.DependencyInjection.Factories
 {
-    public class SingletonContainerFactory<TImplementation> : SingletonContainerFactory<TImplementation, TImplementation>
+    public class ContainerFactory
+    {
+        internal static void RegisterDependency<TAbstraction, TImplementation>(Dependency<TAbstraction, TImplementation> dependency)
+            where TImplementation : class, TAbstraction
+            where TAbstraction : class
+        {
+            ContainerRegisterService.Current.Register(dependency);
+        }
+
+        public static ContainerFactory<TAbstraction, TImplementation> New<TAbstraction, TImplementation>()
+            where TImplementation : class, TAbstraction
+            where TAbstraction : class
+        {
+            return new ContainerFactory<TAbstraction, TImplementation>();
+        }
+
+        public static ContainerFactory<TImplementation> New<TImplementation>()
+            where TImplementation : class
+        {
+            return new ContainerFactory<TImplementation>();
+        }
+        
+    }
+
+    public class ContainerFactory<TImplementation> : ContainerFactory<TImplementation, TImplementation>
         where TImplementation : class
     {
-        internal SingletonContainerFactory() : base()
+        internal ContainerFactory() : base()
         {
         }
     }
 
-    public class SingletonContainerFactory<TAbstraction, TImplementation> : IContainerFactory<TAbstraction>, IContainerAware
+    public class ContainerFactory<TAbstraction, TImplementation> : IContainerFactory<TAbstraction>, IContainerAware
         where TImplementation : class, TAbstraction
         where TAbstraction : class
     {
-        internal SingletonContainerFactory()
+        internal ContainerFactory()
         {
             var dependency = new Dependency<TAbstraction, TImplementation>
             {
                 Abstraction = typeof(TAbstraction),
                 Implementation = typeof(TImplementation),
-                Lifestyle = Lifestyle.Singleton
+                Lifestyle = Lifestyle.Scoped
             };
 
             ContainerFactory.RegisterDependency(dependency);

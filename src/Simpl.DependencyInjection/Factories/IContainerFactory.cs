@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.Factories;
 
-namespace Novicell.App.Headless.Core.Factories
+namespace Simpl.DependencyInjection.Factories
 {
     public interface IContainerFactory<out T> : IFactory<T>
     {
