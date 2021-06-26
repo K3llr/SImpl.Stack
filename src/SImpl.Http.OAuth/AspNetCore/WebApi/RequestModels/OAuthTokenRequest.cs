@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace SImpl.Http.OAuth.WebApi.RequestModels
+namespace SImpl.Http.OAuth.AspNetCore.WebApi.RequestModels
 {
     [DataContract]
     public class OAuthTokenRequest

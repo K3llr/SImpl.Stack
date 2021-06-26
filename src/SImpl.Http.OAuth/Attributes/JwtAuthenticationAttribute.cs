@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SImpl.DependencyInjection;
-using SImpl.Http.OAuth.ActionResults;
+using SImpl.Http.OAuth.AspNetCore.ActionResults;
 using SImpl.OAuth;
 using SImpl.OAuth.Constants;
 

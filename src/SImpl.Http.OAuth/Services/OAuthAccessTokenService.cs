@@ -8,25 +8,24 @@ using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
-using SImpl.Http.OAuth.Api;
-using SImpl.Http.OAuth.Configuration;
 using SImpl.Http.OAuth.Models;
+using SImpl.Http.OAuth.Module;
 using SImpl.OAuth.Constants;
 
 namespace SImpl.Http.OAuth.Services
 {
     public class OAuthAccessTokenService : IOAuthAccessTokenService
     {
-        private readonly OAuthWebConfig _webConfig;
+        private readonly HttpOAuthConfig _config;
 
-        public OAuthAccessTokenService(OAuthWebConfig webConfig)
+        public OAuthAccessTokenService(HttpOAuthConfig config)
         {
-            _webConfig = webConfig;
+            _config = config;
         }
 
         public int GetAccessTokenLifetimeSeconds(OAuthClient client)
         {
-            return client.AccessTokenLifetimeSeconds ?? _webConfig.ServerConfig.DefaultAccessTokenLifetimeSeconds;
+            return client.AccessTokenLifetimeSeconds ?? _config.ServerConfig.DefaultAccessTokenLifetimeSeconds;
         }
 
         public string GenerateAccessToken(ClaimsIdentity identity, OAuthClient client)
@@ -35,7 +34,7 @@ namespace SImpl.Http.OAuth.Services
 
             RSAParameters rsaParams;
 
-            using (var tr = new StringReader(_webConfig.ServerConfig.PrivateSigningKey))
+            using (var tr = new StringReader(_config.ServerConfig.PrivateSigningKey))
             {
                 var pemReader = new PemReader(tr);
                 var keyPair = pemReader.ReadObject() as AsymmetricCipherKeyPair;

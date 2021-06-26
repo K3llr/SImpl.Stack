@@ -1,19 +1,16 @@
 ﻿using System;
 using SImpl.Host.Builders;
 
-namespace SImpl.Http.OAuth.Configuration
+namespace SImpl.Http.OAuth.Module
 {
-    public class OAuthWebConfig
+    public class HttpOAuthConfig
     {
         internal bool IsServerEnabled { get; private set; }
-        public ISImplHostBuilder simplHostBuilder { get; }
         internal OAuthServerConfig ServerConfig { get; private set; }
 
-        public OAuthWebConfig(ISImplHostBuilder appBuilder)
+        public HttpOAuthConfig(ISImplHostBuilder appBuilder)
         {
-            simplHostBuilder = appBuilder;
             ServerConfig = new OAuthServerConfig();
-          
         }
 
         public void UseServer(Action<OAuthServerConfig> configure = null)

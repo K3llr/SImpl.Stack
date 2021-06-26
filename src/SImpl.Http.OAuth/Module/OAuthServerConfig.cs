@@ -1,8 +1,7 @@
 ﻿using System;
-using SImpl.Http.OAuth.Api;
-using SImpl.Http.OAuth.Storage.InMemory;
+using SImpl.Http.OAuth.Storage;
 
-namespace SImpl.Http.OAuth.Configuration
+namespace SImpl.Http.OAuth.Module
 {
     public class OAuthServerConfig
     {

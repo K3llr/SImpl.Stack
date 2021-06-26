@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace SImpl.Http.OAuth.ActionResults
+namespace SImpl.Http.OAuth.AspNetCore.ActionResults
 {
     public class AuthenticationFailureResult : ActionResult
     {

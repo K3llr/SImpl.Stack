@@ -1,5 +1,4 @@
-﻿using SImpl.Http.OAuth.Api;
-using SImpl.Http.OAuth.Models;
+﻿using SImpl.Http.OAuth.Models;
 using SImpl.OAuth.Constants;
 
 namespace SImpl.Http.OAuth.Services

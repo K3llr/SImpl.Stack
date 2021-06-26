@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace SImpl.Http.OAuth.Api
+namespace SImpl.Http.OAuth
 {
     public interface IOAuthUserProvider
     {

@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using SImpl.Http.OAuth.Models;
 
-namespace SImpl.Http.OAuth.Api
+namespace SImpl.Http.OAuth
 {
     public interface IOAuthAccessTokenService
     {

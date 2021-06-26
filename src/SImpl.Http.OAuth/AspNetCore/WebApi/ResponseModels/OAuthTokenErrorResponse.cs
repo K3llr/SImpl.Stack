@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace SImpl.Http.OAuth.WebApi.ResponseModels
+namespace SImpl.Http.OAuth.AspNetCore.WebApi.ResponseModels
 {
     [DataContract]
     public class OAuthTokenErrorResponse

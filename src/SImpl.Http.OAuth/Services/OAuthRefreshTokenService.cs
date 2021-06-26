@@ -11,9 +11,8 @@ using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
-using SImpl.Http.OAuth.Api;
-using SImpl.Http.OAuth.Configuration;
 using SImpl.Http.OAuth.Models;
+using SImpl.Http.OAuth.Module;
 using SImpl.OAuth;
 using SImpl.OAuth.Constants;
 
@@ -21,18 +20,18 @@ namespace SImpl.Http.OAuth.Services
 {
     public class OAuthRefreshTokenService : IOAuthRefreshTokenService
     {
-        private readonly OAuthWebConfig _webConfig;
+        private readonly HttpOAuthConfig _config;
         private readonly ITokenService _tokenService;
         private readonly IOAuthRefreshTokenStorage _oAuthRefreshTokenStorage;
         private readonly IOAuthUserProvider _oAuthUserProvider;
 
         public OAuthRefreshTokenService(
-            OAuthWebConfig webConfig,
+            HttpOAuthConfig config,
             ITokenService tokenService,
             IOAuthUserProvider oAuthUserProvider,
             IOAuthRefreshTokenStorage oAuthRefreshTokenStorage)
         {
-            _webConfig = webConfig;
+            _config = config;
             _tokenService = tokenService;
             _oAuthUserProvider = oAuthUserProvider;
             _oAuthRefreshTokenStorage = oAuthRefreshTokenStorage;
@@ -82,7 +81,7 @@ namespace SImpl.Http.OAuth.Services
 
         public int GetRefreshTokenLifetimeSeconds(OAuthClient client)
         {
-            return client.RefreshTokenLifetimeSeconds ?? _webConfig.ServerConfig.DefaultRefreshTokenLifetimeSeconds;
+            return client.RefreshTokenLifetimeSeconds ?? _config.ServerConfig.DefaultRefreshTokenLifetimeSeconds;
         }
 
         public OAuthRefreshToken GenerateRefreshToken(HttpRequest request,string userId, OAuthClient client, List<string> scopes)
@@ -91,7 +90,7 @@ namespace SImpl.Http.OAuth.Services
 
             RSAParameters rsaParams;
 
-            using (var tr = new StringReader(_webConfig.ServerConfig.PrivateSigningKey))
+            using (var tr = new StringReader(_config.ServerConfig.PrivateSigningKey))
             {
                 var pemReader = new PemReader(tr);
                 var keyPair = pemReader.ReadObject() as AsymmetricCipherKeyPair;

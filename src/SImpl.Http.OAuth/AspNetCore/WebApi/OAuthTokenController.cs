@@ -5,13 +5,12 @@ using System.Net.Http;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SImpl.Http.OAuth.Api;
+using SImpl.Http.OAuth.AspNetCore.WebApi.RequestModels;
+using SImpl.Http.OAuth.AspNetCore.WebApi.ResponseModels;
 using SImpl.Http.OAuth.Models;
-using SImpl.Http.OAuth.WebApi.RequestModels;
-using SImpl.Http.OAuth.WebApi.ResponseModels;
 using SImpl.OAuth.Constants;
 
-namespace SImpl.Http.OAuth.WebApi
+namespace SImpl.Http.OAuth.AspNetCore.WebApi
 {
     [ApiController]
     public class OAuthTokenController : ControllerBase

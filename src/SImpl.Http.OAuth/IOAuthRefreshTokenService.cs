@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using SImpl.Http.OAuth.Models;
 
-namespace SImpl.Http.OAuth.Api
+namespace SImpl.Http.OAuth
 {
     public interface IOAuthRefreshTokenService
     {

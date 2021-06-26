@@ -1,9 +1,8 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using SImpl.Http.OAuth.Api;
 using SImpl.Http.OAuth.Models;
 
-namespace SImpl.Http.OAuth.Storage.InMemory
+namespace SImpl.Http.OAuth.Storage
 {
     public class InMemoryOAuthClientStorage : IOAuthClientStorage
     {
