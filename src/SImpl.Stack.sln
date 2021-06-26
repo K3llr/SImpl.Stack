@@ -66,11 +66,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Simpl.Modules", "Simpl.Modu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Http.Logging.Serilog", "SImpl.Http.Logging.Serilog\SImpl.Http.Logging.Serilog.csproj", "{18F1514C-E98C-4B31-81A1-3AB67EC6E4AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simpl.DependencyInjection", "Simpl.DependencyInjection\Simpl.DependencyInjection.csproj", "{77A06D1D-4A7A-40AC-9A21-A8EB8ADB029E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.DependencyInjection", "SImpl.DependencyInjection\SImpl.DependencyInjection.csproj", "{77A06D1D-4A7A-40AC-9A21-A8EB8ADB029E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simpl.Http.Oauth", "Simpl.Http.Oauth\Simpl.Http.Oauth.csproj", "{D9FD9125-18EE-4981-B7DE-94D379321C37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.Http.OAuth", "SImpl.Http.OAuth\SImpl.Http.OAuth.csproj", "{D9FD9125-18EE-4981-B7DE-94D379321C37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simpl.Oauth", "Simpl.Oauth\Simpl.Oauth.csproj", "{3EDA4A99-88DD-42F0-BD8F-949FBAE5D3EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.OAuth", "SImpl.OAuth\SImpl.OAuth.csproj", "{3EDA4A99-88DD-42F0-BD8F-949FBAE5D3EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SImpl.AutoRun", "SImpl.AutoRun\SImpl.AutoRun.csproj", "{A44BDECC-ED0A-486E-96D4-03446BD348AB}"
 EndProject
