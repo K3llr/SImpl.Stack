@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 using SImpl.Application.Builders;
 using SImpl.Modules;
 using SImpl.Runtime.Extensions;
@@ -40,20 +41,20 @@ namespace SImpl.Runtime.Core
             return configuredModules;
         }
 
-        public async Task StartAsync<TApplicationModule>()
+        public async Task StartAsync<TApplicationModule>(IHost host)
             where TApplicationModule : IDotNetStackApplicationModule
         {
-            await BootSequence.ForEachAsync<IApplicationModule>(module => module.StartAsync());
-            await BootSequence.ForEachAsync<TApplicationModule>(module => module.StartAsync());
+            await BootSequence.ForEachAsync<IApplicationModule>(module => module.StartAsync(host));
+            await BootSequence.ForEachAsync<TApplicationModule>(module => module.StartAsync(host));
             
             _moduleManager.SetModuleState(ModuleState.Started);
         }
 
-        public async Task StopAsync<TApplicationModule>()
+        public async Task StopAsync<TApplicationModule>(IHost host)
             where TApplicationModule : IDotNetStackApplicationModule
         {
-            await BootSequence.Reverse().ForEachAsync<TApplicationModule>(module => module.StopAsync());
-            await BootSequence.Reverse().ForEachAsync<IApplicationModule>(module => module.StopAsync());
+            await BootSequence.Reverse().ForEachAsync<TApplicationModule>(module => module.StopAsync(host));
+            await BootSequence.Reverse().ForEachAsync<IApplicationModule>(module => module.StopAsync(host));
             
             _moduleManager.SetModuleState(ModuleState.Stopped);
         }

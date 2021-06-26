@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using SImpl.Application.Builders;
 using SImpl.Hosts.WebHost.Modules;
 using SImpl.Modules;
@@ -34,13 +35,13 @@ namespace spike.stack.module
             services.AddTransient<IGreetingService, SpanishGreetingService>();
         }
 
-        public Task StartAsync()
+        public Task StartAsync(IHost host)
         {
             Console.WriteLine(_greetingAppService.SayHi("Keller"));
             return Task.CompletedTask;
         }
 
-        public Task StopAsync()
+        public Task StopAsync(IHost host)
         {
             Console.WriteLine(_greetingAppService.SayBye("Keller"));
             return Task.CompletedTask;

@@ -7,12 +7,12 @@ namespace SImpl.CQRS.Commands.Module
     public class CommandModuleConfig
     {
         private readonly List<Assembly> _assemblies = new();
-        private readonly List<Type> _commandHandlers = new();
+        private readonly List<CommandHandlerRegistration> _commandHandlers = new();
         
         public bool EnableInMemoryCommandDispatcher { get; set; }
         
         public IReadOnlyList<Assembly> RegisteredAssemblies => _assemblies.AsReadOnly();
-        public IReadOnlyList<Type> RegisteredCommandHandlers => _commandHandlers.AsReadOnly();
+        public IReadOnlyList<CommandHandlerRegistration> RegisteredCommandHandlers => _commandHandlers.AsReadOnly();
         
         public CommandModuleConfig AddCommandHandlersFromAssembly(Assembly assembly)
         {
@@ -26,13 +26,22 @@ namespace SImpl.CQRS.Commands.Module
             return this;
         }
         
-        // TODO:
-        /*public CommandModuleConfig AddCommandHandler<TCommandHandler, TCommand>()
+        public CommandModuleConfig AddCommandHandler<TCommandHandler, TCommand>()
             where TCommandHandler : ICommandHandler<TCommand> 
             where TCommand : class, ICommand
         {
-            _commandHandlers.Add(typeof(TCommandHandler));
+            _commandHandlers.Add(new CommandHandlerRegistration
+            {
+                CommandType = typeof(TCommand),
+                CommandHandlerType = typeof(TCommandHandler)
+            });
             return this;
-        }*/
+        }
+    }
+    
+    public class CommandHandlerRegistration
+    {
+        public Type CommandType { get; set; }
+        public Type CommandHandlerType { get; set; }
     }
 }

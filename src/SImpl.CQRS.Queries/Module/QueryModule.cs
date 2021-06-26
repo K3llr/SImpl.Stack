@@ -30,9 +30,12 @@ namespace SImpl.CQRS.Queries.Module
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
 
-            foreach (var queryHandlerType in Config.RegisteredQueryHandlers)
+            var handlerInterface = typeof(IQueryHandler<,>);
+            foreach (var handlerReg in Config.RegisteredQueryHandlers)
             {
-                // TODO:
+                services.AddTransient(
+                    handlerInterface.MakeGenericType(handlerReg.QueryType, handlerReg.ResultType),
+                    handlerReg.QueryHandlerType);
             }
         }
     }

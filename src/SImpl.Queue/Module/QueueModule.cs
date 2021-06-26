@@ -6,7 +6,15 @@ namespace SImpl.Queue.Module
 {
     public class QueueModule : IServicesCollectionConfigureModule
     {
+        public QueueModuleConfig Config { get; }
+        
+        public QueueModule(QueueModuleConfig config)
+        {
+            Config = config;
+        }
+        
         public string Name { get; } = nameof(QueueModule);
+
         public void ConfigureServices(IServiceCollection services)
         {
             if (Config.EnableInMemoryQueueManager)
@@ -27,17 +35,17 @@ namespace SImpl.Queue.Module
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
             
-            foreach (var queryHandlerType in Config.RegisteredQueues)
+            var queueInterface = typeof(IQueue<>);
+            foreach (var queueReg in Config.RegisteredQueues)
             {
-                // TODO: add queue registration by type
+                services.AddSingleton(queueInterface.MakeGenericType(queueReg.ItemType), queueReg.QueueType);
             }
-        }
-
-        public QueueModuleConfig Config { get; }
-        
-        public QueueModule(QueueModuleConfig config)
-        {
-            Config = config;
+            
+            var dequeueInterface = typeof(IDequeueAction<>);
+            foreach (var dequeueReg in Config.RegisteredDequeueActions)
+            {
+                services.AddSingleton(dequeueInterface.MakeGenericType(dequeueReg.ItemType), dequeueReg.QueueType);
+            }
         }
     }
 }

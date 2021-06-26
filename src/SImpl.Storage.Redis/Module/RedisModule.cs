@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.Modules;
+using SImpl.Storage.Redis.Services;
 
 namespace SImpl.Storage.Redis.Module
 {
@@ -16,7 +17,10 @@ namespace SImpl.Storage.Redis.Module
         
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddSingleton(typeof(RedisConnectionConfig), Config.RedisConnectionConfig);
+            services.AddSingleton<IRedisConnectionProvider, RedisConnectionProvider>();
+            services.AddSingleton(typeof(IRedisSerializationService), Config.SerializationServiceType.ImplType);
+            services.AddSingleton<IRedisDataGateway, RedisDataGateway>();
         }
     }
 }

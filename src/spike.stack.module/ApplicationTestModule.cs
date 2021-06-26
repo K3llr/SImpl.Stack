@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 using SImpl.Application.Builders;
 using SImpl.Modules;
 using SImpl.Runtime;
@@ -14,12 +15,12 @@ namespace spike.stack.module
 
         public string Name => nameof(ApplicationTestModule);
             
-        public Task StartAsync()
+        public Task StartAsync(IHost host)
         {
             return Task.CompletedTask;
         }
 
-        public Task StopAsync()
+        public Task StopAsync(IHost host)
         {
             return Task.CompletedTask;
         }

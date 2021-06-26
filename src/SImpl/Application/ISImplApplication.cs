@@ -1,11 +1,12 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 
 namespace SImpl.Application
 {
     public interface ISImplApplication
     {
-        Task StartAsync();
+        Task StartAsync(IHost host);
         
-        Task StopAsync();
+        Task StopAsync(IHost host);
     }
 }

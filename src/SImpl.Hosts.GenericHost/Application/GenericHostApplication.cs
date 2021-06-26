@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 using SImpl.Application;
 using SImpl.Modules;
 using SImpl.Runtime.Core;
@@ -14,14 +15,14 @@ namespace SImpl.Hosts.GenericHost.Application
             _bootManager = bootManager;
         }
 
-        public async Task StartAsync()
+        public async Task StartAsync(IHost host)
         {
-            await _bootManager.StartAsync<IGenericHostApplicationModule>();
+            await _bootManager.StartAsync<IGenericHostApplicationModule>(host);
         }
 
-        public async Task StopAsync()
+        public async Task StopAsync(IHost host)
         {
-            await _bootManager.StopAsync<IGenericHostApplicationModule>();
+            await _bootManager.StopAsync<IGenericHostApplicationModule>(host);
         }
     }
 }

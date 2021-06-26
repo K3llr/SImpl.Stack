@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using SImpl.Application;
 using SImpl.Application.Builders;
 using SImpl.Hosts.WebHost.AspNetCore;
@@ -37,15 +38,15 @@ namespace SImpl.Hosts.WebHost
             _applicationBuilder.Configure(_configureDelegate);
         }
 
-        public async Task StartAsync()
+        public async Task StartAsync(IHost host)
         {
             _application = _applicationBuilder.Build();
-            await _application.StartAsync();
+            await _application.StartAsync(host);
         }
 
-        public async Task StopAsync()
+        public async Task StopAsync(IHost host)
         {
-            await _application.StopAsync();
+            await _application.StopAsync(host);
         }
     }
 }

@@ -7,12 +7,12 @@ namespace SImpl.CQRS.Events.Module
     public class EventModuleConfig
     {
         private readonly List<Assembly> _assemblies = new();
-        private readonly List<Type> _eventHandlers = new();
+        private readonly List<EventHandlerRegistration> _eventHandlers = new();
         
         public bool EnableInMemoryEventDispatcher { get; set; }
         
         public IReadOnlyList<Assembly> RegisteredAssemblies => _assemblies.AsReadOnly();
-        public IReadOnlyList<Type> RegisteredEventHandlers => _eventHandlers.AsReadOnly();
+        public IReadOnlyList<EventHandlerRegistration> RegisteredEventHandlers => _eventHandlers.AsReadOnly();
         
         public EventModuleConfig AddEventHandlersFromAssembly(Assembly assembly)
         {
@@ -25,14 +25,23 @@ namespace SImpl.CQRS.Events.Module
             AddEventHandlersFromAssembly(typeof(T).Assembly);
             return this;
         }
-        
-        // TODO:
-        /*public EventModuleConfig AddCommandHandler<TEventHandler, TEvent>()
+
+        public EventModuleConfig AddEventHandler<TEventHandler, TEvent>()
             where TEventHandler : IEventHandler<TEvent> 
             where TEvent : class, IEvent
         {
-            _eventHandlers.Add(typeof(TEventHandler));
+            _eventHandlers.Add(new EventHandlerRegistration
+            {
+                EventType = typeof(TEvent),
+                EventHandlerType = typeof(TEventHandler)
+            });
             return this;
-        }*/
+        }
+    }
+    
+    public class EventHandlerRegistration
+    {
+        public Type EventType { get; set; }
+        public Type EventHandlerType { get; set; }
     }
 }

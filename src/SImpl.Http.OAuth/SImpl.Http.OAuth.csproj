@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>SImpl.Http.OAuth</RootNamespace>
+        <IsPackable>true</IsPackable>
+        <PackageId>SImpl.Http.OAuth</PackageId>
+        <AssemblyName>SImpl.Http.OAuth</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SImpl.DependencyInjection\SImpl.DependencyInjection.csproj" />
+      <ProjectReference Include="..\SImpl.OAuth\SImpl.OAuth.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+      <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="AspNetCore" />
+    </ItemGroup>
+
+</Project>
