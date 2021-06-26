@@ -28,9 +28,11 @@ namespace SImpl.CQRS.Events.Module
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
 
-            foreach (var commandHandlerType in Config.RegisteredEventHandlers)
+            var handlerInterface = typeof(IEventHandler<>);
+            foreach (var handlerReg in Config.RegisteredEventHandlers)
             {
-                // TODO:
+                services.AddTransient(handlerInterface.MakeGenericType(handlerReg.EventType),
+                    handlerReg.EventHandlerType);
             }
         }
     }

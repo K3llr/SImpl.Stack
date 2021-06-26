@@ -28,11 +28,11 @@ namespace SImpl.CQRS.Commands.Module
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
             
-            var genericInterface = typeof(ICommand);
-            var genericImpl = typeof(ICommandHandler<>);
-            foreach (var queryHandlerType in Config.RegisteredCommandHandlers)
+            var handlerInterface = typeof(ICommandHandler<>);
+            foreach (var handlerReg in Config.RegisteredCommandHandlers)
             {
-                services.AddTransient(genericInterface.MakeGenericType(queryHandlerType), genericImpl.MakeGenericType(queryHandlerType));
+                services.AddTransient(handlerInterface.MakeGenericType(handlerReg.CommandType),
+                    handlerReg.CommandHandlerType);
             }
         }
     }
