@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Microsoft.Extensions.DependencyInjection;
+using Simpl.DependencyInjection.Models;
 
-namespace Simpl.DependencyInjection
+namespace Simpl.DependencyInjection.Services
 {
     internal class ContainerRegisterService : IContainerRegisterService
     {

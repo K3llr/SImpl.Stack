@@ -1,4 +1,5 @@
 using System;
+using Simpl.DependencyInjection.Models;
 
 namespace Simpl.DependencyInjection
 {

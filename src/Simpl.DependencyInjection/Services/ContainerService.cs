@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Simpl.DependencyInjection
+namespace Simpl.DependencyInjection.Services
 {
     public class ContainerService : IContainerService
     {

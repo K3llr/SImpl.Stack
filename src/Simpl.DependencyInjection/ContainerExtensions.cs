@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Simpl.DependencyInjection.Services;
 
 namespace Simpl.DependencyInjection
 {

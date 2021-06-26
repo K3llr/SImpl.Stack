@@ -1,6 +1,6 @@
 using System;
 
-namespace Simpl.DependencyInjection
+namespace Simpl.DependencyInjection.Models
 {
     public enum DependencyType
     {

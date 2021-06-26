@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Simpl.DependencyInjection.Models;
+using Simpl.DependencyInjection.Services;
 using SImpl.Modules;
 
 namespace Simpl.DependencyInjection.Module

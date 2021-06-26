@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Simpl.DependencyInjection.Exceptions;
+using Simpl.DependencyInjection.Models;
 
 namespace Simpl.DependencyInjection.Bundles
 {
