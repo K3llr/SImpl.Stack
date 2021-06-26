@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SImpl.Modules;
-using Simpl.Oauth.Configuration;
-using Simpl.Oauth.Services;
 
-namespace Simpl.Oauth
+namespace Simpl.Oauth.Module
 {
     public class OAuthModule : IServicesCollectionConfigureModule
     {
@@ -14,13 +12,12 @@ namespace Simpl.Oauth
             Config = config;
         }
 
-
-        public string Name { get; }
+        public string Name => nameof(OAuthModule);
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(Config);
-            services.AddScoped(typeof(ITokenService), Config.TokenService);
-
+            services.AddScoped(typeof(ITokenService), Config.TokenServiceType.ImplType);
         }
     }
 }

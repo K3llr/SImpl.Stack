@@ -10,8 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
-using Simpl.Oauth.Configuration;
 using Simpl.Oauth.Constants;
+using Simpl.Oauth.Module;
 
 namespace Simpl.Oauth.Services
 {
@@ -25,7 +25,6 @@ namespace Simpl.Oauth.Services
             _config = config;
             _configuration = configuration;
         }
-
 
         public JwtSecurityToken ReadToken(string token)
         {
@@ -47,16 +46,20 @@ namespace Simpl.Oauth.Services
 
             RSAParameters rsaParams;
             var key = _config.PublicSigningKey;
+            
+            // Backwards compatability: If no key has been configured, read from configuration
             if (string.IsNullOrWhiteSpace(key))
             {
-                if (!string.IsNullOrWhiteSpace(key))
-                {
-                    var base64PublicKey = _configuration["Simpl.OAuth.PublicKey.Base64"];
-
-                    var data = Convert.FromBase64String(base64PublicKey);
-                    key = System.Text.Encoding.ASCII.GetString(data);
-                }
+                _config.ReadPublicSigningKeyFromConfiguration(_configuration);
+                key = _config.PublicSigningKey;
             }
+            
+            // If still no key, throw exception
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ApplicationException("No public signing key has been configured.");
+            }
+
             using (var tr = new StringReader(key))
             {
                 var pemReader = new PemReader(tr);

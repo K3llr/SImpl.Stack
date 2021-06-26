@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Simpl.Oauth.Services
+namespace Simpl.Oauth
 {
     public interface ITokenService
     {

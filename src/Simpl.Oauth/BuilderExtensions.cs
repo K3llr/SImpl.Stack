@@ -1,7 +1,8 @@
 ﻿using System;
 using SImpl.Host.Builders;
+using Simpl.Oauth.Module;
 
-namespace Simpl.Oauth.Configuration
+namespace Simpl.Oauth
 {
     public static class AppBuilderExtensions
     {
@@ -19,10 +20,10 @@ namespace Simpl.Oauth.Configuration
 
         private static OAuthConfig AttachOAuth(ISImplHostBuilder simplHostBuilder)
         {
-            var config = new OAuthConfig(simplHostBuilder);
+            var config = new OAuthConfig();
             var oauthModule = new OAuthModule(config);
 
-            simplHostBuilder.AttachNewOrGetConfiguredModule(()=>oauthModule);
+            simplHostBuilder.AttachNewOrGetConfiguredModule(() => oauthModule);
 
             return config;
         }
