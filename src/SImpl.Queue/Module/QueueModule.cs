@@ -6,7 +6,15 @@ namespace SImpl.Queue.Module
 {
     public class QueueModule : IServicesCollectionConfigureModule
     {
+        public QueueModuleConfig Config { get; }
+        
+        public QueueModule(QueueModuleConfig config)
+        {
+            Config = config;
+        }
+        
         public string Name { get; } = nameof(QueueModule);
+
         public void ConfigureServices(IServiceCollection services)
         {
             if (Config.EnableInMemoryQueueManager)
@@ -26,25 +34,18 @@ namespace SImpl.Queue.Module
                     .AddClasses(c => c.AssignableTo(typeof(IDequeueAction<>)))
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
-            var genericInterface = typeof(IQueue<>);
-            var genericImpl = typeof(IDequeueAction<>);
-            foreach (var queue in Config.RegisteredQueues)
+            
+            var queueInterface = typeof(IQueue<>);
+            foreach (var queueReg in Config.RegisteredQueues)
             {
-                services.AddSingleton(genericInterface.MakeGenericType(queue));
-                
-            }
-            foreach (var dequeueAction in Config.RegisteredDequeueActions)
-            {
-                services.AddSingleton(genericImpl.MakeGenericType(dequeueAction));
+                services.AddSingleton(queueInterface.MakeGenericType(queueReg.ItemType), queueReg.QueueType);
             }
             
-        }
-
-        public QueueModuleConfig Config { get; }
-        
-        public QueueModule(QueueModuleConfig config)
-        {
-            Config = config;
+            var dequeueInterface = typeof(IDequeueAction<>);
+            foreach (var dequeueReg in Config.RegisteredDequeueActions)
+            {
+                services.AddSingleton(dequeueInterface.MakeGenericType(dequeueReg.ItemType), dequeueReg.QueueType);
+            }
         }
     }
 }
