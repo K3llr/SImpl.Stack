@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.Modules;
 using SImpl.Storage.Redis.Services;
@@ -20,7 +19,8 @@ namespace SImpl.Storage.Redis.Module
         {
             services.AddSingleton(typeof(RedisConnectionConfig), Config.RedisConnectionConfig);
             services.AddSingleton<IRedisConnectionProvider, RedisConnectionProvider>();
-            services.AddSingleton<IRedisDataGateway, RedisDefaultDataGateway>();
+            services.AddSingleton(typeof(IRedisSerializationService), Config.SerializationServiceType.ImplType);
+            services.AddSingleton<IRedisDataGateway, RedisDataGateway>();
         }
     }
 }

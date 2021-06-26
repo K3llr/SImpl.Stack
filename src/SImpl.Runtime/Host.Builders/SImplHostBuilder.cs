@@ -68,7 +68,6 @@ namespace SImpl.Runtime.Host.Builders
             // All modules (host and application) has been attached
             // Modules register services
             _bootManager.ConfigureServices(hostBuilder);
-            
         }
 
         public IHost Build()

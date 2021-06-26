@@ -5,30 +5,40 @@ using StackExchange.Redis;
 
 namespace SImpl.Storage.Redis.Services
 {
-    public abstract class RedisDataGateway : IRedisDataGateway
+    public class RedisDataGateway : IRedisDataGateway
     {
-        private readonly IRedisConnectionProvider _redisConnectionProvider;
+        private readonly IRedisConnectionProvider _connectionProvider;
+        private readonly IRedisSerializationService _serializationService;
 
-        public RedisDataGateway(IRedisConnectionProvider redisConnectionProvider)
+        public RedisDataGateway(
+            IRedisConnectionProvider connectionProvider,
+            IRedisSerializationService serializationService)
         {
-            _redisConnectionProvider = redisConnectionProvider;
+            _connectionProvider = connectionProvider;
+            _serializationService = serializationService;
         }
 
         public virtual IDatabase GetDatabase(int database)
         {
-            return _redisConnectionProvider.Connection.GetDatabase(database);
+            return _connectionProvider.Connection.GetDatabase(database);
         }
 
         public void ClearDatabase(int database)
         {
-            var endpoints = _redisConnectionProvider.Connection.GetEndPoints();
-            var server = _redisConnectionProvider.Connection.GetServer(endpoints.First());
+            var endpoints = _connectionProvider.Connection.GetEndPoints();
+            var server = _connectionProvider.Connection.GetServer(endpoints.First());
             server.FlushDatabase(database);
         }
 
-        protected abstract RedisValue SerializeObject<T>(T entry);
+        protected virtual RedisValue SerializeObject<T>(T entry)
+        {
+            return _serializationService.SerializeObject(entry);
+        }
 
-        protected abstract T DeserializeObject<T>(RedisValue entry);
+        protected virtual T DeserializeObject<T>(RedisValue entry)
+        {
+            return _serializationService.DeserializeObject<T>(entry);
+        }
         
         public virtual T Get<T>(int database, string key)
         {
