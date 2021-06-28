@@ -47,15 +47,15 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
             return this;
         }
         
-        public MessagingCqrsModuleConfig SubscribeToEventsFromAssembly(Assembly assembly)
+        public MessagingCqrsModuleConfig HandleEventsFromAssembly(Assembly assembly)
         {
             _eventAssemblies.Add(assembly);
             return this;
         }
         
-        public MessagingCqrsModuleConfig SubscribeToEventsFromAssembly<T>()
+        public MessagingCqrsModuleConfig HandleEventsFromAssembly<T>()
         {
-            SubscribeToEventsFromAssembly(typeof(T).Assembly);
+            HandleEventsFromAssembly(typeof(T).Assembly);
             return this;
         }
     }
