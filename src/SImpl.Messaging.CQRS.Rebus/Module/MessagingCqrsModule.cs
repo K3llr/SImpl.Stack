@@ -49,7 +49,7 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
                                 }
                             }
                             
-                            Config.BusConfigureDelegate?.Invoke(bus);
+                            await Config.BusConfigureDelegate.Invoke(bus);
                         });
                     });
             }

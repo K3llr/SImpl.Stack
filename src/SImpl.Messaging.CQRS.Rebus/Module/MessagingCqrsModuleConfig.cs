@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using Rebus.Bus;
 
 namespace SImpl.Messaging.CQRS.Rebus.Module
@@ -13,22 +14,22 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
         public IReadOnlyList<Assembly> RegisteredCommandAssemblies => _cmdAssemblies.AsReadOnly();
         public IReadOnlyList<Assembly> RegisteredEventAssemblies => _eventAssemblies.AsReadOnly();
 
-        public bool InitBusOnStartEnabled { get; set; } = false;
-        public MessagingCqrsModuleConfig InitBusOnStart(bool initBusOnStart = false)
+        public bool InitBusOnStartEnabled { get; private set; } = false;
+        public MessagingCqrsModuleConfig InitBusOnStart(bool initBusOnStart = true)
         {
             InitBusOnStartEnabled = initBusOnStart;
             return this;
         }
 
-        public bool SubscribeToEventsOnStartEnabled { get; set; } = false;
-        public MessagingCqrsModuleConfig SubscribeToEventsOnStart(bool subscribeToEventsOnStart = false)
+        public bool SubscribeToEventsOnStartEnabled { get; private set; } = false;
+        public MessagingCqrsModuleConfig SubscribeToEventsOnStart(bool subscribeToEventsOnStart = true)
         {
             SubscribeToEventsOnStartEnabled = subscribeToEventsOnStart;
             return this;
         }
 
-        public Action<IBus> BusConfigureDelegate { get; set; } = bus => { }; 
-        public MessagingCqrsModuleConfig ConfigureBusOnStart(Action<IBus> busConfigureDelegate)
+        public Func<IBus, Task> BusConfigureDelegate { get; private set; } = _ => Task.CompletedTask; 
+        public MessagingCqrsModuleConfig ConfigureBusOnStart(Func<IBus, Task> busConfigureDelegate)
         {
             BusConfigureDelegate = busConfigureDelegate;
             return this;
