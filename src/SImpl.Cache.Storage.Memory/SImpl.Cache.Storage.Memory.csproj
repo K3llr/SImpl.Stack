@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <RootNamespace>SImpl.Cache.Storage.Memory</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SImpl.Cache\SImpl.Cache.csproj" />
+    <ProjectReference Include="..\SImpl\SImpl.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>

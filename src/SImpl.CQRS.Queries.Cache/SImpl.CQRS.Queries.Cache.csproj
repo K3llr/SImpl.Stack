@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SImpl.Cache\SImpl.Cache.csproj" />
+    <ProjectReference Include="..\SImpl.CQRS.Queries\SImpl.CQRS.Queries.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Scrutor" Version="3.3.0" />
+  </ItemGroup>
+
+</Project>
