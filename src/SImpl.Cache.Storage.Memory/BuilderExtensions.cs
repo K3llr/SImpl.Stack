@@ -2,7 +2,6 @@ using System;
 using SImpl.Cache.Models;
 using SImpl.Cache.Module;
 using SImpl.Cache.Storage.Memory.Module;
-using SImpl.Cache.Storage.Memory.Services;
 using SImpl.Common;
 
 namespace SImpl.Cache.Storage.Memory
@@ -13,7 +12,7 @@ namespace SImpl.Cache.Storage.Memory
         {
             cacheModuleConfig.AddCacheLayer(() => new MemoryCacheModule(new CacheLayerDefinition()), definition =>
             {
-                definition.CacheServiceType = TypeOf.New<ICacheService, MemoryCacheService>();
+                definition.CacheServiceType = TypeOf.New<ICacheService, IMemoryCacheService>();
                 configureDelegate?.Invoke(definition.Options);
             });
             return cacheModuleConfig;
