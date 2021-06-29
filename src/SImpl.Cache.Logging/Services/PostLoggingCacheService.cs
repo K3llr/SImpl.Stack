@@ -20,32 +20,32 @@ namespace SImpl.Cache.Logging.Services
         
         public async Task<TItem> GetOrCreateAsync<TItem>(CacheEntryInfo info, Func<Task<TItem>> factory, TimeSpan? timeToLive = null)
         {
-            Log($"GetOrCreateAsync:Miss:{info.Key}");
-            Log($"EndOfPipeline:{info.Key}");
+            Log(info, $"GetOrCreateAsync:>>CacheMiss<<");
+            Log(info, $"GetOrCreateAsync:EndOfPipeline");
             return await factory.Invoke();
         }
 
         public TItem GetOrCreate<TItem>(CacheEntryInfo info, Func<TItem> factory, TimeSpan? timeToLive = null)
         {
-            Log($"GetOrCreate:Miss:{info.Key}");
-            Log($"EndOfPipeline:{info.Key}");
+            Log(info, $"GetOrCreate:>>MISS<<");
+            Log(info, $"GetOrCreate:EndOfPipeline");
             return factory.Invoke();
         }
 
         public TItem Set<TItem>(CacheEntryInfo info, TItem value, TimeSpan? timeToLive = null)
         {
-            Log($"EndOfPipeline:{info.Key}");
+            Log(info, $"Set:EndOfPipeline");
             return value;
         }
 
         public void Remove(CacheEntryInfo info)
         {
-            Log($"EndOfPipeline:{info.Key}");
+            Log(info, $"Remove:EndOfPipeline");
         }
         
-        private void Log(string logMessage)
+        private void Log(CacheEntryInfo info, string logMessage)
         {
-            _logger.LogDebug($"{_cacheServiceName}:{logMessage}");
+            _logger.LogDebug($"{info.Key}:{_cacheServiceName}:{logMessage}");
         }
     }
 }

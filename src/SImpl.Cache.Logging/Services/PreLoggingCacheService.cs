@@ -21,62 +21,66 @@ namespace SImpl.Cache.Logging.Services
         
         public async Task<TItem> GetOrCreateAsync<TItem>(CacheEntryInfo info, Func<Task<TItem>> factory, TimeSpan? timeToLive = null)
         {
-            Log($"GetOrCreateAsync:Key:{info.Key}:{info.SourceObject.GetType().Name}{JsonSerializer.Serialize(info)}");
+            Log(info, $"GetOrCreateAsync:Source:{info.SourceObject.GetType().Name}");
+            Log(info, $"GetOrCreateAsync:Info:{JsonSerializer.Serialize(info)}");
             
             if (info.NoCache)
             {
-                Log($"GetOrCreateAsync:NoCache:{info.Key}");
+                Log(info, $"GetOrCreateAsync:NoCache");
             }
 
             var item = await factory.Invoke();
             
-            Log($"GetOrCreateAsync:End:{info.Key}");
+            Log(info, $"GetOrCreateAsync:End");
             return item;
         }
 
         public TItem GetOrCreate<TItem>(CacheEntryInfo info, Func<TItem> factory, TimeSpan? timeToLive = null)
         {
-            Log($"GetOrCreate:Key:{info.Key}:{info.SourceObject.GetType().Name}{JsonSerializer.Serialize(info)}");
+            Log(info, $"GetOrCreate:Source:{info.SourceObject.GetType().Name}");
+            Log(info, $"GetOrCreate:Info:{JsonSerializer.Serialize(info)}");
 
             if (info.NoCache)
             {
-                Log($"GetOrCreate:NoCache:{info.Key}");
+                Log(info, $"GetOrCreateAsync:NoCache");
             }
 
             var item = factory.Invoke();
             
-            Log($"GetOrCreate:End:{info.Key}");
+            Log(info, $"GetOrCreate:End");
             return item;
         }
 
         public TItem Set<TItem>(CacheEntryInfo info, TItem value, TimeSpan? timeToLive = null)
         {
-            Log($"Set:Key:{info.Key}:{info.SourceObject.GetType().Name}{JsonSerializer.Serialize(info)}");
+            Log(info, $"Set:Source:{info.SourceObject.GetType().Name}");
+            Log(info, $"Set:Info:{JsonSerializer.Serialize(info)}");
 
             if (info.NoCache)
             {
-                Log($"Set:NoCache:{info.Key}");
+                Log(info, $"GetOrCreateAsync:NoCache");
             }
             
-            Log($"Set:End:{info.Key}");
+            Log(info, $"GetOrCreate:Set");
             return value;
         }
 
         public void Remove(CacheEntryInfo info)
         {
-            Log($"Remove:Key:{info.Key}:{info.SourceObject.GetType().Name}{JsonSerializer.Serialize(info)}");
+            Log(info, $"Remove:Source:{info.SourceObject.GetType().Name}");
+            Log(info, $"Remove:Info:{JsonSerializer.Serialize(info)}");
 
             if (info.NoCache)
             {
-                Log($"Remove:NoCache:{info.Key}");
+                Log(info, $"GetOrCreateAsync:NoCache");
             }
             
-            Log($"Remove:End:{info.Key}");
+            Log(info, $"GetOrCreate:Remove");
         }
         
-        private void Log(string logMessage)
+        private void Log(CacheEntryInfo info, string logMessage)
         {
-            _logger.LogDebug($"{_cacheServiceName}:{logMessage}");
+            _logger.LogDebug($"{info.Key}:{_cacheServiceName}:{logMessage}");
         }
     }
 }

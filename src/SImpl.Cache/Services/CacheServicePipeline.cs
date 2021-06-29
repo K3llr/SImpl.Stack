@@ -31,7 +31,7 @@ namespace SImpl.Cache.Services
                 info,
                 _next is null
                     ? factory
-                    : () => _next.GetOrCreate(info, factory),
+                    : () => _next.GetOrCreate(info, factory, timeToLive),
                 timeToLive ?? _current.Options.TimeToLive);
         }
 
