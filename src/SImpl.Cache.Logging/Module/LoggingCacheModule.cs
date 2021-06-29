@@ -28,7 +28,7 @@ namespace SImpl.Cache.Logging.Module
             services.AddSingleton<PreLoggingCacheService>();
             services.AddSingleton<PostLoggingCacheService>();
 
-            services.Decorate<ICacheService, CacheServiceDecorator>();
+            services.Decorate<ICacheLayerCacheServiceFactory, CacheLayerCacheServiceFactoryDecorator>();
         }
 
         public CacheLayerDefinition LayerDefinition { get; }

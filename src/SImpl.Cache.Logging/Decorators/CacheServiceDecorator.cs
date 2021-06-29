@@ -14,7 +14,6 @@ namespace SImpl.Cache.Logging.Decorators
         private readonly string _cacheServiceName;
         private readonly bool _disable;
 
-
         public CacheServiceDecorator(ICacheService innerCacheService, ILogger<CacheServiceDecorator> logger)
         {
             _innerCacheService = innerCacheService;

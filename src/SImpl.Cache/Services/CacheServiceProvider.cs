@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using SImpl.Cache.Models;
@@ -9,14 +8,14 @@ namespace SImpl.Cache.Services
     public class CacheServiceProvider : ICacheServiceProvider
     {
         private readonly CacheModuleConfig _config;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly ICacheLayerCacheServiceFactory _cacheLayerCacheServiceFactory;
 
         private ICacheService _firstCacheService;
 
-        public CacheServiceProvider(CacheModuleConfig config, IServiceProvider serviceProvider)
+        public CacheServiceProvider(CacheModuleConfig config, ICacheLayerCacheServiceFactory cacheLayerCacheServiceFactory)
         {
             _config = config;
-            _serviceProvider = serviceProvider;
+            _cacheLayerCacheServiceFactory = cacheLayerCacheServiceFactory;
         }
         
         public ICacheService GetCacheService()
@@ -33,7 +32,7 @@ namespace SImpl.Cache.Services
             var layersDefinitions = _config.CacheLayerDefinitions.Reverse();
             foreach (var layerDefinition in layersDefinitions)
             {
-                var cacheService = (ICacheService) _serviceProvider.GetRequiredService(layerDefinition.CacheServiceType.ImplType);
+                var cacheService = _cacheLayerCacheServiceFactory.Create(layerDefinition);
                 var cacheLayer = new CacheLayer
                 {
                     CacheService = cacheService,

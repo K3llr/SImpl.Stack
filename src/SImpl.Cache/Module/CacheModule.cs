@@ -18,7 +18,8 @@ namespace SImpl.Cache.Module
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(Config);
-            services.AddSingleton<ICacheServiceProvider, CacheServiceProvider>(provider => new CacheServiceProvider(Config, provider));
+            services.AddSingleton<ICacheServiceProvider, CacheServiceProvider>();
+            services.AddSingleton<ICacheLayerCacheServiceFactory, CacheLayerCacheServiceFactory>(provider => new CacheLayerCacheServiceFactory(provider));
         }
     }
 }
