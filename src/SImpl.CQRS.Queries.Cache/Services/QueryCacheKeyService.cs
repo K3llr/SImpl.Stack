@@ -12,7 +12,7 @@ namespace SImpl.CQRS.Queries.Cache.Services
         public string GenerateKey<TQuery, TResult>(TQuery query)
             where TQuery : IQuery<TResult>
         {
-            var serializedQuery = JsonSerializer.Serialize(new KeyObject
+            var serializedSourceObject = JsonSerializer.Serialize(new KeyObject<TQuery, TResult>
                 {
                     SO = query,
                     ST = nameof(TQuery),
@@ -23,7 +23,7 @@ namespace SImpl.CQRS.Queries.Cache.Services
                     WriteIndented = false
                 });
 
-            var jsonKey = HashKey(serializedQuery);
+            var jsonKey = HashKey(serializedSourceObject);
 
             return jsonKey;
         }
@@ -39,10 +39,11 @@ namespace SImpl.CQRS.Queries.Cache.Services
             }
         }
 
-        private class KeyObject
+        private class KeyObject<TQuery, TResult>
+            where TQuery : IQuery<TResult>
         {
-            // Source
-            public object SO { get; set; }
+            // SourceObject
+            public TQuery SO { get; set; }
             
             // SourceType
             public string ST { get; set; }
