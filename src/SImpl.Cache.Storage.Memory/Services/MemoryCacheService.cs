@@ -28,7 +28,7 @@ namespace SImpl.Cache.Storage.Memory.Services
             });
         }
 
-        public TItem GetOrCreate<TItem>(CacheEntryInfo info, Func<TItem> factory)
+        public TItem GetOrCreate<TItem>(CacheEntryInfo info, Func<TItem> factory, TimeSpan? timeToLive = null)
         {
             if (info.NoCache)
             {
@@ -37,25 +37,9 @@ namespace SImpl.Cache.Storage.Memory.Services
 
             return _cache.GetOrCreate(info.Key, entry =>
             {
-                entry.AbsoluteExpiration = DateTime.Now.Add(info.TimeToLive ?? TimeSpan.FromMinutes(0));
+                entry.AbsoluteExpiration = DateTime.Now.Add(timeToLive ?? info.TimeToLive ?? TimeSpan.FromMinutes(0));
                 return factory.Invoke();
             });
-        }
-
-        public T Get<T>(CacheEntryInfo info)
-        {
-            if (info.NoCache)
-            {
-                return default;
-            }
-
-            var cacheKey = info.Key;
-
-            var value = _cache.TryGetValue<T>(cacheKey, out var result)
-                ? result
-                : default;
-            
-            return value;
         }
 
         public T Set<T>(CacheEntryInfo cacheInfo, T value, TimeSpan? timeToLive = null)

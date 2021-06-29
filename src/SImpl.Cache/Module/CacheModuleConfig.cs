@@ -8,10 +8,32 @@ namespace SImpl.Cache.Module
     public class CacheModuleConfig
     {
         private readonly ISImplHostBuilder _hostBuilder;
+        private CacheLayerDefinition _firstCacheLayerDefinition;
+        private CacheLayerDefinition _lastCacheLayerDefinition;
         private readonly List<CacheLayerDefinition> _cacheLayerDefinitions = new();
 
-        public IReadOnlyList<CacheLayerDefinition> CacheLayerDefinitions => _cacheLayerDefinitions.AsReadOnly();
-        
+        public IReadOnlyList<CacheLayerDefinition> CacheLayerDefinitions
+        {
+            get
+            {
+                var cacheLayerDefinitions = new List<CacheLayerDefinition>();
+                
+                if (_firstCacheLayerDefinition != null)
+                {
+                    cacheLayerDefinitions.Add(_firstCacheLayerDefinition);
+                }
+                
+                cacheLayerDefinitions.AddRange(_cacheLayerDefinitions);
+
+                if (_lastCacheLayerDefinition != null)
+                {
+                    cacheLayerDefinitions.Add(_lastCacheLayerDefinition);
+                }
+                
+                return cacheLayerDefinitions.AsReadOnly();
+            }
+        }
+
         public CacheModuleConfig(ISImplHostBuilder hostBuilder)
         {
             _hostBuilder = hostBuilder;
@@ -30,6 +52,28 @@ namespace SImpl.Cache.Module
             configure?.Invoke(layer.LayerDefinition);
             
             _cacheLayerDefinitions.Add(layer.LayerDefinition);
+            
+            return this;
+        }
+        
+        public CacheModuleConfig SetFirstCacheLayer<TCacheStorage>(Func<TCacheStorage> layerFactory, Action<CacheLayerDefinition> configure)
+            where TCacheStorage : ICacheLayerModule
+        {
+            var layer = _hostBuilder.AttachNewOrGetConfiguredModule(layerFactory);
+            configure?.Invoke(layer.LayerDefinition);
+            
+            _firstCacheLayerDefinition = layer.LayerDefinition;
+            
+            return this;
+        }
+        
+        public CacheModuleConfig SetLastCacheLayer<TCacheStorage>(Func<TCacheStorage> layerFactory, Action<CacheLayerDefinition> configure)
+            where TCacheStorage : ICacheLayerModule
+        {
+            var layer = _hostBuilder.AttachNewOrGetConfiguredModule(layerFactory);
+            configure?.Invoke(layer.LayerDefinition);
+            
+            _lastCacheLayerDefinition = layer.LayerDefinition;
             
             return this;
         }

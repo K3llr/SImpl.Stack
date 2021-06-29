@@ -35,7 +35,7 @@ namespace SImpl.Cache.Services
             }, timeToLive);
         }
 
-        public TItem GetOrCreate<TItem>(CacheEntryInfo info, Func<TItem> factory)
+        public TItem GetOrCreate<TItem>(CacheEntryInfo info, Func<TItem> factory, TimeSpan? timeToLive = null)
         {
             if (info.NoCache)
             {
@@ -52,27 +52,7 @@ namespace SImpl.Cache.Services
                 {
                     return _next.GetOrCreate(info, factory);
                 }
-            });
-        }
-
-        public TItem Get<TItem>(CacheEntryInfo info)
-        {
-            if (info.NoCache)
-            {
-                return default;
-            }
-
-            return _current.CacheService.GetOrCreate(info, () =>
-            {
-                if (_next is null)
-                {
-                    return default;
-                }
-                else
-                {
-                    return _next.Get<TItem>(info);
-                }
-            });
+            }, timeToLive);
         }
 
         public void Remove(CacheEntryInfo info)
