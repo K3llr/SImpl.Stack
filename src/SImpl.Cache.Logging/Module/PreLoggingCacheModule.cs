@@ -9,14 +9,14 @@ using SImpl.Modules;
 namespace SImpl.Cache.Logging.Module
 {
     [DependsOn(typeof(CacheModule))]
-    public class LoggingCacheModule : IHostBuilderConfigureModule, IServicesCollectionConfigureModule, ICacheLayerModule
+    public class PreLoggingCacheModule : IHostBuilderConfigureModule, IServicesCollectionConfigureModule, ICacheLayerModule
     {
-        public LoggingCacheModule(CacheLayerDefinition layerDefinition)
+        public PreLoggingCacheModule(CacheLayerDefinition layerDefinition)
         {
             LayerDefinition = layerDefinition;
         }
         
-        public string Name => nameof(LoggingCacheModule);
+        public string Name => nameof(PreLoggingCacheModule);
         
         public void ConfigureHostBuilder(ISImplHostBuilder hostBuilder)
         {
@@ -25,10 +25,9 @@ namespace SImpl.Cache.Logging.Module
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<PreLoggingCacheService>();
-            services.AddSingleton<PostLoggingCacheService>();
-
             services.Decorate<ICacheLayerCacheServiceFactory, CacheLayerCacheServiceFactoryDecorator>();
+
+            services.AddSingleton<PreLoggingCacheService>();
         }
 
         public CacheLayerDefinition LayerDefinition { get; }

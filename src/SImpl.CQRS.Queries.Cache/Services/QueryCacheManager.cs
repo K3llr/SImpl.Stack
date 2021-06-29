@@ -32,7 +32,8 @@ namespace SImpl.CQRS.Queries.Cache.Services
             return new CacheEntryInfo
             {
                 Key = _queryCacheKeyService.GenerateKey<TQuery, TResult>(query),
-                TimeToLive = definition.TimeToLive
+                SourceObject = query,
+                TimeToLive = definition.TimeToLive,
             };
         }
 

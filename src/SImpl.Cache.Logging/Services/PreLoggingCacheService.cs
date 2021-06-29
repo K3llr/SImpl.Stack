@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using SImpl.Cache.Logging.Attributes;
@@ -20,43 +21,57 @@ namespace SImpl.Cache.Logging.Services
         
         public async Task<TItem> GetOrCreateAsync<TItem>(CacheEntryInfo info, Func<Task<TItem>> factory, TimeSpan? timeToLive = null)
         {
+            Log($"GetOrCreateAsync:Key:{info.Key}:{info.SourceObject.GetType().Name}{JsonSerializer.Serialize(info)}");
+            
             if (info.NoCache)
             {
                 Log($"GetOrCreateAsync:NoCache:{info.Key}");
-                return default;
             }
+
+            var item = await factory.Invoke();
             
-            return await factory.Invoke();
+            Log($"GetOrCreateAsync:End:{info.Key}");
+            return item;
         }
 
         public TItem GetOrCreate<TItem>(CacheEntryInfo info, Func<TItem> factory, TimeSpan? timeToLive = null)
         {
+            Log($"GetOrCreate:Key:{info.Key}:{info.SourceObject.GetType().Name}{JsonSerializer.Serialize(info)}");
+
             if (info.NoCache)
             {
                 Log($"GetOrCreate:NoCache:{info.Key}");
-                return default;
             }
+
+            var item = factory.Invoke();
             
-            return factory.Invoke();
+            Log($"GetOrCreate:End:{info.Key}");
+            return item;
         }
 
         public TItem Set<TItem>(CacheEntryInfo info, TItem value, TimeSpan? timeToLive = null)
         {
+            Log($"Set:Key:{info.Key}:{info.SourceObject.GetType().Name}{JsonSerializer.Serialize(info)}");
+
             if (info.NoCache)
             {
                 Log($"Set:NoCache:{info.Key}");
-                return value;
             }
             
+            Log($"Set:End:{info.Key}");
             return value;
         }
 
         public void Remove(CacheEntryInfo info)
         {
+            Log($"Remove:Key:{info.Key}:{info.SourceObject.GetType().Name}{JsonSerializer.Serialize(info)}");
+
             if (info.NoCache)
             {
                 Log($"Remove:NoCache:{info.Key}");
             }
+            
+            Log($"Remove:End:{info.Key}");
         }
         
         private void Log(string logMessage)

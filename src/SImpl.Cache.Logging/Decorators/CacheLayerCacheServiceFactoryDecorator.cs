@@ -1,4 +1,6 @@
+using System;
 using Microsoft.Extensions.Logging;
+using SImpl.Cache.Logging.Attributes;
 using SImpl.Cache.Models;
 
 namespace SImpl.Cache.Logging.Decorators
@@ -19,7 +21,10 @@ namespace SImpl.Cache.Logging.Decorators
         public ICacheService Create(CacheLayerDefinition definition)
         {
             var cacheService = _innerFactory.Create(definition);
-            return new CacheServiceDecorator(cacheService, _logger);
+
+            return Attribute.GetCustomAttribute(cacheService.GetType(), typeof(DisableLoggingAttribute)) != null
+                ? cacheService
+                : new CacheServiceDecorator(cacheService, _logger);
         }
     }
 }

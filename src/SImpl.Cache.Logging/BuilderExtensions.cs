@@ -10,12 +10,12 @@ namespace SImpl.Cache.Logging
     {
         public static CacheModuleConfig AddCacheLayerLogging(this CacheModuleConfig cacheModuleConfig)
         {
-            cacheModuleConfig.SetFirstCacheLayer(() => new LoggingCacheModule(new CacheLayerDefinition()), definition =>
+            cacheModuleConfig.SetFirstCacheLayer(() => new PreLoggingCacheModule(new CacheLayerDefinition()), definition =>
             {
                 definition.CacheServiceType = TypeOf.New<ICacheService, PreLoggingCacheService>();
             });
             
-            cacheModuleConfig.SetLastCacheLayer(() => new LoggingCacheModule(new CacheLayerDefinition()), definition =>
+            cacheModuleConfig.SetLastCacheLayer(() => new PostLoggingCacheModule(new CacheLayerDefinition()), definition =>
             {
                 definition.CacheServiceType = TypeOf.New<ICacheService, PostLoggingCacheService>();
             });

@@ -13,8 +13,8 @@ namespace SImpl.CQRS.Queries.Cache.Services
         {
             var serializedQuery = JsonSerializer.Serialize(new KeyObject
             {
-                Q = query,
-                N = nameof(TResult)
+                Query = query,
+                ResultType = nameof(TResult)
             });
 
             var jsonKey = HashKey(serializedQuery);
@@ -35,8 +35,8 @@ namespace SImpl.CQRS.Queries.Cache.Services
 
         private class KeyObject
         {
-            public object Q { get; set; }
-            public string N { get; set; }
+            public object Query { get; set; }
+            public string ResultType { get; set; }
         }
     }
 }

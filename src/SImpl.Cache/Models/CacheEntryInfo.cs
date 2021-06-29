@@ -11,5 +11,7 @@ namespace SImpl.Cache.Models
         public string Key { get; set; }
 
         public TimeSpan? TimeToLive { get; set; }
+
+        public object SourceObject { get; set; }
     }
 }

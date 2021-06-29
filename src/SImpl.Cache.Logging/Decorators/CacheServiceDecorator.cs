@@ -12,7 +12,6 @@ namespace SImpl.Cache.Logging.Decorators
         private readonly ILogger<CacheServiceDecorator> _logger;
         
         private readonly string _cacheServiceName;
-        private readonly bool _disable;
 
         public CacheServiceDecorator(ICacheService innerCacheService, ILogger<CacheServiceDecorator> logger)
         {
@@ -21,11 +20,6 @@ namespace SImpl.Cache.Logging.Decorators
             
             var cacheServiceType = _innerCacheService.GetType();
             _cacheServiceName = cacheServiceType.Name;
-
-            if (Attribute.GetCustomAttribute(cacheServiceType, typeof(DisableLoggingAttribute)) != null)
-            {
-                _disable = true;
-            }
         }
         
         public async Task<TItem> GetOrCreateAsync<TItem>(CacheEntryInfo info, Func<Task<TItem>> factory, TimeSpan? timeToLive = null)
@@ -64,10 +58,7 @@ namespace SImpl.Cache.Logging.Decorators
 
         private void Log(string logMessage)
         {
-            if (_disable)
-            {
-                _logger.LogDebug($"{_cacheServiceName}:{logMessage}");
-            }
+            _logger.LogDebug($"{_cacheServiceName}:{logMessage}");
         }
     }
 }
