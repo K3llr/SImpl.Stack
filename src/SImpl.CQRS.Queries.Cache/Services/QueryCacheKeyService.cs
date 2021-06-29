@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SImpl.CQRS.Queries.Cache.Services
 {
@@ -12,10 +13,15 @@ namespace SImpl.CQRS.Queries.Cache.Services
             where TQuery : IQuery<TResult>
         {
             var serializedQuery = JsonSerializer.Serialize(new KeyObject
-            {
-                Query = query,
-                ResultType = nameof(TResult)
-            });
+                {
+                    SO = query,
+                    ST = nameof(TQuery),
+                    RT = nameof(TResult)
+                },
+                new JsonSerializerOptions
+                {
+                    WriteIndented = false
+                });
 
             var jsonKey = HashKey(serializedQuery);
 
@@ -35,8 +41,14 @@ namespace SImpl.CQRS.Queries.Cache.Services
 
         private class KeyObject
         {
-            public object Query { get; set; }
-            public string ResultType { get; set; }
+            // Source
+            public object SO { get; set; }
+            
+            // SourceType
+            public string ST { get; set; }
+            
+            // ResultType
+            public string RT { get; set; }
         }
     }
 }
