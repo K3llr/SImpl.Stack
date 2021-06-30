@@ -66,22 +66,41 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
             services.AddSingleton<ICommandDispatcher, RebusCommandDispatcher>();
             services.AddSingleton<IMessagingCommandDispatcher, RebusCommandDispatcher>();
             
-            RegisterMessageHandlers(services, Config.RegisteredCommandAssemblies, typeof(ICommand), typeof(IHandleMessages<>), typeof(CommandMessageHandler<>));
+            RegisterMessageHandlers(
+                services, 
+                Config.RegisteredCommandAssemblies, 
+                Config.RegisteredCommandTypes,
+                typeof(ICommand), 
+                typeof(IHandleMessages<>), 
+                typeof(CommandMessageHandler<>));
 
             // Events
             services.AddSingleton<IEventDispatcher, RebusEventDispatcher>();
             services.AddSingleton<IMessagingEventDispatcher, RebusEventDispatcher>();
             
-            RegisterMessageHandlers(services, Config.RegisteredEventAssemblies, typeof(IEvent), typeof(IHandleMessages<>), typeof(EventMessageHandler<>));
+            RegisterMessageHandlers(
+                services, 
+                Config.RegisteredEventAssemblies, 
+                Config.RegisteredEventTypes, 
+                typeof(IEvent), 
+                typeof(IHandleMessages<>), 
+                typeof(EventMessageHandler<>));
         }
 
-        private void RegisterMessageHandlers(IServiceCollection services, IReadOnlyList<Assembly> assemblies,
-            Type lookForType, Type genericInterface, Type genericImpl)
+        private void RegisterMessageHandlers(
+            IServiceCollection services, 
+            IReadOnlyList<Assembly> assemblies, 
+            IReadOnlyList<Type> types,
+            Type lookForType, 
+            Type genericInterface, 
+            Type genericImpl)
         {
-            var types = assemblies.SelectMany(s => s.GetTypes())
-                .Where(p => p.IsAssignableTo(lookForType));
+            var allTypes = assemblies.SelectMany(s => s.GetTypes())
+                .Where(p => p.IsAssignableTo(lookForType))
+                .Union(types)
+                .Distinct();
 
-            foreach (var type in types)
+            foreach (var type in allTypes)
             {
                 services.AddSingleton(genericInterface.MakeGenericType(type), genericImpl.MakeGenericType(type));
             }

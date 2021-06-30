@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Rebus.Bus;
+using SImpl.CQRS.Commands;
+using SImpl.CQRS.Events;
 
 namespace SImpl.Messaging.CQRS.Rebus.Module
 {
     public class MessagingCqrsModuleConfig
     {
         private readonly List<Assembly> _cmdAssemblies = new();
-        private readonly List<Assembly> _eventAssemblies = new();
+        private readonly List<Type> _cmdTypes = new();
         
         public IReadOnlyList<Assembly> RegisteredCommandAssemblies => _cmdAssemblies.AsReadOnly();
+        public IReadOnlyList<Type> RegisteredCommandTypes => _cmdTypes.AsReadOnly();
+        
+        private readonly List<Assembly> _eventAssemblies = new();
+        private readonly List<Type> _eventTypes = new();
+        
         public IReadOnlyList<Assembly> RegisteredEventAssemblies => _eventAssemblies.AsReadOnly();
-
+        public IReadOnlyList<Type> RegisteredEventTypes => _eventTypes.AsReadOnly();
+        
         public bool InitBusOnStartEnabled { get; private set; } = false;
         public MessagingCqrsModuleConfig InitBusOnStart(bool initBusOnStart = true)
         {
@@ -47,6 +55,13 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
             return this;
         }
         
+        public MessagingCqrsModuleConfig HandleCommand<TCommand>()
+            where TCommand : class, ICommand
+        {
+            _cmdTypes.Add(typeof(TCommand));
+            return this;
+        }
+        
         public MessagingCqrsModuleConfig HandleEventsFromAssembly(Assembly assembly)
         {
             _eventAssemblies.Add(assembly);
@@ -56,6 +71,13 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
         public MessagingCqrsModuleConfig HandleEventsFromAssembly<T>()
         {
             HandleEventsFromAssembly(typeof(T).Assembly);
+            return this;
+        }
+        
+        public MessagingCqrsModuleConfig HandleEvent<TEvent>()
+            where TEvent : class, IEvent
+        {
+            _eventTypes.Add(typeof(TEvent));
             return this;
         }
     }
