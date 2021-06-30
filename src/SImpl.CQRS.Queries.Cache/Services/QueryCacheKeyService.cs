@@ -4,11 +4,19 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging;
 
 namespace SImpl.CQRS.Queries.Cache.Services
 {
     public class QueryCacheKeyService : IQueryCacheKeyService
     {
+        private readonly ILogger<QueryCacheKeyService> _logger;
+
+        public QueryCacheKeyService(ILogger<QueryCacheKeyService> logger)
+        {
+            _logger = logger;
+        }
+        
         public string GenerateKey<TQuery, TResult>(TQuery query)
             where TQuery : IQuery<TResult>
         {
@@ -23,9 +31,12 @@ namespace SImpl.CQRS.Queries.Cache.Services
                     WriteIndented = false
                 });
 
-            var jsonKey = HashKey(serializedSourceObject);
+            _logger.LogDebug($"String cache key:{serializedSourceObject}");
+            
+            var hashedKey = HashKey(serializedSourceObject);
+            _logger.LogDebug($"Hashed cache key:{hashedKey}");
 
-            return jsonKey;
+            return hashedKey;
         }
 
         private string HashKey(string key)
