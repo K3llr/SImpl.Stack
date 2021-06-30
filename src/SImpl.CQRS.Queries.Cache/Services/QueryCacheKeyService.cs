@@ -10,31 +10,21 @@ namespace SImpl.CQRS.Queries.Cache.Services
 {
     public class QueryCacheKeyService : IQueryCacheKeyService
     {
-        private readonly ILogger<QueryCacheKeyService> _logger;
-
-        public QueryCacheKeyService(ILogger<QueryCacheKeyService> logger)
-        {
-            _logger = logger;
-        }
-        
         public string GenerateKey<TQuery, TResult>(TQuery query)
             where TQuery : IQuery<TResult>
         {
-            var serializedSourceObject = JsonSerializer.Serialize(new KeyObject<TQuery, TResult>
+            var serializedSourceObject = JsonSerializer.Serialize(new KeyObject
                 {
-                    SO = query,
-                    ST = nameof(TQuery),
-                    RT = nameof(TResult)
+                    SourceObject = query,
+                    SourceType = typeof(TQuery).FullName,
+                    ResultType = typeof(TResult).FullName
                 },
                 new JsonSerializerOptions
                 {
                     WriteIndented = false
                 });
-
-            _logger.LogDebug($"String cache key:{serializedSourceObject}");
             
             var hashedKey = HashKey(serializedSourceObject);
-            _logger.LogDebug($"Hashed cache key:{hashedKey}");
 
             return hashedKey;
         }
@@ -50,17 +40,16 @@ namespace SImpl.CQRS.Queries.Cache.Services
             }
         }
 
-        private class KeyObject<TQuery, TResult>
-            where TQuery : IQuery<TResult>
+        private class KeyObject
         {
             // SourceObject
-            public TQuery SO { get; set; }
+            public object SourceObject { get; set; }
             
             // SourceType
-            public string ST { get; set; }
+            public string SourceType { get; set; }
             
             // ResultType
-            public string RT { get; set; }
+            public string ResultType { get; set; }
         }
     }
 }
