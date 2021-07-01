@@ -94,7 +94,7 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
             {
                 var concreteBufferConfigType = bufferConfigType.MakeGenericType(messagesBuffer.MessageType);
                 var config = Activator.CreateInstance(concreteBufferConfigType, messagesBuffer.MaxTimeSpan, messagesBuffer.MaxMessageCount);
-                services.AddSingleton(config);
+                services.AddSingleton(concreteBufferConfigType, config);
                 
                 var genericMessageHandler = messageHandlerType.MakeGenericType(messagesBuffer.MessageType);
                 var genericBufferMessageHandler = bufferMessageHandlerType.MakeGenericType(messagesBuffer.MessageType);
