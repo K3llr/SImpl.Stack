@@ -20,7 +20,6 @@ namespace SImpl.CQRS.Queries.Module
         {
             if (Config.EnableInMemoryQueryDispatcher)
             {
-                services.AddSingleton<IQueryDispatcher, InMemoryQueryDispatcher>();
                 services.AddSingleton<IInMemoryQueryDispatcher, InMemoryQueryDispatcher>();
             }
 

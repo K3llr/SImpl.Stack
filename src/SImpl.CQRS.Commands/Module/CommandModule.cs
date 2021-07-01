@@ -18,7 +18,6 @@ namespace SImpl.CQRS.Commands.Module
         {
             if (Config.EnableInMemoryCommandDispatcher)
             {
-                services.AddSingleton<ICommandDispatcher, InMemoryCommandDispatcher>();
                 services.AddSingleton<IInMemoryCommandDispatcher, InMemoryCommandDispatcher>();
             }
             

@@ -18,7 +18,6 @@ namespace SImpl.CQRS.Events.Module
         {
             if (Config.EnableInMemoryEventDispatcher)
             {
-                services.AddSingleton<IEventDispatcher, InMemoryEventDispatcher>();
                 services.AddSingleton<IInMemoryEventDispatcher, InMemoryEventDispatcher>();
             }
             

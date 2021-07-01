@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Rebus.Bus;
+using SImpl.Common;
 using SImpl.CQRS.Commands;
 using SImpl.CQRS.Events;
 
@@ -78,6 +79,31 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
             where TEvent : class, IEvent
         {
             _eventTypes.Add(typeof(TEvent));
+            return this;
+        }
+        
+        private readonly List<MessageBufferRegistration> _messageBuffers = new();
+        public IReadOnlyList<MessageBufferRegistration> RegisteredMessagesBuffers => _messageBuffers.AsReadOnly();
+
+        public class MessageBufferRegistration
+        {
+            public Type MessageType { get; set; }
+            public Type BufferHandlerType { get; set; }
+            public TimeSpan MaxTimeSpan { get; set; }
+            public int MaxMessageCount { get; set; }
+        }
+        
+        public MessagingCqrsModuleConfig AddMessageBuffer<TMessage, TBufferHandler>(TimeSpan maxTimeSpan, int maxMessageCount)
+            where TBufferHandler : IBufferHandler<TMessage>
+        {
+            _messageBuffers.Add(new MessageBufferRegistration
+            {
+                MessageType = typeof(TMessage),
+                BufferHandlerType = typeof(TBufferHandler),
+                MaxTimeSpan = maxTimeSpan,
+                MaxMessageCount = maxMessageCount
+            });
+            
             return this;
         }
     }

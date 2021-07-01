@@ -62,8 +62,7 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
         
         public void ConfigureServices(IServiceCollection services)
         {
-            // Commands
-            services.AddSingleton<ICommandDispatcher, RebusCommandDispatcher>();
+            // Register commands
             services.AddSingleton<IMessagingCommandDispatcher, RebusCommandDispatcher>();
             
             RegisterMessageHandlers(
@@ -74,8 +73,7 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
                 typeof(IHandleMessages<>), 
                 typeof(CommandMessageHandler<>));
 
-            // Events
-            services.AddSingleton<IEventDispatcher, RebusEventDispatcher>();
+            // Register events
             services.AddSingleton<IMessagingEventDispatcher, RebusEventDispatcher>();
             
             RegisterMessageHandlers(
@@ -85,6 +83,26 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
                 typeof(IEvent), 
                 typeof(IHandleMessages<>), 
                 typeof(EventMessageHandler<>));
+
+            // Register buffered messageHandler
+            var bufferConfigType = typeof(MessageBufferConfig<>);
+            var messageHandlerType = typeof(IHandleMessages<>);
+            var bufferMessageHandlerType = typeof(BufferedMessageHandler<>);
+            var bufferHandlerType = typeof(IBufferHandler<>);
+            
+            foreach (var messagesBuffer in Config.RegisteredMessagesBuffers)
+            {
+                var concreteBufferConfigType = bufferConfigType.MakeGenericType(messagesBuffer.MessageType);
+                var config = Activator.CreateInstance(concreteBufferConfigType, messagesBuffer.MaxTimeSpan, messagesBuffer.MaxMessageCount);
+                services.AddSingleton(config);
+                
+                var genericMessageHandler = messageHandlerType.MakeGenericType(messagesBuffer.MessageType);
+                var genericBufferMessageHandler = bufferMessageHandlerType.MakeGenericType(messagesBuffer.MessageType);
+                services.AddSingleton(genericMessageHandler, genericBufferMessageHandler);
+
+                var genericBufferHandlerType = bufferHandlerType.MakeGenericType(messagesBuffer.MessageType);
+                services.AddSingleton(genericBufferHandlerType, messagesBuffer.BufferHandlerType);
+            }
         }
 
         private void RegisterMessageHandlers(

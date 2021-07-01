@@ -17,6 +17,7 @@
     <PackageReference Include="Rebus" Version="6.4.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     <PackageReference Include="Rebus.ServiceProvider" Version="6.3.1" />
+    <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
