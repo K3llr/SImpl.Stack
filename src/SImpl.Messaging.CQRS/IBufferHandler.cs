@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace SImpl.Messaging.CQRS.Rebus
+namespace SImpl.Messaging.CQRS
 {
     public interface IBufferHandler<TMessage>
     {
