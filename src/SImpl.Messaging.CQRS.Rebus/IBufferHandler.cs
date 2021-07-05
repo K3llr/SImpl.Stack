@@ -4,6 +4,8 @@ namespace SImpl.Messaging.CQRS.Rebus
 {
     public interface IBufferHandler<TMessage>
     {
-        void Handle(IList<TMessage> commands);
+        void OnBufferFull(IList<TMessage> commands);
+
+        TMessage OnEnterBuffer(TMessage message);
     }
 }

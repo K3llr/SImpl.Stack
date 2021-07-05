@@ -84,24 +84,58 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
                 typeof(IHandleMessages<>), 
                 typeof(EventMessageHandler<>));
 
-            // Register buffered messageHandler
-            var bufferConfigType = typeof(MessageBufferConfig<>);
+            // Register messageHandler buffer
+            var handlerBufferConfigType = typeof(HandlerBufferConfig<>);
             var messageHandlerType = typeof(IHandleMessages<>);
             var bufferMessageHandlerType = typeof(BufferedMessageHandler<>);
             var bufferHandlerType = typeof(IBufferHandler<>);
+            var registeredBufferHandlers = new List<Type>();
             
-            foreach (var messagesBuffer in Config.RegisteredMessagesBuffers)
+            foreach (var messagesBuffer in Config.RegisteredMessageHandlerBuffers)
             {
-                var concreteBufferConfigType = bufferConfigType.MakeGenericType(messagesBuffer.MessageType);
+                // Register config
+                var concreteBufferConfigType = handlerBufferConfigType.MakeGenericType(messagesBuffer.MessageType);
                 var config = Activator.CreateInstance(concreteBufferConfigType, messagesBuffer.MaxTimeSpan, messagesBuffer.MaxMessageCount);
                 services.AddSingleton(concreteBufferConfigType, config);
                 
+                // Register handler
                 var genericMessageHandler = messageHandlerType.MakeGenericType(messagesBuffer.MessageType);
                 var genericBufferMessageHandler = bufferMessageHandlerType.MakeGenericType(messagesBuffer.MessageType);
                 services.AddSingleton(genericMessageHandler, genericBufferMessageHandler);
 
+                // Register buffer handler
                 var genericBufferHandlerType = bufferHandlerType.MakeGenericType(messagesBuffer.MessageType);
-                services.AddSingleton(genericBufferHandlerType, messagesBuffer.BufferHandlerType);
+                if (registeredBufferHandlers.All(type => type != genericBufferHandlerType))
+                {
+                    registeredBufferHandlers.Add(genericBufferHandlerType);
+                    services.AddSingleton(genericBufferHandlerType, messagesBuffer.BufferHandlerType);
+                }
+            }
+            
+            // Register commandDispatch buffer
+            var dispatchBufferConfigType = typeof(DispatchBufferConfig<>);
+            var dispatcherType = typeof(ICommandBufferDispatcher<>);
+            var commandBufferDispatcherType = typeof(CommandBufferDispatcher<>);
+            
+            foreach (var messagesBuffer in Config.RegisteredMessageDispatcherBuffers)
+            {
+                // Register config
+                var concreteBufferConfigType = dispatchBufferConfigType.MakeGenericType(messagesBuffer.MessageType);
+                var config = Activator.CreateInstance(concreteBufferConfigType, messagesBuffer.MaxTimeSpan, messagesBuffer.MaxMessageCount);
+                services.AddSingleton(concreteBufferConfigType, config);
+                
+                // Register dispatcher
+                var genericDispatcher = dispatcherType.MakeGenericType(messagesBuffer.MessageType);
+                var genericCommandBufferDispatcher = commandBufferDispatcherType.MakeGenericType(messagesBuffer.MessageType);
+                services.AddSingleton(genericDispatcher, genericCommandBufferDispatcher);
+
+                // Register buffer handler
+                var genericBufferHandlerType = bufferHandlerType.MakeGenericType(messagesBuffer.MessageType);
+                if (registeredBufferHandlers.All(type => type != genericBufferHandlerType))
+                {
+                    registeredBufferHandlers.Add(genericBufferHandlerType);
+                    services.AddSingleton(genericBufferHandlerType, messagesBuffer.BufferHandlerType);
+                }
             }
         }
 

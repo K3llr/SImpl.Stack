@@ -2,9 +2,9 @@ using System;
 
 namespace SImpl.Messaging.CQRS.Rebus.Services
 {
-    public class MessageBufferConfig<TMessage>
+    public class HandlerBufferConfig<TMessage>
     {
-        public MessageBufferConfig(TimeSpan maxTimeSpan, int maxMessageCount)
+        public HandlerBufferConfig(TimeSpan maxTimeSpan, int maxMessageCount)
         {
             MaxTimeSpan = maxTimeSpan;
             MaxMessageCount = maxMessageCount;

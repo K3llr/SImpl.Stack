@@ -82,10 +82,7 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
             return this;
         }
         
-        private readonly List<MessageBufferRegistration> _messageBuffers = new();
-        public IReadOnlyList<MessageBufferRegistration> RegisteredMessagesBuffers => _messageBuffers.AsReadOnly();
-
-        public class MessageBufferRegistration
+        public class BufferRegistration
         {
             public Type MessageType { get; set; }
             public Type BufferHandlerType { get; set; }
@@ -93,12 +90,31 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
             public int MaxMessageCount { get; set; }
         }
         
-        public MessagingCqrsModuleConfig AddMessageBuffer<TMessage, TBufferHandler>(TimeSpan maxTimeSpan, int maxMessageCount)
+        private readonly List<BufferRegistration> _messageHandlerBuffers = new();
+        public IReadOnlyList<BufferRegistration> RegisteredMessageHandlerBuffers => _messageHandlerBuffers.AsReadOnly();
+        public MessagingCqrsModuleConfig AddMessageHandlerBuffer<TMessage, TBufferHandler>(TimeSpan maxTimeSpan, int maxMessageCount)
             where TBufferHandler : IBufferHandler<TMessage>
         {
-            _messageBuffers.Add(new MessageBufferRegistration
+            _messageHandlerBuffers.Add(new BufferRegistration
             {
                 MessageType = typeof(TMessage),
+                BufferHandlerType = typeof(TBufferHandler),
+                MaxTimeSpan = maxTimeSpan,
+                MaxMessageCount = maxMessageCount
+            });
+            
+            return this;
+        }
+        
+        private readonly List<BufferRegistration> _messageDispatcherBuffers = new();
+        public IReadOnlyList<BufferRegistration> RegisteredMessageDispatcherBuffers => _messageDispatcherBuffers.AsReadOnly();
+        public MessagingCqrsModuleConfig AddMessageDispatcherBuffer<TCommand, TBufferHandler>(TimeSpan maxTimeSpan, int maxMessageCount)
+            where TBufferHandler : IBufferHandler<TCommand>
+            where TCommand : class, ICommand
+        {
+            _messageDispatcherBuffers.Add(new BufferRegistration
+            {
+                MessageType = typeof(TCommand),
                 BufferHandlerType = typeof(TBufferHandler),
                 MaxTimeSpan = maxTimeSpan,
                 MaxMessageCount = maxMessageCount
