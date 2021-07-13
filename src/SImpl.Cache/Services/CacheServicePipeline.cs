@@ -22,7 +22,7 @@ namespace SImpl.Cache.Services
                 _next is null
                     ? factory
                     : async () => await _next.GetOrCreateAsync(info, factory, timeToLive),
-                timeToLive ?? _current.Options.TimeToLive);
+                timeToLive ?? info.TimeToLive ?? _current.Options.TimeToLive);
         }
 
         public TItem GetOrCreate<TItem>(CacheEntryInfo info, Func<TItem> factory, TimeSpan? timeToLive = null)
@@ -32,7 +32,7 @@ namespace SImpl.Cache.Services
                 _next is null
                     ? factory
                     : () => _next.GetOrCreate(info, factory, timeToLive),
-                timeToLive ?? _current.Options.TimeToLive);
+                timeToLive ?? info.TimeToLive ?? _current.Options.TimeToLive);
         }
 
         public void Remove(CacheEntryInfo info)
@@ -43,8 +43,8 @@ namespace SImpl.Cache.Services
 
         public TItem Set<TItem>(CacheEntryInfo info, TItem value, TimeSpan? timeToLive = null)
         {
-            _current.CacheService.Set(info, value, _current.Options.TimeToLive);
-            _next?.Set(info, value, _current.Options.TimeToLive);
+            _current.CacheService.Set(info, value, timeToLive ?? info.TimeToLive ?? _current.Options.TimeToLive);
+            _next?.Set(info, value, timeToLive);
 
             return value;
         }
