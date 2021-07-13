@@ -14,7 +14,7 @@ namespace SImpl.Messaging.CQRS.Rebus.Services
 
         public CommandBufferDispatcher(
             IBufferHandler<TCommand> bufferHandler,
-            HandlerBufferConfig<TCommand> handlerBufferConfig)
+            DispatchBufferConfig<TCommand> handlerBufferConfig)
         {
             _bufferHandler = bufferHandler;
             _messages = new Subject<TCommand>();

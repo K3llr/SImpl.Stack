@@ -31,6 +31,7 @@ namespace SImpl.CQRS.Queries.Cache.Module
             
             services.AddSingleton<IQueryCacheKeyService, QueryCacheKeyService>();
             services.AddSingleton<IQueryCacheManager, QueryCacheManager>();
+            services.AddSingleton<IQueryCacheInvalidator, QueryCacheInvalidator>();
 
             services.Decorate(typeof(IQueryHandler<,>), typeof(QueryHandlerCacheDecorator<,>));
         }
