@@ -20,5 +20,10 @@ namespace SImpl.Storage.Repository.Dapper.Module
             ConnectionStringName = connectionStringName;
             return this;
         }
+
+        public TypeMapper FluentMapping()
+        {
+            return TypeMapper.Mappings;
+        }
     }
 }
