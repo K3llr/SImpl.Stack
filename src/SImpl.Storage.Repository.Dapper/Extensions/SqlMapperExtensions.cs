@@ -107,7 +107,7 @@ namespace Dapper.Contrib.Extensions
         }
 
         public static Func<Type, List<PropertyInfo>> KeyPropertiesMapper  { get; set; } 
-            = type => TypePropertiesCache(type).Where(p => p.GetCustomAttributes(true).Any(a => a is ExplicitKeyAttribute)).ToList();
+//            = type => TypePropertiesCache(type).Where(p => p.GetCustomAttributes(true).Any(a => a is KeyAttribute)).ToList();
         
         private static List<PropertyInfo> KeyPropertiesCache(Type type)
         {
