@@ -90,13 +90,22 @@ namespace SImpl.OAuth.Services
         public IEnumerable<Claim> GetClaims(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var securityToken = tokenHandler.ReadJwtToken(token);
-            if (securityToken == null)
+            try
+            {
+                var securityToken = tokenHandler.ReadJwtToken(token);
+                if (securityToken == null)
+                {
+                    return new List<Claim>();
+                }
+                return securityToken.Claims;
+            }
+            catch (Exception e)
             {
                 return new List<Claim>();
             }
+          
 
-            return securityToken.Claims;
+            
         }
     }
 }
