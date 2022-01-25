@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace SImpl.Messaging.CQRS
@@ -6,6 +7,10 @@ namespace SImpl.Messaging.CQRS
     {
         void OnBufferFull(IList<TMessage> commands);
 
+        void OnError(Exception e);
+
+        void OnCompleted();
+        
         TMessage OnEnterBuffer(TMessage message);
     }
 }

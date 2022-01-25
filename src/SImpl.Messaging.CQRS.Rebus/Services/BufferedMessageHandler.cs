@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
@@ -9,20 +10,49 @@ namespace SImpl.Messaging.CQRS.Rebus.Services
     public class BufferedMessageHandler<TMessage> : IHandleMessages<TMessage>
     {
         private readonly IBufferHandler<TMessage> _bufferHandler;
-        private readonly Subject<TMessage> _messages;
+        private readonly HandlerBufferConfig<TMessage> _handlerBufferConfig;
+        private Subject<TMessage> _messages;
 
         public BufferedMessageHandler(
             IBufferHandler<TMessage> bufferHandler,
             HandlerBufferConfig<TMessage> handlerBufferConfig)
         {
             _bufferHandler = bufferHandler;
-            _messages = new Subject<TMessage>();
+            _handlerBufferConfig = handlerBufferConfig;
             
-            // Buffer until x items or y millisecond has elapsed, whatever comes first.
-            _messages.Buffer(handlerBufferConfig.MaxTimeSpan, handlerBufferConfig.MaxMessageCount) 
-                .Subscribe(_bufferHandler.OnBufferFull);
+            _messages = NewSubject();
         }
 
+        private Subject<TMessage> NewSubject()
+        {
+            var messages = new Subject<TMessage>();
+
+            // Buffer until x items or y millisecond has elapsed, whatever comes first.
+            messages.Buffer(_handlerBufferConfig.MaxTimeSpan, _handlerBufferConfig.MaxMessageCount)
+                .Subscribe(OnBufferFull, OnError, OnCompleted);
+
+            return messages;
+        }
+
+        private void OnBufferFull(IList<TMessage> messages)
+        {
+            _bufferHandler.OnBufferFull(messages);
+        }
+
+        private void OnError(Exception e)
+        {
+            _bufferHandler.OnError(e);
+            // Restart
+            _messages = NewSubject();
+        }
+
+        private void OnCompleted()
+        {
+            _bufferHandler.OnCompleted();
+            // Restart
+            _messages = NewSubject();   
+        }
+        
         public Task Handle(TMessage message)
         {
             _messages.OnNext(_bufferHandler.OnEnterBuffer(message));
