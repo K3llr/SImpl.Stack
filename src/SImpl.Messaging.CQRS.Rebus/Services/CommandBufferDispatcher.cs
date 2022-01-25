@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using SImpl.CQRS.Commands;
@@ -10,18 +11,47 @@ namespace SImpl.Messaging.CQRS.Rebus.Services
         where TCommand : class, ICommand
     {
         private readonly IBufferHandler<TCommand> _bufferHandler;
-        private readonly Subject<TCommand> _messages;
+        private readonly DispatchBufferConfig<TCommand> _handlerBufferConfig;
+        private Subject<TCommand> _messages;
 
         public CommandBufferDispatcher(
             IBufferHandler<TCommand> bufferHandler,
             DispatchBufferConfig<TCommand> handlerBufferConfig)
         {
             _bufferHandler = bufferHandler;
-            _messages = new Subject<TCommand>();
+            _handlerBufferConfig = handlerBufferConfig;
             
+            _messages = NewSubject();
+        }
+        
+        private Subject<TCommand> NewSubject()
+        {
+            var messages = new Subject<TCommand>();
+
             // Buffer until x items or y millisecond has elapsed, whatever comes first.
-            _messages.Buffer(handlerBufferConfig.MaxTimeSpan, handlerBufferConfig.MaxMessageCount) 
-                .Subscribe(_bufferHandler.OnBufferFull);
+            messages.Buffer(_handlerBufferConfig.MaxTimeSpan, _handlerBufferConfig.MaxMessageCount)
+                .Subscribe(OnBufferFull, OnError, OnCompleted);
+
+            return messages;
+        }
+        
+        private void OnBufferFull(IList<TCommand> messages)
+        {
+            _bufferHandler.OnBufferFull(messages);
+        }
+
+        private void OnError(Exception e)
+        {
+            _bufferHandler.OnError(e);
+            // Restart
+            _messages = NewSubject();
+        }
+
+        private void OnCompleted()
+        {
+            _bufferHandler.OnCompleted();
+            // Restart
+            _messages = NewSubject();   
         }
         
         public Task ExecuteAsync(TCommand command)
