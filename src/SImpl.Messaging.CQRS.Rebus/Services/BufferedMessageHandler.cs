@@ -20,10 +20,10 @@ namespace SImpl.Messaging.CQRS.Rebus.Services
             _bufferHandler = bufferHandler;
             _handlerBufferConfig = handlerBufferConfig;
             
-            _messages = NewSubject();
+            _messages = NewSubject(true);
         }
 
-        private Subject<TMessage> NewSubject()
+        private Subject<TMessage> NewSubject(bool firstStart = false)
         {
             var messages = new Subject<TMessage>();
 
@@ -31,6 +31,15 @@ namespace SImpl.Messaging.CQRS.Rebus.Services
             messages.Buffer(_handlerBufferConfig.MaxTimeSpan, _handlerBufferConfig.MaxMessageCount)
                 .Subscribe(OnBufferFull, OnError, OnCompleted);
 
+            if (firstStart)
+            {
+                _bufferHandler.OnStart();
+            }
+            else
+            {
+                _bufferHandler.OnRestart();    
+            }
+            
             return messages;
         }
 

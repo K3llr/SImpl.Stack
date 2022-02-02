@@ -10,6 +10,10 @@ namespace SImpl.Messaging.CQRS
         void OnError(Exception e);
 
         void OnCompleted();
+
+        void OnStart();
+        
+        void OnRestart();
         
         TMessage OnEnterBuffer(TMessage message);
     }
