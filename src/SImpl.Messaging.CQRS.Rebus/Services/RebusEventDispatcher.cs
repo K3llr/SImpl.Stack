@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Rebus.Bus;
+using Rebus.Transport;
 using SImpl.CQRS.Events;
 
 namespace SImpl.Messaging.CQRS.Rebus.Services
@@ -23,7 +24,9 @@ namespace SImpl.Messaging.CQRS.Rebus.Services
         public async Task PublishAsync<T>(T @event, IDictionary<string, string> headers) 
             where T : class, IEvent
         {
+            using var scope = new RebusTransactionScope();
             await _bus.Publish(@event, headers);
+            await scope.CompleteAsync();
         }
     }
 }
