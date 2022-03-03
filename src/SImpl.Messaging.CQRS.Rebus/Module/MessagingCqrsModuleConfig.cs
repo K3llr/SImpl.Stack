@@ -23,6 +23,9 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
         public IReadOnlyList<Assembly> RegisteredEventAssemblies => _eventAssemblies.AsReadOnly();
         public IReadOnlyList<Type> RegisteredEventTypes => _eventTypes.AsReadOnly();
         
+        public bool EnableMessagingCommandDispatcher { get; set; }
+        public bool EnableMessagingEventDispatcher { get; set; }
+        
         public bool InitBusOnStartEnabled { get; private set; } = false;
         public MessagingCqrsModuleConfig InitBusOnStart(bool initBusOnStart = true)
         {

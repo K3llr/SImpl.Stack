@@ -63,7 +63,10 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
         public void ConfigureServices(IServiceCollection services)
         {
             // Register commands
-            services.AddSingleton<IMessagingCommandDispatcher, RebusCommandDispatcher>();
+            if (Config.EnableMessagingCommandDispatcher)
+            {
+                services.AddSingleton<IMessagingCommandDispatcher, RebusCommandDispatcher>();
+            }
             
             RegisterMessageHandlers(
                 services, 
@@ -74,7 +77,10 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
                 typeof(CommandMessageHandler<>));
 
             // Register events
-            services.AddSingleton<IMessagingEventDispatcher, RebusEventDispatcher>();
+            if (Config.EnableMessagingEventDispatcher)
+            {
+                services.AddSingleton<IMessagingEventDispatcher, RebusEventDispatcher>();
+            }
             
             RegisterMessageHandlers(
                 services, 
