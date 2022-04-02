@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
+using Rebus.Config;
 using Rebus.Handlers;
 using Rebus.ServiceProvider;
 using SImpl.CQRS.Commands;
