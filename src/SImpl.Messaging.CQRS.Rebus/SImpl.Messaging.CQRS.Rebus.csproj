@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
@@ -14,9 +14,9 @@
 
   <ItemGroup>
     <PackageReference Include="Polly" Version="7.2.2" />
-    <PackageReference Include="Rebus" Version="6.4.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Rebus.ServiceProvider" Version="6.3.1" />
+    <PackageReference Include="Rebus" Version="6.6.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Rebus.ServiceProvider" Version="7.0.0" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 
