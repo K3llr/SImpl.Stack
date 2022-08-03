@@ -3,6 +3,7 @@
   branches:
     only:
       - master
+      - v2/master
   configuration: Release
   before_build:
     - ps: nuget restore .\src\SImpl.Stack.sln
