@@ -7,6 +7,7 @@
   configuration: Release
   before_build:
     - ps: nuget restore .\src\SImpl.Stack.sln
+  image: Visual Studio 2022
   build:
     publish_nuget: true
     project: .\src\SImpl.Stack.sln
