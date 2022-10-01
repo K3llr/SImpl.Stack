@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Net;
-using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using SImpl.Http.OAuth.AspNetCore.WebApi.RequestModels;
 using SImpl.Http.OAuth.AspNetCore.WebApi.ResponseModels;
 using SImpl.OAuth.Constants;
@@ -10,7 +7,7 @@ using SImpl.OAuth.Constants;
 namespace SImpl.Http.OAuth.AspNetCore.WebApi
 {
     [ApiController]
-    [Route("TaggingService/[controller]")]
+    [Route("oauth")]
     public class OAuthRevokeTokenController : ControllerBase
     {
         private readonly IOAuthRefreshTokenStorage _oAuthRefreshTokenStorage;
@@ -24,64 +21,45 @@ namespace SImpl.Http.OAuth.AspNetCore.WebApi
             _oAuthClientStorage = oAuthClientStorage;
         }
 
-        [Route("oauth/revoke")]
-        [HttpPost]
-        public HttpResponseMessage Revoke([FromBody] OAuthRevokeTokenRequest revokeRequest)
+        [HttpPost("revoke")]
+        public new IActionResult Revoke([FromBody] OAuthRevokeTokenRequest revokeRequest)
         {
             if (string.IsNullOrWhiteSpace(revokeRequest.ClientId)
                 || string.IsNullOrWhiteSpace(revokeRequest.ClientSecret)
                 || string.IsNullOrWhiteSpace(revokeRequest.Token))
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                return BadRequest(new OAuthTokenErrorResponse(OAuthTokenErrors.InvalidRequest)
                 {
-                    Content = new StringContent(JsonConvert.SerializeObject(
-                        new OAuthTokenErrorResponse(OAuthTokenErrors.InvalidRequest)
-                        {
-                            ErrorDescription = "client_id, client_secret and token is required."
-                        }))
-                };
+                    ErrorDescription = "client_id, client_secret and token is required."
+                });
             }
 
             var client = _oAuthClientStorage.Fetch(revokeRequest.ClientId);
 
-            if (client == null 
+            if (client == null
                 || client.ClientSecret != revokeRequest.ClientSecret)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest)
-                {
-                    Content = new StringContent(JsonConvert.SerializeObject(
-                        new OAuthTokenErrorResponse(OAuthTokenErrors.InvalidClient)))
-                };
+                return BadRequest(new OAuthTokenErrorResponse(OAuthTokenErrors.InvalidClient));
             }
 
             try
             {
                 if (revokeRequest.TokenTypeHint != OAuthTokenTypes.RefreshToken)
                 {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest)
-                    {
-                        Content = new StringContent(JsonConvert.SerializeObject(
-                            new OAuthTokenErrorResponse("unsupported_token_type")))
-                    };
+                    return BadRequest(new OAuthTokenErrorResponse("unsupported_token_type"));
                 }
 
                 _oAuthRefreshTokenStorage.Delete(revokeRequest.Token);
 
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return Ok();
             }
             catch (Exception e)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                return BadRequest(new OAuthTokenErrorResponse()
                 {
-                    Content = new StringContent(JsonConvert.SerializeObject(
-                        new OAuthTokenErrorResponse()
-                        {
-                            ErrorDescription = e.Message
-                        }))
-                };
+                    ErrorDescription = e.Message
+                });
             }
         }
-
-      
     }
 }
