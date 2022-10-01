@@ -7,7 +7,6 @@ namespace SImpl.Http.OAuth.Module
     {
         public OAuthServerConfig()
         {
-           
         }
 
         internal Type  ClientStorage { get; set; } = typeof(InMemoryOAuthClientStorage);
@@ -35,7 +34,6 @@ namespace SImpl.Http.OAuth.Module
 
         /// <summary>
         /// Set a signing key that only your oauth server can know, used to sign JWT tokens
-        /// See <see cref="https://novicell.atlassian.net/wiki/spaces/NK/pages/1469121765/Key+generation">Documentation</see>
         /// </summary>
         /// <param name="key"></param>
         public void SetPrivateSigningKey(string key)
