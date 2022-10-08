@@ -16,35 +16,9 @@ namespace SImpl.Runtime
 {
     public class SImply
     {
-        public static ISImplHostBuilder Boot(WebApplicationBuilder webApplicationBuilder, string[] args, ILogger logger, Action<ISImplHostBuilder> configureDelegate)
+        public static IHostBuilder Boot(WebApplicationBuilder webApplicationBuilder, string[] args, ILogger logger, Action<ISImplHostBuilder> configureDelegate)
         {
-            var diagnostics = DiagnosticsCollector.Create();
-            
-            // Write welcome to console
-            ConsoleWriteNameAndVersion();
-            
-            // Parse command line arguments
-            var flags = ParseArgs(args);
-           
-            // Init boot container
-            var bootContainer = InitBootContainer( webApplicationBuilder.Host, logger ?? CreateLogger(), flags, diagnostics);
-            
-            // Init runtime services
-            RuntimeServices.Init(bootContainer.Resolve<IRuntimeServices>());
-            
-            // Create .NET Stack host builder
-            var dotNetStackHostBuilder = bootContainer.Resolve<ISImplHostBuilder>();
-            
-            // Start configuration of the host builder
-            dotNetStackHostBuilder.Configure(dotNetStackHostBuilder, stack =>
-            {
-                // Pre-installed module
-                stack.Use(() => new StackRuntimeModule(bootContainer));
-                // Installed modules
-                configureDelegate?.Invoke(stack);
-            });
-            
-            return dotNetStackHostBuilder;
+            return Boot(webApplicationBuilder.Host, args, logger, configureDelegate);
         }
         public static IHostBuilder Boot(IHostBuilder hostBuilder, string[] args, ILogger logger, Action<ISImplHostBuilder> configureDelegate)
         {
