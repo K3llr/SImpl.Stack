@@ -23,7 +23,6 @@ namespace SImpl.Http.OAuth.Module
 
         /// <summary>
         /// Set a public signing key that can verify your tokens.
-        /// See <see cref="https://novicell.atlassian.net/wiki/spaces/NK/pages/1469121765/Key+generation">Documentation</see>
         /// </summary>
         /// <param name="key"></param>
         public void SetPublicSigningKey(string key)
