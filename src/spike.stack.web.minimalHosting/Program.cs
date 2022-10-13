@@ -4,7 +4,7 @@ using SImpl.Runtime;
 using spike.stack.module;
 
 var builder = WebApplication.CreateBuilder(args);
-var simplify = builder.SImplify(args, simpl =>
+var app = builder.SImplify(args, simpl =>
 {
     simpl.Use<GreetingsWebModule>();
     simpl.Use<RootModule>();
@@ -17,8 +17,7 @@ var simplify = builder.SImplify(args, simpl =>
             app.UseAppModule<ApplicationTestModule>();
         });
     });
-});
-var app = builder.Build();
+}).Build();
 
 app.MapGet("/", () => "Hello World!");
 app.Run();

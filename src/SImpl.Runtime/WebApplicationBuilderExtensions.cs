@@ -1,6 +1,5 @@
 using System;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SImpl.Host.Builders;
 
@@ -8,21 +7,27 @@ namespace SImpl.Runtime;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static IHostBuilder SImplify(this WebApplicationBuilder hostBuilder,
+    public static WebApplicationBuilder SImplify(
+        this WebApplicationBuilder webApplicationBuilder,
         Action<ISImplHostBuilder> simpl = null)
     {
-        return hostBuilder.SImplify(Array.Empty<string>(), simpl);
+        return webApplicationBuilder.SImplify(Array.Empty<string>(), simpl);
     }
 
-    public static IHostBuilder SImplify(this WebApplicationBuilder hostBuilder, string[] args,
+    public static WebApplicationBuilder SImplify(
+        this WebApplicationBuilder webApplicationBuilder, 
+        string[] args,
         Action<ISImplHostBuilder> simpl = null)
     {
-        return hostBuilder.SImplify(args, null, simpl);
+        return webApplicationBuilder.SImplify(args, null, simpl);
     }
 
-    public static IHostBuilder SImplify(this WebApplicationBuilder hostBuilder, string[] args, ILogger logger,
+    public static WebApplicationBuilder SImplify(
+        this WebApplicationBuilder webApplicationBuilder, 
+        string[] args, 
+        ILogger logger, 
         Action<ISImplHostBuilder> simpl = null)
     {
-        return SImply.Boot(hostBuilder, args, logger, simpl);
+        return SImply.Boot(webApplicationBuilder, args, logger, simpl);
     }
 }

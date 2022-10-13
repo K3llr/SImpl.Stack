@@ -16,10 +16,13 @@ namespace SImpl.Runtime
 {
     public class SImply
     {
-        public static IHostBuilder Boot(WebApplicationBuilder webApplicationBuilder, string[] args, ILogger logger, Action<ISImplHostBuilder> configureDelegate)
+        public static WebApplicationBuilder Boot(WebApplicationBuilder webApplicationBuilder, string[] args, ILogger logger, Action<ISImplHostBuilder> configureDelegate)
         {
-            return Boot(webApplicationBuilder.Host, args, logger, configureDelegate);
+            Boot(webApplicationBuilder.Host, args, logger, configureDelegate);
+            
+            return webApplicationBuilder;
         }
+        
         public static IHostBuilder Boot(IHostBuilder hostBuilder, string[] args, ILogger logger, Action<ISImplHostBuilder> configureDelegate)
         {
             var diagnostics = DiagnosticsCollector.Create();
