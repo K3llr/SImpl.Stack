@@ -27,13 +27,13 @@ namespace SImpl.Queue.Module
                 s.FromAssemblies(Config.RegisteredAssemblies)
                     .AddClasses(c => c.AssignableTo(typeof(IQueue<>)))
                     .AsImplementedInterfaces()
-                    .WithTransientLifetime());
+                    .WithSingletonLifetime());
             
             services.Scan(s =>
                 s.FromAssemblies(Config.RegisteredAssemblies)
                     .AddClasses(c => c.AssignableTo(typeof(IDequeueAction<>)))
                     .AsImplementedInterfaces()
-                    .WithTransientLifetime());
+                    .WithSingletonLifetime());
             
             var queueInterface = typeof(IQueue<>);
             foreach (var queueReg in Config.RegisteredQueues)
