@@ -27,6 +27,11 @@ namespace SImpl.Queue.Module
             AddQueuesAndDequeueActionsFromAssembly(typeof(T).Assembly);
             return this;
         }
+        public QueueModuleConfig EnableDefaultQueue()
+        {
+            AddQueuesAndDequeueActionsFromAssembly(this.GetType().Assembly);
+            return this;
+        }
         
         public QueueModuleConfig AddQueue<TQueue, T>()
             where TQueue : IQueue<T>
