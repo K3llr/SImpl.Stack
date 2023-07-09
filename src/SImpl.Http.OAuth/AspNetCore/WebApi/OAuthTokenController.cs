@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using SImpl.Http.OAuth.AspNetCore.WebApi.RequestModels;
 using SImpl.Http.OAuth.AspNetCore.WebApi.ResponseModels;
 using SImpl.Http.OAuth.Models;
@@ -13,6 +10,7 @@ using SImpl.OAuth.Constants;
 namespace SImpl.Http.OAuth.AspNetCore.WebApi
 {
     [ApiController]
+    [Route("oauth")]
     public class OAuthTokenController : ControllerBase
     {
         private readonly IOAuthClientService _oAuthClientService;
@@ -35,9 +33,8 @@ namespace SImpl.Http.OAuth.AspNetCore.WebApi
             _oAuthRefreshTokenStorage = oAuthRefreshTokenStorage;
         }
 
-        [Route("oauth/token")]
-        [HttpPost]
-        public HttpResponseMessage Token([FromBody]OAuthTokenRequest tokenRequest)
+        [HttpPost("token")]
+        public new IActionResult Token([FromBody] OAuthTokenRequest tokenRequest)
         {
             HttpContext.Response.Headers.Add("Cache-Control", "no-store");
             HttpContext.Response.Headers.Add("Pragma", "no-store");
@@ -49,38 +46,29 @@ namespace SImpl.Http.OAuth.AspNetCore.WebApi
                 tokenRequest.GrantType);
             if (client == null)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest)
-                {
-                    Content = new StringContent(JsonConvert.SerializeObject(new OAuthTokenErrorResponse(OAuthTokenErrors.InvalidClient)))
-                };
-                
+                return BadRequest(new OAuthTokenErrorResponse(OAuthTokenErrors.InvalidClient));
             }
 
-            switch (tokenRequest.GrantType)
+            var answer = tokenRequest.GrantType switch
             {
-                case OAuthGrantTypes.Password:
-                    return ProcessPasswordGrant(client, tokenRequest);
-                case OAuthGrantTypes.RefreshToken:
-                    return ProcessRefreshTokenGrant(client, tokenRequest);
-            }
-            var answer = new HttpResponseMessage(HttpStatusCode.BadRequest)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject( new OAuthTokenErrorResponse(OAuthTokenErrors.InvalidGrant)))
+                OAuthGrantTypes.Password => ProcessPasswordGrant(client, tokenRequest),
+                OAuthGrantTypes.RefreshToken => ProcessRefreshTokenGrant(client, tokenRequest),
+                _ => BadRequest(new OAuthTokenErrorResponse(OAuthTokenErrors.InvalidGrant))
             };
+
             return answer;
-           
         }
 
-        private HttpResponseMessage ProcessPasswordGrant(OAuthClient client, OAuthTokenRequest tokenRequest)
+        private IActionResult ProcessPasswordGrant(OAuthClient client, OAuthTokenRequest tokenRequest)
         {
             var scopes = (tokenRequest.Scopes ?? "")
-                .Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries)
+                .Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries)
                 .ToList();
 
             if (!_oAuthUserProvider.ValidateUser(tokenRequest.Username, tokenRequest.Password, scopes))
             {
                 // User is invalid
-                return new HttpResponseMessage(HttpStatusCode.Forbidden);
+                return Forbid();
             }
 
             // Get claims
@@ -93,25 +81,22 @@ namespace SImpl.Http.OAuth.AspNetCore.WebApi
 
             var accessTokenExpiresIn = _oAuthAccessTokenService.GetAccessTokenLifetimeSeconds(client);
             var accessToken = _oAuthAccessTokenService.GenerateAccessToken(claimsIdentity, client);
-            var refreshToken = _oAuthRefreshTokenService.GenerateRefreshToken(Request,userId, client, scopes);
+            var refreshToken = _oAuthRefreshTokenService.GenerateRefreshToken(Request, userId, client, scopes);
 
             // Persist refresh token
             _oAuthRefreshTokenStorage.Save(refreshToken);
-            var answer = new HttpResponseMessage(HttpStatusCode.OK)
+
+            return Ok(new OAuthTokenResponse
             {
-                Content = new StringContent(JsonConvert.SerializeObject(new OAuthTokenResponse
-                {
-                    TokenType = OAuthTokenTypes.Bearer,
-                    AccessToken = accessToken,
-                    RefreshToken = refreshToken.Token,
-                    ExpiresIn = accessTokenExpiresIn,
-                    Scope = string.Join(" ", scopes),
-                }))
-            };
-            return answer;
+                TokenType = OAuthTokenTypes.Bearer,
+                AccessToken = accessToken,
+                RefreshToken = refreshToken.Token,
+                ExpiresIn = accessTokenExpiresIn,
+                Scope = string.Join(" ", scopes),
+            });
         }
 
-        private HttpResponseMessage ProcessRefreshTokenGrant(OAuthClient client, OAuthTokenRequest tokenRequest)
+        private IActionResult ProcessRefreshTokenGrant(OAuthClient client, OAuthTokenRequest tokenRequest)
         {
             // Validate refresh token
             var refreshToken =
@@ -119,9 +104,9 @@ namespace SImpl.Http.OAuth.AspNetCore.WebApi
             if (refreshToken == null)
             {
                 // Refresh token is invalid
-                return new HttpResponseMessage(HttpStatusCode.Forbidden);
+                return Forbid();
             }
-            
+
             // Get claims
             var claims = _oAuthUserProvider.GetClaimsByUserId(refreshToken.UserId);
 
@@ -132,26 +117,23 @@ namespace SImpl.Http.OAuth.AspNetCore.WebApi
             var accessTokenExpiresIn = _oAuthAccessTokenService.GetAccessTokenLifetimeSeconds(client);
             var accessToken = _oAuthAccessTokenService.GenerateAccessToken(claimsIdentity, client);
             var newRefreshToken = _oAuthRefreshTokenService.GenerateRefreshToken(Request,
-                refreshToken.UserId, 
-                client, 
+                refreshToken.UserId,
+                client,
                 tokenRequest.Scopes
-                ?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                .ToList());
-            
+                    ?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                    .ToList());
+
             // Persist refresh new token and delete old
             _oAuthRefreshTokenStorage.Delete(refreshToken.Token);
             _oAuthRefreshTokenStorage.Save(newRefreshToken);
-            var answer = new HttpResponseMessage(HttpStatusCode.OK)
+
+            return Ok(new OAuthTokenResponse
             {
-                Content = new StringContent(JsonConvert.SerializeObject(new OAuthTokenResponse
-                {
-                    TokenType = OAuthTokenTypes.Bearer,
-                    AccessToken = accessToken,
-                    RefreshToken = newRefreshToken.Token,
-                    ExpiresIn = accessTokenExpiresIn,
-                }))
-            };
-            return answer;
+                TokenType = OAuthTokenTypes.Bearer,
+                AccessToken = accessToken,
+                RefreshToken = newRefreshToken.Token,
+                ExpiresIn = accessTokenExpiresIn,
+            });
         }
     }
 }
