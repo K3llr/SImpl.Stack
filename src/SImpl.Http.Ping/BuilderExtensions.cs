@@ -19,7 +19,7 @@ public static class BuilderExtensions
     {
         hostBuilder.ConfigureWebHostStackApp(web =>
         {
-            web.UseHealthCheckEndpoints(configureDelegate);
+            web.UsePingModule(configureDelegate);
         });
             
         return hostBuilder;
