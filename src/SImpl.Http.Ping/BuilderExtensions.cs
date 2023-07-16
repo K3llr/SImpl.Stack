@@ -7,7 +7,7 @@ namespace SImpl.Http.Ping;
 
 public static class BuilderExtensions
 {
-    public static IWebHostBuilder UseHealthCheckEndpoints(this IWebHostBuilder hostBuilder, Action<PingModuleConfig> configureDelegate)
+    public static IWebHostBuilder UsePingModule(this IWebHostBuilder hostBuilder, Action<PingModuleConfig> configureDelegate)
     {
         var module = hostBuilder.AttachNewWebHostModuleOrGetConfigured(() => new PingModule(new PingModuleConfig()));
         configureDelegate?.Invoke(PingModule.ModuleConfig);
@@ -15,7 +15,7 @@ public static class BuilderExtensions
         return hostBuilder;
     }
         
-    public static ISImplHostBuilder UseCommonHostHealthModule(this ISImplHostBuilder hostBuilder, Action<PingModuleConfig> configureDelegate)
+    public static ISImplHostBuilder UsePingModule(this ISImplHostBuilder hostBuilder, Action<PingModuleConfig> configureDelegate)
     {
         hostBuilder.ConfigureWebHostStackApp(web =>
         {
