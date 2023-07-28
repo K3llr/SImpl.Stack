@@ -26,6 +26,12 @@ namespace SImpl.CQRS.Commands.Module
             return this;
         }
         
+        public CommandModuleConfig AddCommandHandler(CommandHandlerRegistration registration)
+        {
+            _commandHandlers.Add(registration);
+            return this;
+        }
+        
         public CommandModuleConfig AddCommandHandler<TCommandHandler, TCommand>()
             where TCommandHandler : ICommandHandler<TCommand> 
             where TCommand : class, ICommand

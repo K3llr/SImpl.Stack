@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using SImpl.Common;
 
 namespace SImpl.CQRS.Queries.Module
 {
@@ -36,6 +37,12 @@ namespace SImpl.CQRS.Queries.Module
                 ResultType = typeof(TResult), 
                 QueryHandlerType = typeof(TQueryHandler)
             });
+            return this;
+        }
+
+        public QueryModuleConfig AddQueryHandler(QueryHandlerRegistration registration)
+        {
+            _queryHandlers.Add(registration);
             return this;
         }
     }

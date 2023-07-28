@@ -25,6 +25,12 @@ namespace SImpl.CQRS.Events.Module
             AddEventHandlersFromAssembly(typeof(T).Assembly);
             return this;
         }
+        
+        public EventModuleConfig AddEventHandler(EventHandlerRegistration registration)
+        {
+            _eventHandlers.Add(registration);
+            return this;
+        }
 
         public EventModuleConfig AddEventHandler<TEventHandler, TEvent>()
             where TEventHandler : IEventHandler<TEvent> 
