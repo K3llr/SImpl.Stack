@@ -30,12 +30,17 @@ namespace SImpl.Storage.Repository.Dapper.Services
 
         public void AbortTransaction()
         {
-            _transaction.Dispose();
+            _transaction.Rollback();
         }
 
         public IDbConnection GetConnection()
         {
             return _dbConnection;
+        }
+
+        public IDbTransaction GetTransaction()
+        {
+            return _transaction;
         }
 
         public void Dispose()

@@ -17,32 +17,34 @@ namespace SImpl.Storage.Repository.Dapper.Services
 
         public virtual IEnumerable<TEntity> GetAll()
         {
-            return UnitOfWork.GetConnection().GetAll<TEntity>();
+            return UnitOfWork.GetConnection().GetAll<TEntity>(UnitOfWork.GetTransaction());
         }
 
         public virtual void Delete(params TId[] ids)
         {
-            UnitOfWork.GetConnection().Delete(ids.Select(id => new TEntity() { Id = id}).ToArray());
+            UnitOfWork.GetConnection().Delete(
+                    ids.Select(id => new TEntity { Id = id}).ToArray(),
+                    UnitOfWork.GetTransaction());
         }
 
         public virtual TEntity Get(TId id)
         {
-            return UnitOfWork.GetConnection().Get<TEntity>(id);
+            return UnitOfWork.GetConnection().Get<TEntity>(id, UnitOfWork.GetTransaction());
         }
 
         public virtual void SaveRange(IEnumerable<TEntity> list)
         {
-            UnitOfWork.GetConnection().Insert(list.ToArray());
+            UnitOfWork.GetConnection().Insert(list.ToArray(), UnitOfWork.GetTransaction());
         }
 
         public virtual void Update(TEntity entity)
         {
-            UnitOfWork.GetConnection().Update(entity);
+            UnitOfWork.GetConnection().Update(entity, UnitOfWork.GetTransaction());
         }
 
         public virtual void Insert(TEntity entity)
         {
-            UnitOfWork.GetConnection().Insert(entity);
+            UnitOfWork.GetConnection().Insert(entity, UnitOfWork.GetTransaction());
         }
     }
 }

@@ -15,35 +15,37 @@ namespace SImpl.Storage.Repository.Dapper.Services
         {
             UnitOfWork = unitOfWork;
         }
-     
+
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await UnitOfWork.GetConnection().GetAllAsync<TEntity>();
+            return await UnitOfWork.GetConnection().GetAllAsync<TEntity>(UnitOfWork.GetTransaction());
         }
 
-        public virtual async Task DeleteAsync(TId[] ids) 
+        public virtual async Task DeleteAsync(TId[] ids)
         {
-            await UnitOfWork.GetConnection().DeleteAsync(ids.Select(id => new TEntity() { Id = id}).ToArray());
+            await UnitOfWork.GetConnection().DeleteAsync(
+                    ids.Select(id => new TEntity { Id = id}).ToArray(),
+                    UnitOfWork.GetTransaction());
         }
 
         public virtual async Task<TEntity> GetAsync(TId id)
         {
-            return await UnitOfWork.GetConnection().GetAsync<TEntity>(id);
+            return await UnitOfWork.GetConnection().GetAsync<TEntity>(id, UnitOfWork.GetTransaction());
         }
 
         public virtual async Task SaveRangeAsync(IEnumerable<TEntity> list)
         {
-            await UnitOfWork.GetConnection().InsertAsync(list.ToArray());
+            await UnitOfWork.GetConnection().InsertAsync(list.ToArray(), UnitOfWork.GetTransaction());
         }
 
         public virtual async Task UpdateAsync(TEntity entity)
         {
-            await UnitOfWork.GetConnection().UpdateAsync(entity);
+            await UnitOfWork.GetConnection().UpdateAsync(entity, UnitOfWork.GetTransaction());
         }
 
         public virtual async Task InsertAsync(TEntity entity)
         {
-            await UnitOfWork.GetConnection().InsertAsync(entity);
+            await UnitOfWork.GetConnection().InsertAsync(entity, UnitOfWork.GetTransaction());
         }
     }
 }
