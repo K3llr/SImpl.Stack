@@ -1,4 +1,5 @@
 using System;
+using Rebus.Config;
 using SImpl.Host.Builders;
 using SImpl.Messaging.CQRS.Rebus.Module;
 
@@ -6,7 +7,7 @@ namespace SImpl.Messaging.CQRS.Rebus
 {
     public static class BuilderExtensions
     {
-        [Obsolete("Use UseCqrsMessagingDispatchers")]
+        [Obsolete("Use UseCqrsMessaging")]
         public static ISImplHostBuilder UseCqrsMessagingCommandDispatcher(this ISImplHostBuilder host, Action<MessagingCqrsModuleConfig> configureDelegate)
         {
             return UseCqrsMessagingDispatchers(host, configureDelegate);
@@ -22,11 +23,16 @@ namespace SImpl.Messaging.CQRS.Rebus
             return host;
         }
 
-        public static ISImplHostBuilder UseCqrsMessaging(this ISImplHostBuilder host, Action<MessagingCqrsModuleConfig> configureDelegate)
+        public static ISImplHostBuilder UseCqrsMessaging(this ISImplHostBuilder host,
+            Action<MessagingCqrsModuleConfig> configureDelegate,
+            Func<RebusConfigurer, RebusConfigurer> configureRebusService = null)
         {
-            var module = host.AttachNewOrGetConfiguredModule(() => new MessagingCqrsModule(new MessagingCqrsModuleConfig()));
+            var module = host.AttachNewOrGetConfiguredModule(() => new MessagingCqrsModule(
+                    new MessagingCqrsModuleConfig(configureRebusService)
+                )
+            );
             configureDelegate?.Invoke(module.Config);
-            
+
             return host;
         }
     }

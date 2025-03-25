@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
+using Rebus.Bus;
 using Rebus.Config;
 using Rebus.Handlers;
-using Rebus.ServiceProvider;
 using SImpl.CQRS.Commands;
 using SImpl.CQRS.Events;
 using SImpl.Hosts.WebHost.Modules;
@@ -17,11 +17,12 @@ using SImpl.Modules;
 
 namespace SImpl.Messaging.CQRS.Rebus.Module
 {
-    public class MessagingCqrsModule : IServicesCollectionConfigureModule, IAspNetPostModule
+    public class MessagingCqrsModule : IAspNetPostModule
     {
         public MessagingCqrsModuleConfig Config { get; }
 
         public string Name => nameof(MessagingCqrsModule);
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (Config.InitBusOnStartEnabled)
@@ -35,23 +36,21 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
                         {
                             // Add logic to be executed before each retry, such as logging
                         })
-                    .Execute(() =>
+                    .Execute(async () =>
                     {
-                        app.ApplicationServices.UseRebus(async bus =>
+                        var bus = app.ApplicationServices.GetRequiredService<IBus>();
+                        if (Config.SubscribeToEventsOnStartEnabled)
                         {
-                            if (Config.SubscribeToEventsOnStartEnabled)
+                            var eventTypes = Config.RegisteredEventAssemblies.SelectMany(s => s.GetTypes())
+                                .Where(p => p.IsAssignableTo(typeof(IEvent)));
+
+                            foreach (var eventType in eventTypes)
                             {
-                                var eventTypes = Config.RegisteredEventAssemblies.SelectMany(s => s.GetTypes())
-                                    .Where(p => p.IsAssignableTo(typeof(IEvent)));
-
-                                foreach (var eventType in eventTypes)
-                                {
-                                    await bus.Subscribe(eventType);
-                                }
+                                await bus.Subscribe(eventType);
                             }
+                        }
 
-                            await Config.BusConfigureDelegate.Invoke(bus);
-                        });
+                        await Config.BusConfigureDelegate.Invoke(bus);
                     });
             }
         }
@@ -63,6 +62,11 @@ namespace SImpl.Messaging.CQRS.Rebus.Module
 
         public void ConfigureServices(IServiceCollection services)
         {
+            if (Config.ConfigureRebusService != null)
+            {
+                services.AddRebus(Config.ConfigureRebusService);
+            }
+
             // Register commands
             if (Config.EnableMessagingCommandDispatcher)
             {
