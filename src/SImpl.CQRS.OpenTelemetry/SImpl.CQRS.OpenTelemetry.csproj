@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SImpl.CQRS.Commands\SImpl.CQRS.Commands.csproj" />
+    <ProjectReference Include="..\SImpl.CQRS.Events\SImpl.CQRS.Events.csproj" />
+    <ProjectReference Include="..\SImpl.CQRS.Queries\SImpl.CQRS.Queries.csproj" />
+    <ProjectReference Include="..\SImpl\SImpl.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0"/>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+</Project>
