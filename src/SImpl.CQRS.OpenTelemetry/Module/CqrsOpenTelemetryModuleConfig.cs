@@ -1,6 +1,6 @@
 namespace SImpl.CQRS.OpenTelemetry.Module;
 
-public sealed class SqrsOpenTelemetryModuleConfig
+public sealed class CqrsOpenTelemetryModuleConfig
 {
     public bool EnableCommandsInstrumentation { get; set; }
     public bool EnableEventsInstrumentation { get; set; }

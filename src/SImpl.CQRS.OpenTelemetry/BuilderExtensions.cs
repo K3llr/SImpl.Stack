@@ -18,9 +18,9 @@ public static class BuilderExtensions
         return host;
     }
     
-    public static ISImplHostBuilder UseCqrsOpenTelemetry(this ISImplHostBuilder host, Action<SqrsOpenTelemetryModuleConfig> configureDelegate)
+    public static ISImplHostBuilder UseCqrsOpenTelemetry(this ISImplHostBuilder host, Action<CqrsOpenTelemetryModuleConfig> configureDelegate)
     {
-        var module = host.AttachNewOrGetConfiguredModule(() => new SqrsOpenTelemetryModule(new SqrsOpenTelemetryModuleConfig()));
+        var module = host.AttachNewOrGetConfiguredModule(() => new CqrsOpenTelemetryModule(new CqrsOpenTelemetryModuleConfig()));
         configureDelegate?.Invoke(module.Config);
             
         return host;
