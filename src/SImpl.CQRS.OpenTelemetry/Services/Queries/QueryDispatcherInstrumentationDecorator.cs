@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using SImpl.CQRS.OpenTelemetry.Helpers;
 using SImpl.CQRS.Queries;
 
 namespace SImpl.CQRS.OpenTelemetry.Services.Queries;
@@ -10,6 +11,7 @@ public sealed class QueryDispatcherInstrumentationDecorator(IQueryDispatcher @ba
         var type = query.GetType();
         using var activity = Constants.ActivitySource.StartActivity($"QueryAsync: {type.Name}");
         activity?.SetTag("query.fullname", type.FullName);
+        activity?.SetTag("query.serialized", SerializationHelper.SerializeActivityObject(query));
         return await @base.QueryAsync(query);
     }
 
@@ -18,6 +20,7 @@ public sealed class QueryDispatcherInstrumentationDecorator(IQueryDispatcher @ba
         var type = query.GetType();
         using var activity = Constants.ActivitySource.StartActivity($"QueryAsync: {type.Name}");
         activity?.SetTag("query.fullname", type.FullName);
+        activity?.SetTag("query.serialized", SerializationHelper.SerializeActivityObject(query));
         return await @base.QueryAsync<TQuery, TResult>(query);
     }
 }
