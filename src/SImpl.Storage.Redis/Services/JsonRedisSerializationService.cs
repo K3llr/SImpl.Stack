@@ -12,7 +12,11 @@ namespace SImpl.Storage.Redis.Services
 
         public T DeserializeObject<T>(RedisValue entry)
         {
+#if NET10_0
+            return JsonSerializer.Deserialize<T>(entry.ToString());
+#else
             return JsonSerializer.Deserialize<T>(entry);
+#endif
         }
     }
 }

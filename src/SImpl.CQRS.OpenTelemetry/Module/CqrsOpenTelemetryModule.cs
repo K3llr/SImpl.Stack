@@ -9,11 +9,16 @@ using SImpl.Modules;
 
 namespace SImpl.CQRS.OpenTelemetry.Module;
 
-public class CqrsOpenTelemetryModule(CqrsOpenTelemetryModuleConfig config) : IServicesCollectionConfigureModule
+public class CqrsOpenTelemetryModule : IServicesCollectionConfigureModule
 {
+    public CqrsOpenTelemetryModule(CqrsOpenTelemetryModuleConfig config)
+    {
+        Config = config;
+    }
+
     public string Name => nameof(CqrsOpenTelemetryModule);
 
-    public CqrsOpenTelemetryModuleConfig Config { get; } = config;
+    public CqrsOpenTelemetryModuleConfig Config { get; }
 
     public void ConfigureServices(IServiceCollection services)
     {

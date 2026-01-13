@@ -6,6 +6,7 @@
         <Title>SImpl .NET</Title>
         <AssemblyName>$(MSBuildProjectName)</AssemblyName>
         <AssemblyVersion>$(Version)</AssemblyVersion>
+        <TargetFrameworks>net6.0;net8.0;net9.0;net10.0</TargetFrameworks>
     </PropertyGroup>    
 
     <PropertyGroup>

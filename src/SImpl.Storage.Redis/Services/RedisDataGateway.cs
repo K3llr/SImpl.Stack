@@ -175,7 +175,7 @@ namespace SImpl.Storage.Redis.Services
             var serializedValue = SerializeObject(value);
 
             // Set to redis
-            db.StringSet(key, serializedValue, expiry, flags: CommandFlags.DemandMaster | CommandFlags.FireAndForget);
+            db.StringSet(key, serializedValue, expiry, when: When.Always, flags: CommandFlags.DemandMaster | CommandFlags.FireAndForget);
         }
 
         public virtual void Set<T1, T2>(int database, string key1, T1 value1, string key2, T2 value2, TimeSpan? expiry = default(TimeSpan?))
