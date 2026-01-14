@@ -28,4 +28,4 @@
     api_key:
       secure: WTf+t9lyREu2uEik7ORDYCAjnZkvRiKRRaS/DrxrDucL2QsvkYRUXxHzin5B8MkD
     skip_symbols: false
-    artifact: .*\.nupkg
+    artifact: /.*(\.|\.s)nupkg/
