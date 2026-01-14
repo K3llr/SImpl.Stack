@@ -17,12 +17,14 @@
     - cmd: dotnet restore .\src\SImpl.Stack.slnx
   image: Visual Studio 2022
   build:
-    publish_nuget: true
+    publish_nuget: false
     project: .\src\SImpl.Stack.slnx
+  after_build:
+    - cmd: dotnet pack src\SImpl.Stack.slnx -c Release --no-build -o artifacts
   
   deploy:
     provider: NuGet
     api_key:
       secure: WTf+t9lyREu2uEik7ORDYCAjnZkvRiKRRaS/DrxrDucL2QsvkYRUXxHzin5B8MkD
     skip_symbols: false
-    artifact: /.*(\.|\.s)nupkg/
+    artifact: artifacts\.*\.nupkg
