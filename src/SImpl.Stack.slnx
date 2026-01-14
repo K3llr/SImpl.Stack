@@ -1,0 +1,67 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/SImpl.Cache/">
+    <Project Path="SImpl.Cache.Logging/SImpl.Cache.Logging.csproj" />
+    <Project Path="SImpl.Cache.Storage.Memory/SImpl.Cache.Storage.Memory.csproj" />
+    <Project Path="SImpl.Cache/SImpl.Cache.csproj" />
+  </Folder>
+  <Folder Name="/SImpl.CQRS/">
+    <Project Path="SImpl.CQRS.Commands/SImpl.CQRS.Commands.csproj" />
+    <Project Path="SImpl.CQRS.Events/SImpl.CQRS.Events.csproj" />
+    <Project Path="SImpl.CQRS.OpenTelemetry/SImpl.CQRS.OpenTelemetry.csproj" />
+    <Project Path="SImpl.CQRS.Queries.Cache/SImpl.CQRS.Queries.Cache.csproj" />
+    <Project Path="SImpl.CQRS.Queries/SImpl.CQRS.Queries.csproj" />
+  </Folder>
+  <Folder Name="/SImpl.Http/">
+    <Project Path="SImpl.Http.CQRS/SImpl.Http.CQRS.csproj" />
+    <Project Path="SImpl.Http.Logging.Serilog/SImpl.Http.Logging.Serilog.csproj" />
+    <Project Path="SImpl.Http.OAuth/SImpl.Http.OAuth.csproj" />
+    <Project Path="SImpl.Http.Ping/SImpl.Http.Ping.csproj" />
+  </Folder>
+  <Folder Name="/SImpl.Stack/">
+    <Project Path="SImpl.Hosts.GenericHost/SImpl.Hosts.GenericHost.csproj" />
+    <Project Path="SImpl.Hosts.WebHost/SImpl.Hosts.WebHost.csproj" />
+    <Project Path="SImpl.Reflector/SImpl.Reflector.csproj" />
+    <Project Path="SImpl.Runtime.Diagnostics/SImpl.Runtime.Diagnostics.csproj" />
+    <Project Path="SImpl.Runtime/SImpl.Runtime.csproj" />
+    <Project Path="SImpl/SImpl.csproj" />
+  </Folder>
+  <Folder Name="/SImpl.Storage/">
+    <Project Path="SImpl.Storage.KeyValue.Redis/SImpl.Storage.KeyValue.Redis.csproj" />
+    <Project Path="SImpl.Storage.KeyValue/SImpl.Storage.KeyValue.csproj" />
+    <Project Path="SImpl.Storage.Redis/SImpl.Storage.Redis.csproj" />
+    <Project Path="SImpl.Storage.Repository.Dapper/SImpl.Storage.Repository.Dapper.csproj" />
+    <Project Path="SImpl.Storage.Repository.NPoco/SImpl.Storage.Repository.NPoco.csproj" />
+    <Project Path="SImpl.Storage.Repository/SImpl.Storage.Repository.csproj" />
+  </Folder>
+  <Folder Name="/SImpl.Templates/">
+    <Project Path="SImpl.Templates.WebApi/SImpl.Templates.WebApi.csproj" />
+  </Folder>
+  <Folder Name="/SImpl.Templates/.template.config/" />
+  <Folder Name="/SImpl.Templates/.template.config/SImpl.Templates.WebApi/">
+    <File Path="SImpl.Templates.WebApi/.template.config/template.json" />
+  </Folder>
+  <Folder Name="/SImpl/">
+    <Project Path="SImpl.AutoRun/SImpl.AutoRun.csproj" />
+    <Project Path="SImpl.DependencyInjection/SImpl.DependencyInjection.csproj" />
+    <Project Path="SImpl.Messaging.CQRS.Rebus/SImpl.Messaging.CQRS.Rebus.csproj" />
+    <Project Path="SImpl.Messaging.CQRS/SImpl.Messaging.CQRS.csproj" />
+    <Project Path="SImpl.OAuth/SImpl.OAuth.csproj" />
+    <Project Path="SImpl.Queue/SImpl.Queue.csproj" />
+  </Folder>
+  <Folder Name="/SolutionItems/">
+    <File Path="directory.build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Folder Name="/Spike/">
+    <Project Path="spike.stack.application/spike.stack.application.csproj" />
+    <Project Path="spike.stack.console/spike.stack.console.csproj" />
+    <Project Path="spike.stack.module/spike.stack.module.csproj" />
+    <Project Path="spike.stack.web.minimalHosting/spike.stack.web.minimalHosting.csproj" />
+    <Project Path="spike.stack.web/spike.stack.web.csproj" />
+  </Folder>
+</Solution>

@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
 
@@ -11,9 +10,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
-      <PackageReference Include="NPoco" Version="5.1.2" />
-      <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+      <PackageReference Include="NPoco" />
+      <PackageReference Include="System.Data.SqlClient" />
     </ItemGroup>
 
 </Project>

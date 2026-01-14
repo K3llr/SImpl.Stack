@@ -5,12 +5,20 @@
       - master
       - v2/master
   configuration: Release
+  environment:
+    DOTNET_NOLOGO: 1
+    DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  install:
+    - ps: |
+        Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
+        & $env:temp\dotnet-install.ps1 -Architecture x64 -Version '10.0.100' -InstallDir "$env:ProgramFiles\dotnet"
   before_build:
-    - ps: nuget restore .\src\SImpl.Stack.sln
+    - cmd: dotnet restore .\src\SImpl.Stack.slnx
   image: Visual Studio 2022
   build:
     publish_nuget: true
-    project: .\src\SImpl.Stack.sln
+    project: .\src\SImpl.Stack.slnx
   
   deploy:
     provider: NuGet

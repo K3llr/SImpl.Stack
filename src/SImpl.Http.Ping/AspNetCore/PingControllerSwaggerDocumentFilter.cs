@@ -1,5 +1,10 @@
+#if NET10_0_OR_GREATER
+using Microsoft.OpenApi;
+using System.Text.Json;
+#else
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+#endif
 using SImpl.Http.Ping.Module;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -13,6 +18,45 @@ public class PingControllerSwaggerDocumentFilter : IDocumentFilter
         {
             swaggerDoc.Paths.Add($"{PingModule.ModuleConfig.RoutePrefix}/ping/ping", new OpenApiPathItem
             {
+#if NET10_0_OR_GREATER
+                Operations = new Dictionary<HttpMethod, OpenApiOperation>()
+                {
+                    [HttpMethod.Get] = new()
+                    {
+                        Responses = new OpenApiResponses
+                        {
+                            {
+                                "200", new OpenApiResponse
+                                {
+                                    Content = new Dictionary<string, OpenApiMediaType>
+                                    {
+                                        ["text/plain"] = new OpenApiMediaType
+                                        {
+                                            Example = JsonSerializer.SerializeToNode("03/24/2021 16:43:41 pong"),
+                                            Schema = new OpenApiSchema
+                                            {
+                                                Type = JsonSchemaType.String
+                                            }
+                                        }
+                                    },
+                                    Description = "Success",
+                                }
+                            },
+                            {
+                                "400", new OpenApiResponse
+                                {
+                                    Description = "Not Found",
+                                }
+                            }
+                        },
+                        Summary = "Ping to test whether the microservice is reachable",
+                        Tags = new HashSet<OpenApiTagReference>
+                        {
+                            new(PingModule.ModuleConfig.ControllerArea)
+                        }
+                    }
+                }
+#else
                 Operations = new Dictionary<OperationType, OpenApiOperation>()
                 {
                     [OperationType.Get] = new()
@@ -52,7 +96,8 @@ public class PingControllerSwaggerDocumentFilter : IDocumentFilter
                             }
                         }
                     }
-                },
+                }
+#endif
             });
         }
     }

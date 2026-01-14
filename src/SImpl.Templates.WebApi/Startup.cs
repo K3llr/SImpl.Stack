@@ -4,7 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+#if NET10_0_OR_GREATER
+using Microsoft.OpenApi;
+#else
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace SImpl.Templates.WebApi
 {
