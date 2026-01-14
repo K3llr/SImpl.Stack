@@ -21,8 +21,4 @@
     <ProjectReference Include="..\SImpl\SImpl.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Hosting" />
-  </ItemGroup>
-
 </Project>
