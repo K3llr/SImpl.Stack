@@ -6,7 +6,7 @@
       - v2/master
   configuration: Release
   before_build:
-    - ps: nuget restore .\src\SImpl.Stack.slnx
+    - ps: dotnet restore .\src\SImpl.Stack.slnx
   image: Visual Studio 2022
   build:
     publish_nuget: true
