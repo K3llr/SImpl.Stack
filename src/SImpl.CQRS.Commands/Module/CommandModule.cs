@@ -23,7 +23,7 @@ namespace SImpl.CQRS.Commands.Module
             
             services.Scan(s =>
                 s.FromAssemblies(Config.RegisteredAssemblies)
-                    .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)))
+                    .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)), publicOnly: false)
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
             
