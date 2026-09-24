@@ -1,26 +1,15 @@
 using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SImpl.Storage.Repository.Dapper.Module;
-using SImpl.Storage.Repository.Module;
 
 namespace SImpl.Storage.Repository.Dapper.Factories
 {
-    public class MssqlConnectionFactory : IConnectionFactory
+    public class MssqlConnectionFactory(IConfiguration configuration, DapperRepositoryConfig config) : IConnectionFactory
     {
-        private readonly IConfiguration _configuration;
-        private readonly DapperRepositoryConfig _config;
-
-        public MssqlConnectionFactory(IConfiguration configuration, DapperRepositoryConfig config)
-        {
-            _configuration = configuration;
-            _config = config;
-        }
-
         public IDbConnection CreateConnection()
         {
-            var connectionString = _configuration.GetValue<string>($"ConnectionStrings:{_config.ConnectionStringName}");  
+            var connectionString = configuration.GetValue<string>($"ConnectionStrings:{config.ConnectionStringName}");  
 
             return new SqlConnection(connectionString);
         }

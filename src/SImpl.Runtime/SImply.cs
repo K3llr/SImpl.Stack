@@ -98,32 +98,34 @@ namespace SImpl.Runtime
         private static RuntimeFlags ParseArgs(string[] args)
         {
             var flags = new RuntimeFlags();
-            
-            // Define and parse commands
+
+            var diagnosticsOption = new Option<bool>("--diagnostics", "-d")
+            {
+                Description = "Enable stack diagnostics"
+            };
+
+            var verboseOption = new Option<bool>("--verbose", "-v")
+            {
+                Description = "Enable verbose logging"
+            };
+
             var cmd = new RootCommand("SImpl .NET Stack runtime")
             {
-                new Option<bool>(
-                    new[] {"--diagnostics", "-d"},
-                    getDefaultValue: () => false,
-                    description: "Enable stack diagnostics"),
-                new Option<bool>(
-                    new[] {"--verbose", "-v"},
-                    getDefaultValue: () => false,
-                    description: "Enable verbose logging")
+                diagnosticsOption,
+                verboseOption
             };
 
             var requiresBoot = false;
-            cmd.Handler = CommandHandler.Create<bool, bool>((diagnostics, verbose) =>
-            {
-                // Parse args into flags
-                flags.Diagnostics = diagnostics;
-                flags.Verbose = verbose;
 
-                // Args has been parsed
+            cmd.SetAction(parseResult =>
+            {
+                flags.Diagnostics = parseResult.GetValue(diagnosticsOption);
+                flags.Verbose = parseResult.GetValue(verboseOption);
+
                 requiresBoot = true;
             });
 
-            cmd.Invoke(args);
+            cmd.Parse(args).Invoke();
 
             if (!requiresBoot)
             {
