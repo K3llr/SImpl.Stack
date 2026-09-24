@@ -23,7 +23,7 @@ namespace SImpl.CQRS.Events.Module
             
             services.Scan(s =>
                 s.FromAssemblies(Config.RegisteredAssemblies)
-                    .AddClasses(c => c.AssignableTo(typeof(IEventHandler<>)))
+                    .AddClasses(c => c.AssignableTo(typeof(IEventHandler<>)), publicOnly: false)
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
 

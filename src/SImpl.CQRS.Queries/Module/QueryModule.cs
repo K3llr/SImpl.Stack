@@ -25,7 +25,7 @@ namespace SImpl.CQRS.Queries.Module
 
             services.Scan(s =>
                 s.FromAssemblies(Config.RegisteredAssemblies)
-                    .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,>)))
+                    .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,>)), publicOnly: false)
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
 

@@ -4,15 +4,10 @@ using SImpl.Queue.Services;
 
 namespace SImpl.Queue.Module
 {
-    public class QueueModule : IServicesCollectionConfigureModule
+    public class QueueModule(QueueModuleConfig config) : IServicesCollectionConfigureModule
     {
-        public QueueModuleConfig Config { get; }
-        
-        public QueueModule(QueueModuleConfig config)
-        {
-            Config = config;
-        }
-        
+        public QueueModuleConfig Config { get; } = config;
+
         public string Name { get; } = nameof(QueueModule);
 
         public void ConfigureServices(IServiceCollection services)
@@ -25,13 +20,13 @@ namespace SImpl.Queue.Module
             
             services.Scan(s =>
                 s.FromAssemblies(Config.RegisteredAssemblies)
-                    .AddClasses(c => c.AssignableTo(typeof(IQueue<>)))
+                    .AddClasses(c => c.AssignableTo(typeof(IQueue<>)), publicOnly: false)
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
             
             services.Scan(s =>
                 s.FromAssemblies(Config.RegisteredAssemblies)
-                    .AddClasses(c => c.AssignableTo(typeof(IDequeueAction<>)))
+                    .AddClasses(c => c.AssignableTo(typeof(IDequeueAction<>)), publicOnly: false)
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
             
